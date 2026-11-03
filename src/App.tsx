@@ -14,6 +14,11 @@ import {
   Registration,
 } from "./components/Sections";
 import { Arrow } from "./components/Motifs";
+import { SearchPanel } from "./components/SearchPanel";
+import { ToolsDock } from "./components/ToolsDock";
+import { PlayerRadio } from "./components/radio/PlayerRadio";
+import { CursorEletrico } from "./components/CursorEletrico";
+import RastroTexto from "./components/RastroTexto";
 import { evento } from "./content/evento";
 
 type Theme = "dark" | "light";
@@ -76,6 +81,12 @@ export function App() {
       </main>
 
       <Footer />
+
+      <SearchPanel />
+      <ToolsDock />
+      <PlayerRadio />
+      <CursorEletrico />
+      <RastroTexto />
 
       <div className={`mobile-cta${showCta ? " is-visible" : ""}`}>
         <a

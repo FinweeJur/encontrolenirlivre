@@ -52,6 +52,10 @@ export function PhotoDrift({ reducedMotion }: { reducedMotion: boolean }) {
           autoScrollY={0.1}
           backgroundColor="#100e0a"
           height="clamp(30rem, 70vw, 56rem)"
+          // A roda do mouse fica com a PÁGINA: o componente, por padrão, chama
+          // preventDefault no wheel para deslizar a grade e prende o scroll de
+          // quem está descendo o site. O arrasto com o ponteiro continua.
+          enableWheel={false}
           dpr={Math.min(typeof window === "undefined" ? 1 : window.devicePixelRatio || 1, 1.75)}
         />
       )}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Arrow } from "./Motifs";
+import { pedirBusca } from "./SearchPanel";
 
 export function Header({
   theme,
@@ -55,6 +56,21 @@ export function Header({
         </nav>
 
         <div className="header-actions">
+          {/* Busca expansível na navbar: abre o painel de busca do site. */}
+          <button
+            type="button"
+            className="nav-busca"
+            onClick={pedirBusca}
+            aria-label="Buscar no site"
+            title="Buscar no site (tecla /)"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="11" cy="11" r="6.5" />
+              <path d="m16 16 4.5 4.5" />
+            </svg>
+            <span className="nav-busca__texto">Buscar</span>
+          </button>
+
           <button
             type="button"
             className="theme-toggle"

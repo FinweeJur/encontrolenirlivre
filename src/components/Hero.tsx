@@ -18,7 +18,75 @@ export function Hero({
   return (
     <section className="hero" id="top" aria-labelledby="hero-title">
       <div className="hero__atmosphere" aria-hidden="true">
-        <Sun className="hero__sun" />
+        {/* O sol e a logo dividem o mesmo quadrado: assim a logo fica
+            exatamente no centro do círculo do sol em qualquer tela. */}
+        <div className="hero__sun-wrap">
+          {/* Um só giro para o desenho e o electric: os dois são filhos do
+              mesmo contêiner, então giram juntos, no mesmo sentido horário. */}
+          <div className="hero__sun-giro">
+            <Sun className="hero__sun" />
+            {/* Electric leve no SOL inteiro: círculo + raios, sem brilho de
+                bloom (glow 0), para não aparecer o retângulo do canvas. */}
+            {!reducedMotion && (
+              <ElectricLogo
+                key={`sol-${theme}`}
+                src="/img/sun.png"
+                className="hero__sun-electric"
+                color={ink}
+                glowColor={ink}
+                // O prop `theme` força traço BRANCO no tema claro (o shader
+                // inverte a cor). Aqui o traço é sempre a cor do tema, então o
+                // shader fica no modo escuro.
+                theme="dark"
+                scale={1}
+                intensity={theme === "light" ? 0.9 : 0.55}
+                glow={0}
+                thickness={theme === "light" ? 0.95 : 0.7}
+                strands={1}
+                bend={0.35}
+                crackle={0.7}
+                fill={0}
+                flicker={0.35}
+                speed={0.3}
+              />
+            )}
+          </div>
+          <div className="hero__logo-wrap">
+            {reducedMotion ? (
+              <img className="hero__logo" src={logo} alt="RENAP" />
+            ) : (
+              <ElectricLogo
+                key={theme}
+                src={logo}
+                className="hero__logo"
+                color={ink}
+                // Brilho na cor da própria logo: preto no tema claro (kraft),
+                // claro no escuro. O vermelho saiu para o efeito não brigar
+                // com o sol amarelo atrás.
+                glowColor={ink}
+                // Mesmo motivo do sol: no tema claro o componente pinta de
+                // branco; o shader fica no modo escuro e a cor vem de `color`.
+                theme="dark"
+                scale={0.95}
+                // No kraft o traço fino some no papel: sobe a intensidade.
+                intensity={theme === "light" ? 1.9 : 1.3}
+                // sem bloom: o brilho desenhado no shader é retangular e
+                // denunciava o quadrado do canvas. O traço faz o desenho.
+                glow={0}
+                thickness={theme === "light" ? 1.35 : 1.1}
+                strands={3}
+                bend={0.5}
+                crackle={1.15}
+                fill={0}
+                flicker={0.5}
+                speed={0.7}
+                interactive
+                cursorIntensity={1.2}
+                cursorRadius={110}
+              />
+            )}
+          </div>
+        </div>
         <span className="hero__30">30</span>
       </div>
 
@@ -95,35 +163,6 @@ export function Hero({
         </div>
 
         <div className="hero__visual">
-          <div className="hero__logo-wrap">
-            {reducedMotion ? (
-              <img className="hero__logo" src={logo} alt="RENAP" />
-            ) : (
-              <ElectricLogo
-                key={theme}
-                src={logo}
-                className="hero__logo"
-                color={ink}
-                glowColor="#d63b32"
-                theme={theme}
-                scale={0.95}
-                intensity={1}
-                glow={0.35}
-                thickness={0.9}
-                strands={2}
-                bend={0.5}
-                crackle={1}
-                fill={0}
-                flicker={0.5}
-                speed={0.6}
-                interactive
-                cursorIntensity={1.2}
-                cursorRadius={110}
-              />
-            )}
-            <span className="hero__logo-caption">RENAP · desde 1995</span>
-          </div>
-
           <div className="hero__portrait">
             <div className="hero__media">
               <img
