@@ -368,9 +368,25 @@ export function Registration() {
                 Ir para a inscrição <Arrow />
               </a>
 
+              <div className="housing">
+                <p className="housing__title">
+                  <strong>Precisa de alojamento?</strong> O evento oferece
+                  alojamento a quem responde o formulário da organização.
+                </p>
+                <a
+                  className="housing__link"
+                  href={evento.links.alojamento}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Preencher o formulário <Arrow />
+                </a>
+              </div>
+
               <p className="reg-note">
-                Este site não processa pagamentos. A inscrição é feita no
-                SIGEventos/UFPB. Dúvidas: {evento.email}.
+                Este site não processa pagamentos nem guarda seus dados. A
+                inscrição é feita no SIGEventos/UFPB e o alojamento no
+                formulário da organização. Dúvidas: {evento.email}.
               </p>
             </div>
           </ElectroBorder>
@@ -562,7 +578,22 @@ export function LocalFaq() {
             {faq.map((f) => (
               <details key={f.q}>
                 <summary>{f.q}</summary>
-                <p>{f.a}</p>
+                <p>
+                  {f.a}
+                  {f.link && (
+                    <>
+                      {" "}
+                      <a
+                        className="faq__link"
+                        href={f.link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {f.link.texto} →
+                      </a>
+                    </>
+                  )}
+                </p>
               </details>
             ))}
           </div>

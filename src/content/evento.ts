@@ -32,6 +32,8 @@ export const evento = {
       "https://ipdms.org.br/wp-content/uploads/2026/07/Trabalhos-Aprovados-1.pdf",
     materia:
       "https://anovademocracia.com.br/godos-lenir-correia-luta-pela-terra-abrapo/",
+    // Formulário da organização: é por ele que se pede o alojamento.
+    alojamento: "https://forms.gle/LoSeGv5YGtpNZVaJ6",
   },
   coEventos: [
     {
@@ -185,7 +187,12 @@ export const organizacoes = [
   },
 ] as const;
 
-export const faq = [
+export const faq: ReadonlyArray<{
+  q: string;
+  a: string;
+  /** Link opcional ao fim da resposta (ex.: formulário do alojamento). */
+  link?: { texto: string; url: string };
+}> = [
   {
     q: "Quem pode participar?",
     a: "Estudantes de graduação e pós-graduação, pesquisadoras e pesquisadores, docentes, advogadas e advogados, demais profissionais, integrantes de movimentos sociais e outras pessoas interessadas no tema.",
@@ -208,13 +215,17 @@ export const faq = [
   },
   {
     q: "O evento oferece alojamento?",
-    a: "Não há alojamento oficial divulgado. Consulte a página do IPDMS e o SIGEventos para informações atualizadas sobre hospedagem e locais das atividades.",
+    a: "Sim. O alojamento é oferecido a quem responde o formulário da organização, com nome, contato e dados de chegada e permanência. A vaga é organizada a partir das respostas.",
+    link: {
+      texto: "Formulário do alojamento",
+      url: "https://forms.gle/LoSeGv5YGtpNZVaJ6",
+    },
   },
   {
     q: "Onde serão as atividades?",
     a: "No Campus I da UFPB, em João Pessoa. A sala de cada atividade será divulgada pela organização no site do evento.",
   },
-] as const;
+];
 
 export const galeria = Array.from({ length: 15 }, (_, i) => {
   const n = String(i + 1).padStart(2, "0");
