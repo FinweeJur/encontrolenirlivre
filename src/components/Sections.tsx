@@ -224,6 +224,28 @@ export function Encounter() {
         >
           Página oficial, editais e programação completa <Arrow />
         </a>
+
+        {/* Cartas políticas: em vez de seção própria, uma linha de links —
+            o leitor que quer o histórico da rede chega pela publicação. */}
+        <div className="encounter__cartas">
+          <p className="section-tag">Cartas políticas dos encontros anteriores</p>
+          <ul>
+            {cartas.map((c) => (
+              <li key={c.url}>
+                <a href={c.url} target="_blank" rel="noopener noreferrer">
+                  <span>{c.ano}</span>
+                  {c.titulo.replace(/ —.*$/, "")}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a href={evento.links.encontros} target="_blank" rel="noopener noreferrer">
+                <span>+</span>
+                Todos os encontros
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
   );
@@ -237,7 +259,7 @@ export function Program() {
     <section className="band-dark program" id="programacao" aria-labelledby="programacao-titulo">
       <LayoutGrid />
       <div className="shell">
-        <SectionHead index="05" label="Programação" />
+        <SectionHead index="04" label="Programação" />
         <div className="program__head">
           <h2 id="programacao-titulo" className="h2">
             Quatro dias
@@ -309,7 +331,7 @@ export function Registration() {
   return (
     <section className="section registration" id="inscricoes" aria-labelledby="inscricoes-titulo">
       <div className="shell">
-        <SectionHead index="06" label="Inscrições" />
+        <SectionHead index="05" label="Inscrições" />
         <div className="registration__grid">
           <div className="registration__copy">
             <p className="deadline">
@@ -432,67 +454,6 @@ export function Registration() {
   );
 }
 
-/**
- * Cartas políticas dos encontros anteriores da RENAP.
- *
- * Por que existe: o site do 30º encontro é peça de mobilização e precisa
- * mostrar que a rede tem histórico — as cartas são o que cada encontro deixou
- * escrito. As capas são fotos dos próprios encontros, baixadas do site oficial
- * da RENAP e reduzidas; cada cartão abre a publicação original.
- */
-export function Cartas() {
-  return (
-    <section className="section cartas" id="cartas" aria-labelledby="cartas-titulo">
-      <div className="shell">
-        <SectionHead index="04" label="Cartas políticas" />
-        <div className="cartas__head">
-          <h2 id="cartas-titulo" className="h2">
-            O que a rede
-            <br />
-            <span className="red">já escreveu.</span>
-          </h2>
-          <p>
-            Cada encontro nacional termina com uma carta política: o balanço da
-            conjuntura e as tarefas que a advocacia popular assume. Estão aqui
-            as últimas, com as fotos dos encontros.
-          </p>
-        </div>
-
-        <ul className="cartas__lista">
-          {cartas.map((c) => (
-            <li key={c.url}>
-              <a className="carta" href={c.url} target="_blank" rel="noopener noreferrer">
-                <span className="carta__midia">
-                  <img
-                    src={c.imagem}
-                    alt={`Encontro da RENAP: ${c.titulo}`}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <span className="carta__ano">{c.ano}</span>
-                </span>
-                <span className="carta__texto">
-                  <strong>{c.titulo}</strong>
-                  <small>{c.local} · ler a carta →</small>
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <a
-          className="text-link"
-          href={evento.links.encontros}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Todos os encontros da RENAP <Arrow />
-        </a>
-      </div>
-    </section>
-  );
-}
-
 export function Case() {
   const marcos = [
     {
@@ -530,7 +491,7 @@ export function Case() {
   return (
     <section className="section case" id="caso" aria-labelledby="caso-titulo">
       <div className="shell">
-        <SectionHead index="07" label="O caso" />
+        <SectionHead index="06" label="O caso" />
         <div className="case__grid">
           <div>
             <h2 id="caso-titulo" className="h2">
@@ -594,7 +555,7 @@ export function Organizations() {
   return (
     <section className="section organizations" id="organizacoes" aria-labelledby="orgs-titulo">
       <div className="shell">
-        <SectionHead index="08" label="Organizações" />
+        <SectionHead index="07" label="Organizações" />
         <div className="orgs__head">
           <h2 id="orgs-titulo" className="h2">
             Uma rede
@@ -635,7 +596,7 @@ export function LocalFaq() {
   return (
     <section className="section local" id="local" aria-labelledby="local-titulo">
       <div className="shell">
-        <SectionHead index="09" label="Onde e como" />
+        <SectionHead index="08" label="Onde e como" />
         <div className="local__grid">
           <div>
             <h2 id="local-titulo" className="h2">

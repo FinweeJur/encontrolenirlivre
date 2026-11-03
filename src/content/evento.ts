@@ -232,10 +232,18 @@ export const faq: ReadonlyArray<{
   },
 ];
 
-export const galeria = Array.from({ length: 15 }, (_, i) => {
-  const n = String(i + 1).padStart(2, "0");
-  return `/img/gallery/${n}.webp`;
-});
+export const galeria = [
+  // Encontros anteriores, recortados em 4:5 para os quadros da grade.
+  "/img/galeria-renap/grade-2025-salvador.webp",
+  "/img/galeria-renap/grade-ro-2023.webp",
+  "/img/galeria-renap/grade-rs-2019.webp",
+  "/img/galeria-renap/grade-xxiii-2018.webp",
+  "/img/galeria-renap/grade-articulacao-2018.webp",
+  ...Array.from({ length: 15 }, (_, i) => {
+    const n = String(i + 1).padStart(2, "0");
+    return `/img/gallery/${n}.webp`;
+  }),
+];
 
 /**
  * Cartas políticas e notas dos encontros anteriores da RENAP.
@@ -243,6 +251,13 @@ export const galeria = Array.from({ length: 15 }, (_, i) => {
  * da rede (robots libera `/`; UA honesto) e reduzidas para 900 px de largura.
  */
 export const cartas = [
+  {
+    ano: "2025",
+    titulo: "29º Encontro Nacional — 30 anos em defesa da justiça social",
+    local: "Salvador · BA",
+    imagem: "/img/galeria-renap/2025-salvador.webp",
+    url: "https://www.renap.org.br/encontro-nacional",
+  },
   {
     ano: "2024",
     titulo: "XXVIII Encontro Nacional — carta política",
@@ -259,7 +274,7 @@ export const cartas = [
   },
   {
     ano: "2019",
-    titulo: "RENAP/RS debate a conjuntura sociopolítica",
+    titulo: "Encontro do RENAP/RS — conjuntura sociopolítica",
     local: "Rio Grande do Sul",
     imagem: "/img/galeria-renap/rs-2019.webp",
     url: "https://www.renap.org.br/post/renap-rs-re%C3%BAne-se-para-debater-a-conjuntura-sociopol%C3%ADtica",
