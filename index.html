@@ -36,6 +36,9 @@
         try {
           var t = localStorage.getItem("ecnl-theme");
           document.documentElement.dataset.theme = t === "light" ? "light" : "dark";
+          // Modo de texto maior: aplicado antes da primeira pintura.
+          var x = localStorage.getItem("ecnl-texto");
+          document.documentElement.dataset.texto = x === "grande" ? "grande" : "normal";
         } catch (e) {}
       })();
     </script>

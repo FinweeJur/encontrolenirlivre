@@ -232,17 +232,22 @@ export const faq: ReadonlyArray<{
   },
 ];
 
+/**
+ * Fotos da grade infinita — só as imagens dos encontros que entraram neste
+ * trabalho: as capas das cartas no site da RENAP (baixadas hoje) e os quatro
+ * registros enviados pela organização. As fotos antigas de `img/gallery`
+ * saíram: não eram deste lote.
+ */
 export const galeria = [
-  // Encontros anteriores, recortados em 4:5 para os quadros da grade.
   "/img/galeria-renap/grade-2025-salvador.webp",
   "/img/galeria-renap/grade-ro-2023.webp",
   "/img/galeria-renap/grade-rs-2019.webp",
   "/img/galeria-renap/grade-xxiii-2018.webp",
   "/img/galeria-renap/grade-articulacao-2018.webp",
-  ...Array.from({ length: 15 }, (_, i) => {
-    const n = String(i + 1).padStart(2, "0");
-    return `/img/gallery/${n}.webp`;
-  }),
+  "/img/galeria-renap/grade-encontro-a.webp",
+  "/img/galeria-renap/grade-encontro-b.webp",
+  "/img/galeria-renap/grade-encontro-c.webp",
+  "/img/galeria-renap/grade-encontro-d.webp",
 ];
 
 /**

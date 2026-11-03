@@ -322,10 +322,14 @@ export const InfiniteDrift2 = forwardRef<
       gl.enableVertexAttribArray(aPos);
       gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
 
-      // Build 3x3 Texture Atlas
+      // Build the texture atlas. O componente oficial fixa 3×3 (só 9 fotos em
+      // uso, repetindo a cada 3 quadros); aqui o atlas cresce com a lista —
+      // com 24 fotos vira 5×5 e o padrão demora mais para repetir.
       const atlasCanvas = document.createElement("canvas");
       const atlasDim = 1536;
-      const gridCount = 3;
+      const imageList = images && images.length > 0 ? images : DEFAULT_IMAGES;
+      // Mínimo 4: com poucas fotos o padrão 3×3 repetia a cada três quadros.
+      const gridCount = Math.min(6, Math.max(4, Math.ceil(Math.sqrt(imageList.length))));
       const cellDim = atlasDim / gridCount;
       atlasCanvas.width = atlasDim;
       atlasCanvas.height = atlasDim;
@@ -415,9 +419,13 @@ export const InfiniteDrift2 = forwardRef<
         atlasCanvas
       );
 
-      // Asynchronously load real images into the atlas
-      const imageList = images && images.length > 0 ? images : DEFAULT_IMAGES;
-      imageList.slice(0, 9).forEach((url, i) => {
+      // Asynchronously load real images into the atlas. Percorre TODAS as
+      // células (não só as nove primeiras) para a última linha não nascer
+      // vazia; quando a lista é menor que o atlas, a imagem se repete.
+      const imageListLoad = images && images.length > 0 ? images : DEFAULT_IMAGES;
+      const celulas = gridCount * gridCount;
+      for (let i = 0; i < celulas; i += 1) {
+        const url = imageListLoad[i % imageListLoad.length];
         const img = new Image();
         img.crossOrigin = "anonymous";
         img.onload = () => {
@@ -455,7 +463,7 @@ export const InfiniteDrift2 = forwardRef<
           }
         };
         img.src = url;
-      });
+      }
 
       // Uniform Locations
       const uRes = gl.getUniformLocation(program, "uResolution");

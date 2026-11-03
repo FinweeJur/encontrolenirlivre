@@ -12,6 +12,7 @@ import {
   Organizations,
   Program,
   Registration,
+  Vozes,
 } from "./components/Sections";
 import { Arrow } from "./components/Motifs";
 import { SearchPanel } from "./components/SearchPanel";
@@ -72,6 +73,7 @@ export function App() {
         <Opening />
         <Homage />
         <Encounter />
+        <Vozes />
         <PhotoDrift reducedMotion={reducedMotion} />
         <Program />
         <Registration />

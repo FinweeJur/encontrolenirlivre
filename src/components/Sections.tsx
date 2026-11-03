@@ -454,6 +454,37 @@ export function Registration() {
   );
 }
 
+/**
+ * Palavra de ordem e citação: a faixa que liga o encontro à história da
+ * advocacia popular. A palavra de ordem é da carta do 29º Encontro (2025);
+ * a citação é de Luiz Gama (1830–1882), advogado negro que libertou mais de
+ * 500 pessoas escravizadas — referência da luta que a RENAP reivindica.
+ */
+export function Vozes() {
+  return (
+    <section className="band-dark vozes" aria-labelledby="vozes-titulo">
+      <div className="shell vozes__grid">
+        <p className="vozes__ordem" id="vozes-titulo">
+          Lutando em rede,
+          <br />
+          <span>esperançaremos</span>
+          <br />
+          ainda melhor.
+        </p>
+
+        <figure className="vozes__cita">
+          <blockquote>
+            “Todo escravo que mata seu senhor,
+            <br />
+            age em legítima defesa.”
+          </blockquote>
+          <figcaption>Luiz Gama, advogado e abolicionista</figcaption>
+        </figure>
+      </div>
+    </section>
+  );
+}
+
 export function Case() {
   const marcos = [
     {

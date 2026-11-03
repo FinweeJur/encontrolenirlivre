@@ -28,9 +28,9 @@ export function PhotoDrift({ reducedMotion }: { reducedMotion: boolean }) {
   const grade = (
     <InfiniteDrift2
       images={galeria}
-      tileWidth={220}
-      tileHeight={280}
-      gap={14}
+      tileWidth={200}
+      tileHeight={255}
+      gap={12}
       borderRadius={4}
       curve={0.28}
       curveRadius={1.7}

@@ -14,13 +14,23 @@
  */
 
 import { useEffect, useState } from "react";
-import { ArrowDown, ArrowUp, Headphones, Search } from "lucide-react";
+import { ALargeSmall, ArrowDown, ArrowUp, Headphones, Search } from "lucide-react";
 import { ExpandableSpeedDial, type SpeedDialAction } from "./lightswind/expandable-speed-dial";
 import { pedirBusca } from "./SearchPanel";
 import { pedirRadio } from "./radio/PlayerRadio";
 
+/** Chave do modo de texto maior. */
+const CHAVE_TEXTO = "ecnl-texto";
+
+/** Lê o modo salvo e aplica no <html> antes da primeira pintura útil. */
+function lerTextoGrande(): boolean {
+  if (typeof document === "undefined") return false;
+  return document.documentElement.dataset.texto === "grande";
+}
+
 export function ToolsDock() {
   const [desceu, setDesceu] = useState(false);
+  const [textoGrande, setTextoGrande] = useState(lerTextoGrande);
 
   useEffect(() => {
     const onScroll = () => setDesceu(window.scrollY > 600);
@@ -28,6 +38,18 @@ export function ToolsDock() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  /** Liga/desliga o texto maior e guarda a escolha no navegador. */
+  function alternarTexto() {
+    const proximo = !textoGrande;
+    setTextoGrande(proximo);
+    document.documentElement.dataset.texto = proximo ? "grande" : "normal";
+    try {
+      localStorage.setItem(CHAVE_TEXTO, proximo ? "grande" : "normal");
+    } catch {
+      /* modo privado: vale só nesta visita */
+    }
+  }
 
   /** Próxima seção abaixo da posição atual. */
   function descer() {
@@ -41,6 +63,13 @@ export function ToolsDock() {
   const acoes: SpeedDialAction[] = [
     { icon: <Search className="h-4 w-4" />, label: "Buscar no site", onClick: pedirBusca },
     { icon: <Headphones className="h-4 w-4" />, label: "Ouvir a rádio", onClick: pedirRadio },
+    // Acessibilidade: cresce o texto corrido (os títulos grandes ficam presos
+    // pela regra do `html[data-texto]` em global.css).
+    {
+      icon: <ALargeSmall className="h-4 w-4" />,
+      label: textoGrande ? "Voltar ao texto normal" : "Aumentar o texto",
+      onClick: alternarTexto,
+    },
     { icon: <ArrowDown className="h-4 w-4" />, label: "Descer para a próxima seção", onClick: descer },
   ];
 
