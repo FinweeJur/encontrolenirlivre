@@ -233,21 +233,39 @@ export const faq: ReadonlyArray<{
 ];
 
 /**
- * Fotos da grade infinita — só as imagens dos encontros que entraram neste
- * trabalho: as capas das cartas no site da RENAP (baixadas hoje) e os quatro
- * registros enviados pela organização. As fotos antigas de `img/gallery`
- * saíram: não eram deste lote.
+ * Fotos da grade infinita — duas origens apenas:
+ * 1. as fotos enviadas pelo dono no chat (15 registros dos encontros);
+ * 2. as capas das cartas políticas do site renap.org.br (5 encontros).
+ * Nada de banco de imagens antigo: o que não veio dessas duas fontes saiu.
  */
 export const galeria = [
+  // Fotos enviadas no chat.
+  "/img/galeria-renap/grade-chat-01.webp",
+  "/img/galeria-renap/grade-chat-02.webp",
+  "/img/galeria-renap/grade-chat-03.webp",
+  "/img/galeria-renap/grade-chat-04.webp",
+  "/img/galeria-renap/grade-chat-05.webp",
+  "/img/galeria-renap/grade-chat-06.webp",
+  "/img/galeria-renap/grade-chat-07.webp",
+  "/img/galeria-renap/grade-chat-08.webp",
+  "/img/galeria-renap/grade-chat-09.webp",
+  "/img/galeria-renap/grade-chat-10.webp",
+  "/img/galeria-renap/grade-chat-11.webp",
+  "/img/galeria-renap/grade-chat-12.webp",
+  "/img/galeria-renap/grade-chat-13.webp",
+  "/img/galeria-renap/grade-chat-14.webp",
+  "/img/galeria-renap/grade-chat-15.webp",
+  // Registros do ZIP enviado no chat.
+  "/img/galeria-renap/grade-encontro-a.webp",
+  "/img/galeria-renap/grade-encontro-b.webp",
+  "/img/galeria-renap/grade-encontro-c.webp",
+  "/img/galeria-renap/grade-encontro-d.webp",
+  // Capas das cartas políticas (renap.org.br/encontro-nacional).
   "/img/galeria-renap/grade-2025-salvador.webp",
   "/img/galeria-renap/grade-ro-2023.webp",
   "/img/galeria-renap/grade-rs-2019.webp",
   "/img/galeria-renap/grade-xxiii-2018.webp",
   "/img/galeria-renap/grade-articulacao-2018.webp",
-  "/img/galeria-renap/grade-encontro-a.webp",
-  "/img/galeria-renap/grade-encontro-b.webp",
-  "/img/galeria-renap/grade-encontro-c.webp",
-  "/img/galeria-renap/grade-encontro-d.webp",
 ];
 
 /**
