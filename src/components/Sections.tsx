@@ -180,18 +180,6 @@ export function Encounter() {
           </Lens>
         </div>
 
-        <div className="encounter__cards">
-          {evento.coEventos.map((e, i) => (
-            <article className="encounter__card" key={e.sigla}>
-              <span className="encounter__index">0{i + 1}</span>
-              <span className="encounter__num">{e.numero}</span>
-              <h3>{e.sigla}</h3>
-              <p>{e.nome}</p>
-              <span className="encounter__theme">{e.tema}</span>
-            </article>
-          ))}
-        </div>
-
         <a
           className="text-link"
           href={evento.links.ipdms}

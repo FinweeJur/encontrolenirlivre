@@ -2365,9 +2365,20 @@ html[data-theme="light"] .hero__sun {
     gap: 1.2rem;
   }
 
+  /* `relative`, não `static`: o ElectroBorder desenha as bordas em camadas
+     `absolute inset-0` e depende do cartão ser o bloco de referência. Com
+     `static` a moldura elétrica esticava pela seção inteira. */
   .registration__card,
   .demands {
-    position: static;
+    position: relative;
+  }
+
+  /* Uma coluna: o cartão do passo a passo fica com a largura do texto, não
+     esticado na tela inteira (sobrava muito espaço vazio à direita). */
+  .registration__card {
+    width: 100%;
+    max-width: 40rem;
+    margin-inline: auto;
   }
 
   .footer__grid {

@@ -230,7 +230,7 @@ const PX_POR_LETRA = 24;
  * (era 1,6 s). Some-se ao tempo de vida ocioso da corrente: 1,8 s parado
  * + 2,4 s de fade = 4,2 s de leitura depois que o ponteiro pára.
  */
-const OCIOSO_MS = 1800;
+const OCIOSO_MS = 4200;
 
 /**
  * Detecta máquina fraca ANTES de montar a corrente (10/10/2026).
@@ -487,11 +487,10 @@ export default function RastroTexto() {
           pointer-events: none;
           overflow: hidden;
           opacity: 0;
-          /* Desaparecimento lento: 2,4 s (pedido do dono, 10/10/2026, para
-             dar tempo de ler as letras depois que o ponteiro pára; era
-             1,6 s desde 03/10/2026 e 0,7 s desde 02/10/2026). Junto com
-             OCIOSO_MS = 1800, dá 4,2 s de leitura ociosa. */
-          transition: opacity 2.4s ease;
+          /* Sumiço lento: aqui o rastro fica bem mais tempo na tela (era
+             2,4 s no portal). Com OCIOSO_MS = 4200, dá ~8 s de leitura
+             depois que o ponteiro para. */
+          transition: opacity 3.8s ease;
           contain: strict;
         }
         .ecnl-rastro-elo {
