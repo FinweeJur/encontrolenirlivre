@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { evento, faq, organizacoes, programacao } from "../content/evento";
+import { cartas, evento, faq, organizacoes, programacao } from "../content/evento";
 import { Arrow, Spark } from "./Motifs";
 import { LayoutGrid, ScrollStar } from "./effects/Extras";
 import ElectroBorder from "./lightswind/electro-border";
@@ -136,6 +136,14 @@ export function Homage() {
           >
             Leia a reportagem completa <Arrow />
           </a>
+          <a
+            className="text-link"
+            href={evento.links.notaRenap}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Nota pública da RENAP sobre a Operação Engodo <Arrow />
+          </a>
         </div>
       </div>
     </section>
@@ -143,6 +151,12 @@ export function Homage() {
 }
 
 export function Encounter() {
+  // Posição do ponteiro sobre o banner, para o anel fino da lente. A lente do
+  // Lightswind não desenha borda de 1 px (a classe `border-1` não existe no
+  // Tailwind), então o anel é desenhado aqui, nítido e alinhado ao círculo.
+  const [lente, setLente] = useState<{ x: number; y: number } | null>(null);
+  const TAMANHO_LENTE = 190;
+
   return (
     <section className="section encounter" id="o-encontro" aria-labelledby="encontro-titulo">
       <div className="shell">
@@ -160,16 +174,25 @@ export function Encounter() {
           </p>
         </div>
 
-        <div className="encounter__banner">
+        <div
+          className="encounter__banner"
+          onPointerMove={(ev) => {
+            const r = ev.currentTarget.getBoundingClientRect();
+            setLente({ x: ev.clientX - r.left, y: ev.clientY - r.top });
+          }}
+          onPointerLeave={() => setLente(null)}
+        >
           <Lens
             zoomFactor={1.85}
-            lensSize={190}
+            lensSize={TAMANHO_LENTE}
             borderRadius="md"
             borderWidth={1}
             borderColor="border-white/40"
             shadowIntensity="heavy"
             animationDuration={0.28}
-            blurEdge
+            /* Borda nítida: com `blurEdge` o recorte desmancha de 60% a 100%
+               e o círculo parece borrado. O anel fino é desenhado por CSS. */
+            blurEdge={false}
           >
             <img
               src="/img/banner.webp"
@@ -178,6 +201,19 @@ export function Encounter() {
               decoding="async"
             />
           </Lens>
+
+          {lente && (
+            <span
+              className="encounter__anel"
+              aria-hidden="true"
+              style={{
+                left: lente.x,
+                top: lente.y,
+                width: TAMANHO_LENTE,
+                height: TAMANHO_LENTE,
+              }}
+            />
+          )}
         </div>
 
         <a
@@ -201,7 +237,7 @@ export function Program() {
     <section className="band-dark program" id="programacao" aria-labelledby="programacao-titulo">
       <LayoutGrid />
       <div className="shell">
-        <SectionHead index="04" label="Programação" />
+        <SectionHead index="05" label="Programação" />
         <div className="program__head">
           <h2 id="programacao-titulo" className="h2">
             Quatro dias
@@ -273,7 +309,7 @@ export function Registration() {
   return (
     <section className="section registration" id="inscricoes" aria-labelledby="inscricoes-titulo">
       <div className="shell">
-        <SectionHead index="05" label="Inscrições" />
+        <SectionHead index="06" label="Inscrições" />
         <div className="registration__grid">
           <div className="registration__copy">
             <p className="deadline">
@@ -396,6 +432,67 @@ export function Registration() {
   );
 }
 
+/**
+ * Cartas políticas dos encontros anteriores da RENAP.
+ *
+ * Por que existe: o site do 30º encontro é peça de mobilização e precisa
+ * mostrar que a rede tem histórico — as cartas são o que cada encontro deixou
+ * escrito. As capas são fotos dos próprios encontros, baixadas do site oficial
+ * da RENAP e reduzidas; cada cartão abre a publicação original.
+ */
+export function Cartas() {
+  return (
+    <section className="section cartas" id="cartas" aria-labelledby="cartas-titulo">
+      <div className="shell">
+        <SectionHead index="04" label="Cartas políticas" />
+        <div className="cartas__head">
+          <h2 id="cartas-titulo" className="h2">
+            O que a rede
+            <br />
+            <span className="red">já escreveu.</span>
+          </h2>
+          <p>
+            Cada encontro nacional termina com uma carta política: o balanço da
+            conjuntura e as tarefas que a advocacia popular assume. Estão aqui
+            as últimas, com as fotos dos encontros.
+          </p>
+        </div>
+
+        <ul className="cartas__lista">
+          {cartas.map((c) => (
+            <li key={c.url}>
+              <a className="carta" href={c.url} target="_blank" rel="noopener noreferrer">
+                <span className="carta__midia">
+                  <img
+                    src={c.imagem}
+                    alt={`Encontro da RENAP: ${c.titulo}`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span className="carta__ano">{c.ano}</span>
+                </span>
+                <span className="carta__texto">
+                  <strong>{c.titulo}</strong>
+                  <small>{c.local} · ler a carta →</small>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <a
+          className="text-link"
+          href={evento.links.encontros}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Todos os encontros da RENAP <Arrow />
+        </a>
+      </div>
+    </section>
+  );
+}
+
 export function Case() {
   const marcos = [
     {
@@ -433,7 +530,7 @@ export function Case() {
   return (
     <section className="section case" id="caso" aria-labelledby="caso-titulo">
       <div className="shell">
-        <SectionHead index="06" label="O caso" />
+        <SectionHead index="07" label="O caso" />
         <div className="case__grid">
           <div>
             <h2 id="caso-titulo" className="h2">
@@ -497,7 +594,7 @@ export function Organizations() {
   return (
     <section className="section organizations" id="organizacoes" aria-labelledby="orgs-titulo">
       <div className="shell">
-        <SectionHead index="07" label="Organizações" />
+        <SectionHead index="08" label="Organizações" />
         <div className="orgs__head">
           <h2 id="orgs-titulo" className="h2">
             Uma rede
@@ -538,7 +635,7 @@ export function LocalFaq() {
   return (
     <section className="section local" id="local" aria-labelledby="local-titulo">
       <div className="shell">
-        <SectionHead index="08" label="Onde e como" />
+        <SectionHead index="09" label="Onde e como" />
         <div className="local__grid">
           <div>
             <h2 id="local-titulo" className="h2">

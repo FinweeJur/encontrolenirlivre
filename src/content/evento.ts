@@ -34,6 +34,11 @@ export const evento = {
       "https://anovademocracia.com.br/godos-lenir-correia-luta-pela-terra-abrapo/",
     // Formulário da organização: é por ele que se pede o alojamento.
     alojamento: "https://forms.gle/LoSeGv5YGtpNZVaJ6",
+    // Nota pública da RENAP sobre a Operação Engodo e a prisão da Lenir.
+    notaRenap:
+      "https://www.renap.org.br/post/nota-p%C3%BAblica-opera%C3%A7%C3%A3o-engodo-pela-imediata-revoga%C3%A7%C3%A3o-da-pris%C3%A3o-da-advogada-popular-lenir-correia",
+    // Página de encontros da RENAP (histórico, fotos e cartas).
+    encontros: "https://www.renap.org.br/encontro-nacional",
   },
   coEventos: [
     {
@@ -231,3 +236,46 @@ export const galeria = Array.from({ length: 15 }, (_, i) => {
   const n = String(i + 1).padStart(2, "0");
   return `/img/gallery/${n}.webp`;
 });
+
+/**
+ * Cartas políticas e notas dos encontros anteriores da RENAP.
+ * Fonte: blog oficial (renap.org.br). As capas foram baixadas do próprio site
+ * da rede (robots libera `/`; UA honesto) e reduzidas para 900 px de largura.
+ */
+export const cartas = [
+  {
+    ano: "2024",
+    titulo: "XXVIII Encontro Nacional — carta política",
+    local: "São Paulo",
+    imagem: "/img/galeria-renap/sp-2024.webp",
+    url: "https://www.renap.org.br/post/renap-divulga-a-carta-pol%C3%ADtica-do-seu-xviii-encontro-em-sp",
+  },
+  {
+    ano: "2023",
+    titulo: "Encontro de Rondônia — carta política",
+    local: "Rondônia",
+    imagem: "/img/galeria-renap/ro-2023.webp",
+    url: "https://www.renap.org.br/post/renap-divulga-carta-pol%C3%ADtica-do-encontro-de-rond%C3%B4nia",
+  },
+  {
+    ano: "2019",
+    titulo: "RENAP/RS debate a conjuntura sociopolítica",
+    local: "Rio Grande do Sul",
+    imagem: "/img/galeria-renap/rs-2019.webp",
+    url: "https://www.renap.org.br/post/renap-rs-re%C3%BAne-se-para-debater-a-conjuntura-sociopol%C3%ADtica",
+  },
+  {
+    ano: "2018",
+    titulo: "XXIII Encontro Nacional — carta política",
+    local: "Brasil",
+    imagem: "/img/galeria-renap/xxiii-2018.webp",
+    url: "https://www.renap.org.br/post/xxiii-encontro-nacional-da-renap-carta-pol%C3%ADtica",
+  },
+  {
+    ano: "2018",
+    titulo: "Encontro de Articulação — carta política",
+    local: "Brasil",
+    imagem: "/img/galeria-renap/articulacao-2018.webp",
+    url: "https://www.renap.org.br/post/carta-pol%C3%ADtica-do-encontro-de-articula%C3%A7%C3%A3o",
+  },
+] as const;

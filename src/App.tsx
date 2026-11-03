@@ -4,6 +4,7 @@ import { Hero } from "./components/Hero";
 import { PhotoDrift } from "./components/PhotoDrift";
 import {
   Case,
+  Cartas,
   Encounter,
   Footer,
   Homage,
@@ -73,6 +74,7 @@ export function App() {
         <Homage />
         <Encounter />
         <PhotoDrift reducedMotion={reducedMotion} />
+        <Cartas />
         <Program />
         <Registration />
         <Case />
