@@ -2,16 +2,22 @@
  * Página do XI Seminário Nacional Direitos, Pesquisa e Movimentos Sociais —
  * "Venas abiertas: pesquisas e insurgências na América Latina".
  *
- * Por que existe separada: o seminário do IPDMS tem identidade própria
- * (terracota sobre papel, do site institucional) e público próprio — pesquisa
- * e pós-graduação —, enquanto a página da RENAP é a peça de mobilização do 30º
- * Encontro. As duas se apontam: quem chega por uma encontra a outra.
+ * Por que existe separada: o seminário do IPDMS tem público próprio (pesquisa
+ * e pós-graduação), mas divide a mesma luta com o 30º Encontro da RENAP. As
+ * duas páginas se apontam: quem chega por uma encontra a outra.
  *
- * Fatos e links vêm da página oficial (ipdms.org.br/xi-sn-ipdms) e do
- * SIGEventos/UFPB. Nada de número inventado.
+ * Identidade: mesma família de cores e a mesma tipografia da página da RENAP
+ * (papel kraft, vermelho e amarelo), com a arte oficial do seminário — o punho
+ * saindo das raízes, sobre o sol — recortada do banner do IPDMS.
+ *
+ * Componentes: ElectricLogo (React Bits) nas duas marcas, ElectroBorder
+ * (Lightswind) nos cartões e Magnet (referência do React Bits) nos botões.
  */
 import { useEffect, useState } from "react";
 import "../../styles/seminario.css";
+import ElectricLogo from "../effects/ElectricLogo";
+import ElectroBorder from "../lightswind/electro-border";
+import { Magnet } from "./Magnet";
 
 const LINKS = {
   inscricao: "https://sigeventos.ufpb.br/eventos/public/evento/SNIPDMS",
@@ -26,6 +32,9 @@ const LINKS = {
 
 const PIX = "ipdmscorreio@gmail.com";
 const EMAIL = "ipdmscorreio@gmail.com";
+
+/** Vermelho da paleta (igual ao tema claro da página da RENAP). */
+const VERMELHO = "#bf2a26";
 
 const DIAS = [
   {
@@ -134,10 +143,12 @@ export function SeminarioPage() {
             <a href="#tres">Os três encontros</a>
           </nav>
 
-          <a className="xi-ponte" href="/">
-            <span>30º Encontro da RENAP</span>
-            <span aria-hidden="true">→</span>
-          </a>
+          <Magnet limite={6}>
+            <a className="xi-ponte" href="/">
+              <span>30º Encontro da RENAP</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </Magnet>
 
           <button
             type="button"
@@ -164,35 +175,84 @@ export function SeminarioPage() {
       <main id="xi-conteudo">
         <section className="xi-hero" id="topo" aria-labelledby="xi-titulo">
           <Veias className="xi-hero__veias" />
-          <div className="xi-casca">
-            <p className="xi-kicker">
-              XI Seminário Nacional Direitos, Pesquisa e Movimentos Sociais
-            </p>
-            <h1 id="xi-titulo" className="xi-hero__titulo">
-              Venas
-              <br />
-              abiertas
-            </h1>
-            <p className="xi-hero__tema">
-              pesquisas e insurgências na América Latina
-            </p>
-            <p className="xi-hero__meta">
-              11 a 14 de novembro de 2026 · UFPB · João Pessoa/PB
-            </p>
+          <div className="xi-casca xi-hero__grade">
+            <div className="xi-hero__texto">
+              <p className="xi-kicker">
+                XI Seminário Nacional Direitos, Pesquisa e Movimentos Sociais
+              </p>
+              <h1 id="xi-titulo" className="xi-hero__titulo">
+                Venas
+                <br />
+                abiertas
+              </h1>
+              <p className="xi-hero__tema">
+                pesquisas e insurgências na América Latina
+              </p>
+              <p className="xi-hero__meta">
+                11 a 14 de novembro de 2026 · UFPB · João Pessoa/PB
+              </p>
 
-            <div className="xi-hero__acoes">
-              <a className="xi-btn xi-btn--cheio" href={LINKS.inscricao} target="_blank" rel="noopener noreferrer">
-                Inscreva-se
-              </a>
-              <a className="xi-btn" href={LINKS.programacao} target="_blank" rel="noopener noreferrer">
-                Programação completa
-              </a>
+              <div className="xi-hero__acoes">
+                <Magnet>
+                  <a
+                    className="xi-btn xi-btn--cheio"
+                    href={LINKS.inscricao}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Inscreva-se
+                  </a>
+                </Magnet>
+                <Magnet>
+                  <a
+                    className="xi-btn"
+                    href={LINKS.programacao}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Programação completa
+                  </a>
+                </Magnet>
+              </div>
+
+              <p className="xi-hero__nota">
+                Inscrições até 6 de novembro de 2026. O seminário acontece junto
+                ao 30º Encontro da RENAP e ao 20º Encontro da RENAJU.
+              </p>
             </div>
 
-            <p className="xi-hero__nota">
-              Inscrições até 6 de novembro de 2026. O seminário acontece junto ao
-              30º Encontro da RENAP e ao 20º Encontro da RENAJU.
-            </p>
+            {/* Arte oficial: o punho saindo das raízes, sobre o sol. A base é a
+                imagem recortada do banner; o contorno elétrico vem por cima. */}
+            <div className="xi-hero__arte">
+              <div className="xi-hero__marca">
+                <ElectricLogo
+                  src="/img/ipdms-logo.png"
+                  className="xi-logo-electrico"
+                  color={VERMELHO}
+                  glowColor={VERMELHO}
+                  theme="dark"
+                  scale={1}
+                  intensity={0.9}
+                  glow={0}
+                  thickness={0.8}
+                  strands={1}
+                  bend={0.35}
+                  crackle={0.8}
+                  fill={0}
+                  flicker={0.4}
+                  speed={0.45}
+                />
+              </div>
+
+              <div className="xi-hero__raizes">
+                <img
+                  src="/img/xi-raizes.png"
+                  alt="Punho erguido saindo de raízes, sobre o sol — arte do XI Seminário"
+                  width="568"
+                  height="477"
+                />
+              </div>
+            </div>
           </div>
         </section>
 
@@ -312,9 +372,16 @@ export function SeminarioPage() {
                 <a href={`mailto:${EMAIL}`}>{EMAIL}</a>. Este site não processa
                 pagamentos nem guarda seus dados.
               </p>
-              <a className="xi-btn xi-btn--cheio" href={LINKS.inscricao} target="_blank" rel="noopener noreferrer">
-                Ir para o SIGEventos
-              </a>
+              <Magnet>
+                <a
+                  className="xi-btn xi-btn--cheio"
+                  href={LINKS.inscricao}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ir para o SIGEventos
+                </a>
+              </Magnet>
             </div>
           </div>
         </section>
@@ -329,39 +396,70 @@ export function SeminarioPage() {
             </h2>
 
             <div className="xi-cards">
-              <article className="xi-card">
-                <span className="xi-card__num">XI</span>
-                <h3>IPDMS</h3>
-                <p>
-                  Seminário Nacional Direitos, Pesquisa e Movimentos Sociais —
-                  Venas abiertas.
-                </p>
-                <a href={LINKS.ipdms} target="_blank" rel="noopener noreferrer">
-                  Site do IPDMS ↗
-                </a>
-              </article>
+              <ElectroBorder
+                className="xi-card"
+                borderColor={VERMELHO}
+                radius="10px"
+                borderWidth={2}
+                cardBackground="var(--xi-branco)"
+                glowBlur={22}
+              >
+                <div className="xi-card__interior">
+                  <span className="xi-card__num">XI</span>
+                  <h3>IPDMS</h3>
+                  <p>
+                    Seminário Nacional Direitos, Pesquisa e Movimentos Sociais —
+                    Venas abiertas.
+                  </p>
+                  <a href={LINKS.ipdms} target="_blank" rel="noopener noreferrer">
+                    Site do IPDMS ↗
+                  </a>
+                </div>
+              </ElectroBorder>
 
-              <article className="xi-card xi-card--destaque">
-                <span className="xi-card__num">30º</span>
-                <h3>RENAP</h3>
-                <p>
-                  Encontro Nacional da Rede Nacional de Advogadas e Advogados
-                  Populares — Lenir Correia Livre.
-                </p>
-                <a href="/">Ver a página do encontro →</a>
-              </article>
+              <ElectroBorder
+                className="xi-card xi-card--destaque"
+                borderColor="#d63b32"
+                radius="10px"
+                borderWidth={2}
+                cardBackground="color-mix(in srgb, #d63b32 7%, var(--xi-branco))"
+                glowBlur={26}
+              >
+                <div className="xi-card__interior">
+                  <span className="xi-card__num">30º</span>
+                  <h3>RENAP</h3>
+                  <p>
+                    Encontro Nacional da Rede Nacional de Advogadas e Advogados
+                    Populares — Lenir Correia Livre.
+                  </p>
+                  <a href="/">Ver a página do encontro →</a>
+                </div>
+              </ElectroBorder>
 
-              <article className="xi-card">
-                <span className="xi-card__num">20º</span>
-                <h3>RENAJU</h3>
-                <p>
-                  Encontro Nacional da Rede Nacional de Assessoria Jurídica
-                  Universitária — Memórias e dilemas renajupianos.
-                </p>
-                <a href="https://www.instagram.com/ajupsbrasil/" target="_blank" rel="noopener noreferrer">
-                  @ajupsbrasil ↗
-                </a>
-              </article>
+              <ElectroBorder
+                className="xi-card"
+                borderColor={VERMELHO}
+                radius="10px"
+                borderWidth={2}
+                cardBackground="var(--xi-branco)"
+                glowBlur={22}
+              >
+                <div className="xi-card__interior">
+                  <span className="xi-card__num">20º</span>
+                  <h3>RENAJU</h3>
+                  <p>
+                    Encontro Nacional da Rede Nacional de Assessoria Jurídica
+                    Universitária — Memórias e dilemas renajupianos.
+                  </p>
+                  <a
+                    href="https://www.instagram.com/ajupsbrasil/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    @ajupsbrasil ↗
+                  </a>
+                </div>
+              </ElectroBorder>
             </div>
           </div>
         </section>
@@ -376,12 +474,14 @@ export function SeminarioPage() {
                 Campus I.
               </h2>
               <p className="xi-texto">
-                Universidade Federal da Paraíba, Campus I — João Pessoa/PB.
-                A sala de cada atividade é divulgada pela organização.
+                Universidade Federal da Paraíba, Campus I — João Pessoa/PB. A
+                sala de cada atividade é divulgada pela organização.
               </p>
-              <a className="xi-btn" href={LINKS.mapa} target="_blank" rel="noopener noreferrer">
-                Abrir no mapa
-              </a>
+              <Magnet>
+                <a className="xi-btn" href={LINKS.mapa} target="_blank" rel="noopener noreferrer">
+                  Abrir no mapa
+                </a>
+              </Magnet>
             </div>
             <div className="xi-contato">
               <p className="xi-rotulo">Contato</p>
@@ -405,9 +505,7 @@ export function SeminarioPage() {
 
       <footer className="xi-rodape">
         <div className="xi-casca xi-rodape__linha">
-          <p>
-            XI Seminário Direitos, Pesquisa e Movimentos Sociais · IPDMS · 2026
-          </p>
+          <p>XI Seminário Direitos, Pesquisa e Movimentos Sociais · IPDMS · 2026</p>
           <p className="xi-rodape__ponte">
             Este site também publica o{" "}
             <a href="/">30º Encontro Nacional da RENAP</a>.

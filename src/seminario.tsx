@@ -1,6 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { SeminarioPage } from "./components/seminario/SeminarioPage";
+// As utilitárias do Tailwind existem por causa dos componentes oficiais
+// (ElectroBorder usa `absolute`, `inset-0`, etc.). Sem este import, as camadas
+// da moldura caem no fluxo e o cartão abre um vão em branco.
+import "./styles/tailwind.css";
 
 /**
  * Entrada da página do XI Seminário do IPDMS (seminario.html).

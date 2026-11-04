@@ -1,28 +1,30 @@
 /* ==========================================================================
    XI Seminário do IPDMS — "Venas abiertas"
-   Identidade do site institucional do IPDMS: terracota (#9e3f00) sobre papel
-   claro, com o motivo das veias. Deliberadamente diferente do kraft escuro da
-   página da RENAP: são dois eventos, dois públicos, uma mesma luta.
+   Mesma família de cores e a mesma tipografia da página do 30º Encontro da
+   RENAP (papel kraft, vermelho, amarelo), para as duas páginas serem irmãs.
+   A arte oficial do seminário — punho saindo das raízes, sobre o sol — vem
+   recortada do banner do IPDMS.
    ========================================================================== */
 
 :root {
-  --xi-papel: #f6f1e7;
-  --xi-papel-2: #efe7d8;
-  --xi-branco: #fffdf8;
-  --xi-tinta: #241a12;
-  --xi-tinta-suave: #5a4a3c;
-  --xi-tinta-fraca: #8a7767;
-  --xi-terra: #9e3f00;
-  --xi-terra-claro: #c2622300;
-  --xi-teal: #0a8f86;
-  --xi-linha: #ddcdb6;
-  --xi-linha-forte: #c7b294;
+  /* Paleta espelhada no tema claro da página da RENAP. */
+  --xi-papel: #e9dfc6;
+  --xi-papel-2: #e2d6b9;
+  --xi-branco: #f3ead6;
+  --xi-tinta: #2a2521;
+  --xi-tinta-suave: #4a423a;
+  --xi-tinta-fraca: #6d6153;
+  --xi-terra: #bf2a26;
+  --xi-terra-forte: #93201c;
+  --xi-amarelo: #d98f2a;
+  --xi-linha: #c2b193;
+  --xi-linha-forte: #b09c7b;
 
   --xi-display: "Clash Display", "Arial Narrow", system-ui, sans-serif;
   --xi-corpo: "General Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --xi-dados: "Tabular", ui-monospace, monospace;
 
-  --xi-casca: 1120px;
+  --xi-casca: 1180px;
   --xi-goteira: clamp(1.1rem, 4vw, 2.6rem);
 }
 
@@ -77,8 +79,9 @@ a:hover {
   left: 1rem;
   z-index: 100;
   padding: 0.6rem 1rem;
+  border-radius: 100px;
   background: var(--xi-terra);
-  color: #fff;
+  color: #fff4e2;
   font-family: var(--xi-dados);
   font-size: 0.72rem;
   text-transform: uppercase;
@@ -121,10 +124,10 @@ a:hover {
   height: 2.2rem;
   border-radius: 50%;
   background: var(--xi-terra);
-  color: #fff8ec;
+  color: #fff4e2;
   font-family: var(--xi-display);
   font-size: 0.86rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.02em;
 }
 
@@ -137,6 +140,7 @@ a:hover {
 .xi-marca__texto strong {
   font-family: var(--xi-display);
   font-size: 0.98rem;
+  font-weight: 600;
   letter-spacing: 0.01em;
 }
 
@@ -186,7 +190,7 @@ a:hover {
 
 .xi-ponte:hover {
   background: var(--xi-terra);
-  color: #fff8ec;
+  color: #fff4e2;
   text-decoration: none;
 }
 
@@ -219,23 +223,30 @@ a:hover {
 .xi-hero {
   position: relative;
   overflow: hidden;
-  padding-block: clamp(2.6rem, 7vw, 5.2rem) clamp(2rem, 5vw, 3.4rem);
+  padding-block: clamp(2.4rem, 5vw, 4.2rem) clamp(2rem, 4vw, 3rem);
   background:
-    radial-gradient(120% 90% at 90% -10%, rgba(158, 63, 0, 0.14), transparent 60%),
+    radial-gradient(120% 90% at 92% -12%, rgba(191, 42, 38, 0.12), transparent 62%),
     var(--xi-papel);
 }
 
 .xi-hero__veias {
   position: absolute;
   inset: -8% -10% auto auto;
-  width: min(46rem, 78vw);
+  width: min(44rem, 74vw);
   color: var(--xi-terra);
-  opacity: 0.16;
+  opacity: 0.14;
   pointer-events: none;
 }
 
-.xi-kicker {
+.xi-hero__grade {
   position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(1.4rem, 4vw, 3rem);
+  align-items: center;
+}
+
+.xi-kicker {
   margin: 0 0 0.9rem;
   font-family: var(--xi-dados);
   font-size: 0.72rem;
@@ -246,10 +257,9 @@ a:hover {
 }
 
 .xi-hero__titulo {
-  position: relative;
   margin: 0;
   font-family: var(--xi-display);
-  font-size: clamp(3.4rem, 12vw, 8.2rem);
+  font-size: clamp(3.5rem, 9.4vw, 122px);
   font-weight: 700;
   line-height: 0.82;
   letter-spacing: -0.045em;
@@ -258,18 +268,16 @@ a:hover {
 }
 
 .xi-hero__tema {
-  position: relative;
   margin: 0.5rem 0 0;
   max-width: 26ch;
   font-family: var(--xi-display);
-  font-size: clamp(1.15rem, 2.4vw, 1.8rem);
+  font-size: clamp(1.15rem, 2.4vw, 1.7rem);
   font-weight: 600;
   line-height: 1.1;
   color: var(--xi-tinta);
 }
 
 .xi-hero__meta {
-  position: relative;
   margin: 1.1rem 0 0;
   font-family: var(--xi-dados);
   font-size: 0.8rem;
@@ -280,7 +288,6 @@ a:hover {
 }
 
 .xi-hero__acoes {
-  position: relative;
   display: flex;
   flex-wrap: wrap;
   gap: 0.7rem;
@@ -288,20 +295,71 @@ a:hover {
 }
 
 .xi-hero__nota {
-  position: relative;
   margin: 1rem 0 0;
   max-width: 44rem;
   font-size: 0.92rem;
   color: var(--xi-tinta-suave);
 }
 
+/* arte do seminário: punho + raízes + sol */
+.xi-hero__arte {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.xi-hero__marca {
+  position: relative;
+  width: clamp(7rem, 15vw, 10rem);
+  aspect-ratio: 344 / 293;
+  align-self: flex-end;
+  margin-right: clamp(0.5rem, 3vw, 2.4rem);
+}
+
+.xi-logo-electrico {
+  width: 100%;
+  height: 100%;
+}
+
+.xi-hero__raizes {
+  position: relative;
+  width: 100%;
+  max-width: 30rem;
+  aspect-ratio: 568 / 477;
+}
+
+.xi-hero__raizes img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.xi-raizes-electrico {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* ---------- botões ---------- */
+
+.magnet {
+  display: inline-flex;
+  transition: transform 0.25s var(--xi-mola, cubic-bezier(0.22, 0.61, 0.36, 1));
+}
+
 .xi-btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   min-height: 2.9rem;
-  padding: 0.7rem 1.3rem;
+  padding: 0.7rem 1.35rem;
   border: 1px solid var(--xi-terra);
   border-radius: 100px;
   font-family: var(--xi-dados);
@@ -311,20 +369,52 @@ a:hover {
   text-transform: uppercase;
   color: var(--xi-terra);
   cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .xi-btn:hover {
-  background: color-mix(in srgb, var(--xi-terra) 10%, transparent);
+  background: color-mix(in srgb, var(--xi-terra) 12%, transparent);
   text-decoration: none;
 }
 
 .xi-btn--cheio {
   background: var(--xi-terra);
-  color: #fff8ec;
+  color: #fff4e2;
 }
 
 .xi-btn--cheio:hover {
-  background: #7f3200;
+  background: var(--xi-terra-forte);
+}
+
+/* Pulso: hierarquia do botão principal, só no hover/foco. */
+.xi-btn--cheio::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid var(--xi-terra);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.xi-btn--cheio:hover::after,
+.xi-btn--cheio:focus-visible::after {
+  animation: xi-pulso 1.4s ease-out infinite;
+}
+
+@keyframes xi-pulso {
+  0% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(1.18);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.18);
+  }
 }
 
 /* ---------- seções ---------- */
@@ -351,10 +441,10 @@ a:hover {
 .xi-h2 {
   margin: 0 0 1.2rem;
   font-family: var(--xi-display);
-  font-size: clamp(1.9rem, 4.6vw, 3.2rem);
+  font-size: clamp(2.2rem, 5.6vw, 67px);
   font-weight: 600;
-  line-height: 0.95;
-  letter-spacing: -0.02em;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
   color: var(--xi-terra);
 }
@@ -490,7 +580,7 @@ a:hover {
   margin: 0;
   padding: 0.8rem 1rem;
   border: 1px dashed var(--xi-linha-forte);
-  border-radius: 4px;
+  border-radius: 6px;
   background: var(--xi-branco);
 }
 
@@ -543,7 +633,7 @@ a:hover {
   color: var(--xi-tinta-suave);
 }
 
-/* ---------- três encontros ---------- */
+/* ---------- três encontros (ElectroBorder) ---------- */
 
 .xi-cards {
   display: grid;
@@ -552,18 +642,23 @@ a:hover {
   margin-top: 1.4rem;
 }
 
+/* O ElectroBorder é a moldura: padding de 2 px, sem borda própria. */
 .xi-card {
+  height: 100%;
+}
+
+.xi-card__interior {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  height: 100%;
   padding: 1.2rem;
-  border: 1px solid var(--xi-linha-forte);
+  border-radius: 9px;
   background: var(--xi-branco);
 }
 
-.xi-card--destaque {
-  border-color: var(--xi-terra);
-  background: color-mix(in srgb, var(--xi-terra) 6%, var(--xi-branco));
+.xi-card--destaque .xi-card__interior {
+  background: color-mix(in srgb, var(--xi-terra) 8%, var(--xi-branco));
 }
 
 .xi-card__num {
@@ -597,6 +692,8 @@ a:hover {
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+
+/* ---------- contato ---------- */
 
 .xi-contato p {
   margin: 0 0 0.5rem;
@@ -666,8 +763,18 @@ a:hover {
     color: var(--xi-tinta);
   }
 
+  .xi-hero__grade,
   .xi-grade2 {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .xi-hero__arte {
+    margin-top: 0.6rem;
+  }
+
+  .xi-hero__marca {
+    align-self: center;
+    margin-right: 0;
   }
 
   .xi-dias {
@@ -678,5 +785,14 @@ a:hover {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .magnet {
+    transition: none;
+  }
+
+  .xi-btn--cheio:hover::after,
+  .xi-btn--cheio:focus-visible::after {
+    animation: none;
   }
 }
