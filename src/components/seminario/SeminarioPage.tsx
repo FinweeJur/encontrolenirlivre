@@ -36,6 +36,9 @@ const EMAIL = "ipdmscorreio@gmail.com";
 /** Vermelho da paleta (igual ao tema claro da página da RENAP). */
 const VERMELHO = "#bf2a26";
 
+/** Este site vive em domínio próprio; a página da RENAP aponta de volta. */
+const URL_RENAP = "https://encontrolenirlivre.pages.dev/";
+
 const DIAS = [
   {
     dia: "11/11",
@@ -144,7 +147,7 @@ export function SeminarioPage() {
           </nav>
 
           <Magnet limite={6}>
-            <a className="xi-ponte" href="/">
+            <a className="xi-ponte" href={URL_RENAP}>
               <span>30º Encontro da RENAP</span>
               <span aria-hidden="true">→</span>
             </a>
@@ -168,7 +171,7 @@ export function SeminarioPage() {
           <a href="#programacao" onClick={() => setMenuAberto(false)}>Programação</a>
           <a href="#inscricoes" onClick={() => setMenuAberto(false)}>Inscrições</a>
           <a href="#tres" onClick={() => setMenuAberto(false)}>Os três encontros</a>
-          <a href="/" onClick={() => setMenuAberto(false)}>30º Encontro da RENAP →</a>
+          <a href={URL_RENAP} onClick={() => setMenuAberto(false)}>30º Encontro da RENAP →</a>
         </div>
       </header>
 
@@ -432,7 +435,7 @@ export function SeminarioPage() {
                     Encontro Nacional da Rede Nacional de Advogadas e Advogados
                     Populares — Lenir Correia Livre.
                   </p>
-                  <a href="/">Ver a página do encontro →</a>
+                  <a href={URL_RENAP}>Ver a página do encontro →</a>
                 </div>
               </ElectroBorder>
 
@@ -508,7 +511,7 @@ export function SeminarioPage() {
           <p>XI Seminário Direitos, Pesquisa e Movimentos Sociais · IPDMS · 2026</p>
           <p className="xi-rodape__ponte">
             Este site também publica o{" "}
-            <a href="/">30º Encontro Nacional da RENAP</a>.
+            <a href={URL_RENAP}>30º Encontro Nacional da RENAP</a>.
           </p>
         </div>
       </footer>

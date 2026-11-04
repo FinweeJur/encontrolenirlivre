@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { cartas, evento, faq, organizacoes, programacao } from "../content/evento";
+
+/** Site proprio do seminario do IPDMS (projeto Cloudflare Pages separado). */
+const URL_XI = "https://seminariovenasabiertas.pages.dev/";
 import { Arrow, Spark } from "./Motifs";
 import { LayoutGrid, ScrollStar } from "./effects/Extras";
 import ElectroBorder from "./lightswind/electro-border";
@@ -227,7 +230,7 @@ export function Encounter() {
 
         {/* Ponte entre as duas páginas: o seminário tem identidade própria. */}
         <p className="encounter__ponte">
-          A página do <a href="/seminario">XI Seminário do IPDMS</a> também está
+          A página do <a href={URL_XI}>XI Seminário do IPDMS</a> também está
           neste site.
         </p>
 
@@ -731,7 +734,7 @@ export function Footer() {
             <a href={evento.links.ipdms} target="_blank" rel="noopener noreferrer">
               Editais e site do IPDMS
             </a>
-            <a href="/seminario">Página do XI Seminário do IPDMS</a>
+            <a href={URL_XI}>Página do XI Seminário do IPDMS</a>
           </nav>
 
           <div className="footer__orgs">

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:seminario": "npm run build && node scripts/build-seminario.mjs",
     "preview": "vite preview",
     "images": "node scripts/prepare-images.mjs"
   },
