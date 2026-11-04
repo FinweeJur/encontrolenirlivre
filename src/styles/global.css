@@ -181,8 +181,29 @@ h4 {
   font-weight: 600;
   line-height: 0.92;
   letter-spacing: -0.028em;
+  /* O arquivo da Clash Display veio com o espaço em branco sem avanço:
+     sem este ajuste as palavras grudam ("O QUEESTÁPUBLICADO"). */
+  word-spacing: 0.12em;
   text-transform: uppercase;
   margin: 0;
+}
+
+/* Peças fora de h1–h4 que também usam a fonte de título. */
+.mobile-menu a,
+.marquee__track span,
+.hero__facts span,
+.hero__30,
+.homage__quote blockquote,
+.encounter__num,
+.lockup__num,
+.program__tab span,
+.deadline span,
+.values td,
+.org__sigla,
+.contact a,
+.vozes__ordem,
+.footer__huge {
+  word-spacing: 0.12em;
 }
 
 p {
@@ -1206,6 +1227,7 @@ html[data-theme="light"] .hero__sun {
   line-height: 0.98;
   text-transform: uppercase;
   letter-spacing: -0.02em;
+  text-wrap: balance;
   color: var(--ink);
 }
 
@@ -2760,213 +2782,6 @@ html[data-theme="light"] .encounter__anel {
   }
 }
 
-/* ---------- ferramentas de página (speed dial, busca, rádio) ---------- */
-
-/* Bandeja: um botão só; as ações saem em leque (ExpandableSpeedDial). */
-.tools-dock {
-  position: fixed;
-  right: 1rem;
-  bottom: max(1.25rem, env(safe-area-inset-bottom));
-  z-index: 45;
-}
-
-.tools-dock button {
-  color: var(--ink);
-}
-
-/* ---------- busca ---------- */
-
-.busca-fundo {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 5.5rem 1rem 1rem;
-  background: color-mix(in srgb, var(--paper) 55%, transparent);
-  backdrop-filter: blur(3px);
-}
-
-.busca {
-  width: min(42rem, 100%);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: var(--paper);
-  box-shadow: var(--shadow);
-  padding: 0.85rem;
-  animation: busca-abre 0.18s var(--ease);
-}
-
-@keyframes busca-abre {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-}
-
-.busca__topo {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0 0.35rem 0 0.7rem;
-  border: 1px solid var(--line);
-  border-radius: 100px;
-  background: var(--paper-2);
-}
-
-.busca__lupa,
-.busca__fechar svg {
-  width: 1.05rem;
-  height: 1.05rem;
-  flex: none;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.7;
-  stroke-linecap: round;
-}
-
-.busca__lupa {
-  color: var(--ink-mute);
-}
-
-.busca__input {
-  flex: 1;
-  min-width: 0;
-  padding: 0.7rem 0;
-  border: 0;
-  background: transparent;
-  color: var(--ink);
-  font-family: var(--body);
-  font-size: 1rem;
-}
-
-.busca__input:focus {
-  outline: none;
-}
-
-.busca__fechar {
-  display: grid;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--ink-mute);
-  cursor: pointer;
-}
-
-.busca__fechar:hover {
-  color: var(--red);
-}
-
-.busca__dica {
-  margin: 0.55rem 0 0;
-  font-family: var(--data);
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-  color: var(--ink-mute);
-}
-
-.busca__lista {
-  list-style: none;
-  margin: 0.5rem 0 0;
-  padding: 0;
-  max-height: min(52vh, 22rem);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-
-.busca__item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  width: 100%;
-  padding: 0.55rem 0.6rem;
-  border: 0;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--ink);
-  text-align: left;
-  cursor: pointer;
-}
-
-.busca__item.is-ativo,
-.busca__item:hover {
-  background: var(--paper-2);
-}
-
-.busca__secao {
-  font-family: var(--data);
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--red);
-}
-
-.busca__texto {
-  font-size: 0.9rem;
-  color: var(--ink-soft);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-@keyframes alvo-busca {
-  0%,
-  100% {
-    outline-color: transparent;
-  }
-  20%,
-  70% {
-    outline-color: var(--red);
-  }
-}
-
-main section.is-alvo-busca {
-  outline: 2px solid var(--red);
-  outline-offset: -4px;
-  animation: alvo-busca 2.2s var(--ease);
-}
-
-/* ---------- rádio ---------- */
-
-.radio-caixa {
-  position: fixed;
-  right: 1rem;
-  bottom: calc(max(1.25rem, env(safe-area-inset-bottom)) + 3.8rem);
-  z-index: 44;
-  display: flex;
-  justify-content: flex-end;
-}
-
-/* Fundo próprio e opaco: o painel não pode deixar o texto da página aparecer. */
-.radio-painel {
-  background: var(--paper);
-  color: var(--ink);
-  border-color: var(--line);
-}
-
-.radio-painel .bg-primary\/10 {
-  background: color-mix(in srgb, var(--red) 12%, var(--paper));
-}
-
-/* volume do player de rádio (linha horizontal no rodapé do painel) */
-
-.ecnl-volume {
-  flex: 1;
-  min-width: 0;
-  height: 1.1rem;
-  margin: 0;
-  accent-color: var(--red);
-  background: transparent;
-  cursor: pointer;
-}
-
 /* ---------- cursor elétrico ---------- */
 
 .cursor-eletrico {
@@ -2983,22 +2798,6 @@ main section.is-alvo-busca {
 @media (hover: none), (pointer: coarse) {
   .cursor-eletrico {
     display: none;
-  }
-}
-
-/* Tela pequena: a bandeja sobe para não brigar com o CTA fixo. */
-@media (max-width: 640px) {
-  .tools-dock {
-    bottom: calc(4.6rem + env(safe-area-inset-bottom));
-  }
-
-  .radio-caixa {
-    right: 0.5rem;
-    bottom: calc(4.6rem + env(safe-area-inset-bottom) + 3.8rem);
-  }
-
-  .busca-fundo {
-    padding-top: 4.5rem;
   }
 }
 

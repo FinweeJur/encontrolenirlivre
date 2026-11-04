@@ -49,6 +49,7 @@ export function Header({
 
         <nav className="nav" aria-label="Navegação principal">
           <a href="#encontro">O encontro</a>
+          <a href="#editais">Editais</a>
           <a href="#lenir">Lenir</a>
           <a href="#fotos">Fotos</a>
           <a href="#programacao">Programação</a>
@@ -116,6 +117,7 @@ export function Header({
       <div id="menu-mobile" className={`mobile-menu${open ? " is-open" : ""}`}>
         <nav aria-label="Navegação móvel">
           <a href="#encontro" onClick={close}>O encontro</a>
+          <a href="#editais" onClick={close}>Editais</a>
           <a href="#lenir" onClick={close}>Lenir Correia Livre</a>
           <a href="#fotos" onClick={close}>Fotos</a>
           <a href="#programacao" onClick={close}>Programação</a>

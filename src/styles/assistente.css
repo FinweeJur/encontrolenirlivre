@@ -1,0 +1,326 @@
+/* ==========================================================================
+   Assistente do encontro — bolha, painel e mensagens.
+   Compartilhado pelas duas páginas. Só usa tokens de tema, então funciona
+   no papel kraft (seminário) e no escuro/claro da RENAP.
+   ========================================================================== */
+
+.assistente__bolha {
+  position: fixed;
+  left: 1rem;
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  z-index: 46;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 3rem;
+  padding: 0 1rem 0 0.85rem;
+  border: 0;
+  border-radius: 100px;
+  background: var(--red);
+  color: #fdf3de;
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.55);
+  transition: transform 0.2s var(--ease, ease), background-color 0.2s;
+}
+
+.assistente__bolha:hover {
+  transform: translateY(-2px);
+  background: var(--red-deep, var(--red));
+}
+
+.assistente__bolha svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.assistente__bolha.is-aberta .assistente__bolha-texto {
+  display: none;
+}
+
+.assistente__bolha.is-aberta {
+  width: 3rem;
+  padding: 0;
+  justify-content: center;
+}
+
+/* ---------- painel ---------- */
+
+.assistente {
+  position: fixed;
+  left: 1rem;
+  bottom: calc(max(1.25rem, env(safe-area-inset-bottom)) + 3.7rem);
+  z-index: 46;
+  display: none;
+  flex-direction: column;
+  width: min(24rem, calc(100vw - 2rem));
+  max-height: min(34rem, calc(100vh - 8rem));
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg, 14px);
+  box-shadow: var(--shadow, 0 24px 60px -30px rgba(0, 0, 0, 0.7));
+}
+
+/* O Tailwind está sem preflight nesta página: caixa de borda na mão. */
+.assistente,
+.assistente * {
+  box-sizing: border-box;
+}
+
+.assistente.is-aberto {
+  display: flex;
+}
+
+.assistente__topo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.8rem 0.9rem 0.6rem;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper-2, var(--paper)) 70%, var(--paper));
+}
+
+.assistente__rotulo {
+  margin: 0 0 0.15rem;
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.assistente__titulo {
+  margin: 0;
+  font-family: var(--display, Georgia, serif);
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.assistente__fechar {
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink-soft, var(--ink));
+  cursor: pointer;
+}
+
+.assistente__fechar:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.assistente__fechar svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+/* ---------- conversa ---------- */
+
+.assistente__conversa {
+  flex: 1;
+  min-height: 10rem;
+  padding: 0.85rem 0.9rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  scrollbar-width: thin;
+}
+
+.assistente__inicio p {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--ink-mute, var(--ink-soft));
+}
+
+.assistente__msg {
+  max-width: 88%;
+  margin: 0;
+  padding: 0.5rem 0.65rem;
+  border-radius: 10px;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.assistente__msg--user {
+  align-self: flex-end;
+  background: var(--red);
+  color: #fdf3de;
+  border-bottom-right-radius: 3px;
+}
+
+.assistente__msg--assistente {
+  align-self: flex-start;
+  background: color-mix(in srgb, var(--ink) 7%, var(--paper));
+  color: var(--ink);
+  border-bottom-left-radius: 3px;
+}
+
+.assistente__msg--pensando {
+  color: var(--ink-mute, var(--ink-soft));
+  font-style: italic;
+}
+
+.assistente__msg a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---------- sugestões ---------- */
+
+.assistente__sugestoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0 0.9rem 0.7rem;
+}
+
+.assistente__sugestoes button {
+  padding: 0.3rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--ink-soft, var(--ink));
+  font-family: var(--body, inherit);
+  font-size: 0.74rem;
+  line-height: 1.2;
+  text-align: left;
+  cursor: pointer;
+}
+
+.assistente__sugestoes button:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* ---------- formulário ---------- */
+
+.assistente__form {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.4rem;
+  padding: 0.65rem 0.7rem 0.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.assistente__form textarea {
+  flex: 1;
+  min-width: 0;
+  resize: none;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--paper-2, var(--paper));
+  color: var(--ink);
+  font-family: var(--body, inherit);
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+.assistente__form textarea:focus {
+  outline: 2px solid color-mix(in srgb, var(--red) 55%, transparent);
+  outline-offset: 1px;
+  border-color: var(--red);
+}
+
+.assistente__enviar {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: none;
+  border: 0;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fdf3de;
+  cursor: pointer;
+}
+
+.assistente__enviar:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.assistente__enviar svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.assistente__pe {
+  margin: 0;
+  padding: 0 0.9rem 0.7rem;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  color: var(--ink-mute, var(--ink-soft));
+}
+
+.assistente__pe a {
+  color: var(--red);
+  border-bottom: 1px solid color-mix(in srgb, var(--red) 45%, transparent);
+}
+
+.assistente__oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- telas pequenas: sobe acima do CTA fixo ---------- */
+
+@media (max-width: 640px) {
+  .assistente__bolha {
+    bottom: calc(4.6rem + env(safe-area-inset-bottom));
+  }
+
+  .assistente {
+    left: 0.5rem;
+    width: calc(100vw - 1rem);
+    bottom: calc(4.6rem + env(safe-area-inset-bottom) + 3.5rem);
+    max-height: calc(100vh - 11rem);
+    max-height: calc(100dvh - 11rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .assistente__bolha {
+    transition: none;
+  }
+}

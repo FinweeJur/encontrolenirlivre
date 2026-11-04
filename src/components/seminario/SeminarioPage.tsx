@@ -2,21 +2,24 @@
  * Página do XI Seminário Nacional Direitos, Pesquisa e Movimentos Sociais —
  * "Venas abiertas: pesquisas e insurgências na América Latina".
  *
- * Por que existe separada: o seminário do IPDMS tem público próprio (pesquisa
- * e pós-graduação), mas divide a mesma luta com o 30º Encontro da RENAP. As
- * duas páginas se apontam: quem chega por uma encontra a outra.
+ * Mesma estrutura e as mesmas opções da página do 30º Encontro da RENAP:
+ * barra fixa com busca e tema, menu móvel, bandeja de ferramentas (busca,
+ * rádio, texto maior, rolagem), player de rádio com Brasil de Fato como
+ * padrão e rodapé completo. O que muda é a identidade: papel kraft com a arte
+ * oficial do seminário — o punho saindo das raízes, sobre o sol.
  *
- * Identidade: mesma família de cores e a mesma tipografia da página da RENAP
- * (papel kraft, vermelho e amarelo), com a arte oficial do seminário — o punho
- * saindo das raízes, sobre o sol — recortada do banner do IPDMS.
- *
- * Componentes: ElectricLogo (React Bits) nas duas marcas, ElectroBorder
- * (Lightswind) nos cartões e Magnet (referência do React Bits) nos botões.
+ * Fontes (Fontshare): Zodiak nos títulos e Satoshi no texto, como pedido.
  */
 import { useEffect, useState } from "react";
 import "../../styles/seminario.css";
 import ElectricLogo from "../effects/ElectricLogo";
 import ElectroBorder from "../lightswind/electro-border";
+import { SearchPanel, pedirBusca } from "../SearchPanel";
+import { ToolsDock } from "../ToolsDock";
+import { PlayerRadio } from "../radio/PlayerRadio";
+import { Editais } from "../Editais";
+import { Assistente } from "../Assistente";
+import { programacao } from "../../content/evento";
 import { Magnet } from "./Magnet";
 
 const LINKS = {
@@ -27,6 +30,7 @@ const LINKS = {
   trabalhos:
     "https://ipdms.org.br/wp-content/uploads/2026/07/Trabalhos-Aprovados-1.pdf",
   ipdms: "https://ipdms.org.br/",
+  renaju: "https://www.instagram.com/ajupsbrasil/",
   mapa: "https://www.google.com/maps/search/?api=1&query=Universidade+Federal+da+Para%C3%ADba+Campus+I",
 };
 
@@ -38,46 +42,6 @@ const VERMELHO = "#bf2a26";
 
 /** Este site vive em domínio próprio; a página da RENAP aponta de volta. */
 const URL_RENAP = "https://encontrolenirlivre.pages.dev/";
-
-const DIAS = [
-  {
-    dia: "11/11",
-    rotulo: "quarta",
-    itens: [
-      ["12h", "Abertura do credenciamento"],
-      ["13h", "Apresentação dos trabalhos (Grupos de Discussão)"],
-      ["18h", "Mesa de abertura: “Venas abiertas”"],
-    ],
-  },
-  {
-    dia: "12/11",
-    rotulo: "quinta",
-    itens: [
-      ["8h30", "IPDMS: avanços e desafios — a reforma do estatuto"],
-      ["8h30", "RENAP: análise de conjuntura da advocacia popular"],
-      ["13h30", "Apresentação dos trabalhos (Grupos de Discussão)"],
-      ["16h", "RENAP: discussões por região"],
-      ["19h", "Lançamento de livros e evento cultural"],
-    ],
-  },
-  {
-    dia: "13/11",
-    rotulo: "sexta",
-    itens: [
-      ["8h30", "IPDMS: oficinas e minicursos"],
-      ["8h30", "RENAP: roda sobre sustentabilidade na advocacia popular"],
-      ["8h30", "RENAJU: experiências contemporâneas de AJUP"],
-    ],
-  },
-  {
-    dia: "14/11",
-    rotulo: "sábado",
-    itens: [
-      ["manhã", "Grupos de trabalho, plenárias e encerramento"],
-      ["—", "Programação detalhada na página oficial do seminário"],
-    ],
-  },
-];
 
 const PASSOS = [
   "Crie sua conta no SIGEventos da UFPB e escolha IPDMS, RENAP ou RENAJU como instituição.",
@@ -112,10 +76,17 @@ function Veias({ className = "" }: { className?: string }) {
   );
 }
 
+type Tema = "claro" | "escuro";
+
 export function SeminarioPage() {
   const [menuAberto, setMenuAberto] = useState(false);
+  const [tema, setTema] = useState<Tema>(() =>
+    typeof document !== "undefined" && document.documentElement.dataset.xiTema === "escuro"
+      ? "escuro"
+      : "claro",
+  );
+  const [fixou, setFixou] = useState(false);
 
-  // A raiz do documento ganha o tema do seminário (o CSS usa [data-xi]).
   useEffect(() => {
     document.documentElement.dataset.xi = "on";
     return () => {
@@ -123,13 +94,31 @@ export function SeminarioPage() {
     };
   }, []);
 
+  useEffect(() => {
+    const onScroll = () => setFixou(window.scrollY > 16);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  function alternarTema() {
+    const proximo: Tema = tema === "claro" ? "escuro" : "claro";
+    setTema(proximo);
+    document.documentElement.dataset.xiTema = proximo;
+    try {
+      localStorage.setItem("ecnl-xi-tema", proximo);
+    } catch {
+      /* modo privado */
+    }
+  }
+
   return (
     <>
       <a className="xi-pular" href="#xi-conteudo">
         Pular para o conteúdo
       </a>
 
-      <header className="xi-topo">
+      <header className={`xi-topo${fixou ? " is-fixa" : ""}`}>
         <div className="xi-casca xi-topo__linha">
           <a className="xi-marca" href="#topo" aria-label="XI Seminário do IPDMS — início">
             <span className="xi-marca__sigla">XI</span>
@@ -141,36 +130,78 @@ export function SeminarioPage() {
 
           <nav className="xi-nav" aria-label="Navegação do seminário">
             <a href="#sobre">Sobre</a>
+            <a href="#editais">Editais</a>
             <a href="#programacao">Programação</a>
             <a href="#inscricoes">Inscrições</a>
             <a href="#tres">Os três encontros</a>
           </nav>
 
-          <Magnet limite={6}>
-            <a className="xi-ponte" href={URL_RENAP}>
-              <span>30º Encontro da RENAP</span>
-              <span aria-hidden="true">→</span>
-            </a>
-          </Magnet>
+          <div className="xi-acoes">
+            <button
+              type="button"
+              className="xi-icone"
+              onClick={pedirBusca}
+              aria-label="Buscar no site"
+              title="Buscar no site (tecla /)"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="6.5" />
+                <path d="m16 16 4.5 4.5" />
+              </svg>
+            </button>
 
-          <button
-            type="button"
-            className="xi-menu-btn"
-            aria-expanded={menuAberto}
-            aria-controls="xi-menu"
-            aria-label={menuAberto ? "Fechar menu" : "Abrir menu"}
-            onClick={() => setMenuAberto((v) => !v)}
-          >
-            <span />
-            <span />
-          </button>
+            <button
+              type="button"
+              className="xi-icone"
+              onClick={alternarTema}
+              aria-label={tema === "claro" ? "Ativar tema escuro" : "Ativar tema claro"}
+              title={tema === "claro" ? "Tema escuro" : "Tema claro"}
+            >
+              {tema === "claro" ? (
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="4" fill="currentColor" />
+                  <g stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+                    <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+                  </g>
+                </svg>
+              )}
+            </button>
+
+            <Magnet limite={6}>
+              <a className="xi-ponte" href={URL_RENAP}>
+                <span>30º Encontro da RENAP</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            </Magnet>
+
+            <button
+              type="button"
+              className="xi-menu-btn"
+              aria-expanded={menuAberto}
+              aria-controls="xi-menu"
+              aria-label={menuAberto ? "Fechar menu" : "Abrir menu"}
+              onClick={() => setMenuAberto((v) => !v)}
+            >
+              <span />
+              <span />
+            </button>
+          </div>
         </div>
 
         <div id="xi-menu" className={`xi-menu${menuAberto ? " is-aberto" : ""}`}>
           <a href="#sobre" onClick={() => setMenuAberto(false)}>Sobre</a>
+          <a href="#editais" onClick={() => setMenuAberto(false)}>Editais</a>
           <a href="#programacao" onClick={() => setMenuAberto(false)}>Programação</a>
           <a href="#inscricoes" onClick={() => setMenuAberto(false)}>Inscrições</a>
           <a href="#tres" onClick={() => setMenuAberto(false)}>Os três encontros</a>
+          <a href="#local" onClick={() => setMenuAberto(false)}>Onde e como</a>
           <a href={URL_RENAP} onClick={() => setMenuAberto(false)}>30º Encontro da RENAP →</a>
         </div>
       </header>
@@ -208,7 +239,7 @@ export function SeminarioPage() {
                 </Magnet>
                 <Magnet>
                   <a
-                    className="xi-btn"
+                    className="xi-btn xi-btn--linha"
                     href={LINKS.programacao}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -224,8 +255,7 @@ export function SeminarioPage() {
               </p>
             </div>
 
-            {/* Arte oficial: o punho saindo das raízes, sobre o sol. A base é a
-                imagem recortada do banner; o contorno elétrico vem por cima. */}
+            {/* Arte oficial: o punho saindo das raízes, sobre o sol. */}
             <div className="xi-hero__arte">
               <div className="xi-hero__marca">
                 <ElectricLogo
@@ -258,6 +288,8 @@ export function SeminarioPage() {
             </div>
           </div>
         </section>
+
+        <Editais escopo="seminario" />
 
         <section className="xi-secao" id="sobre" aria-labelledby="xi-sobre-titulo">
           <div className="xi-casca xi-grade2">
@@ -302,17 +334,24 @@ export function SeminarioPage() {
             </h2>
 
             <ol className="xi-dias">
-              {DIAS.map((d) => (
+              {programacao.map((d) => (
                 <li key={d.dia} className="xi-dia">
                   <p className="xi-dia__data">
-                    <span>{d.dia}</span>
-                    {d.rotulo}
+                    <span>
+                      {d.dia}/{String(11).padStart(2, "0")}
+                    </span>
+                    {d.semana}
                   </p>
                   <ul>
-                    {d.itens.map(([hora, texto]) => (
-                      <li key={hora + texto}>
-                        <span className="xi-dia__hora">{hora}</span>
-                        <span>{texto}</span>
+                    {d.itens.map((item) => (
+                      <li key={`${d.dia}-${item.hora}-${item.titulo}`}>
+                        <span className="xi-dia__hora">{item.hora}</span>
+                        <span>
+                          {item.titulo}{" "}
+                          <em className={`xi-tag xi-tag--${item.tag.toLowerCase()}`}>
+                            {item.tag}
+                          </em>
+                        </span>
                       </li>
                     ))}
                   </ul>
@@ -454,11 +493,7 @@ export function SeminarioPage() {
                     Encontro Nacional da Rede Nacional de Assessoria Jurídica
                     Universitária — Memórias e dilemas renajupianos.
                   </p>
-                  <a
-                    href="https://www.instagram.com/ajupsbrasil/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a href={LINKS.renaju} target="_blank" rel="noopener noreferrer">
                     @ajupsbrasil ↗
                   </a>
                 </div>
@@ -481,7 +516,7 @@ export function SeminarioPage() {
                 sala de cada atividade é divulgada pela organização.
               </p>
               <Magnet>
-                <a className="xi-btn" href={LINKS.mapa} target="_blank" rel="noopener noreferrer">
+                <a className="xi-btn xi-btn--linha" href={LINKS.mapa} target="_blank" rel="noopener noreferrer">
                   Abrir no mapa
                 </a>
               </Magnet>
@@ -507,14 +542,65 @@ export function SeminarioPage() {
       </main>
 
       <footer className="xi-rodape">
-        <div className="xi-casca xi-rodape__linha">
-          <p>XI Seminário Direitos, Pesquisa e Movimentos Sociais · IPDMS · 2026</p>
-          <p className="xi-rodape__ponte">
-            Este site também publica o{" "}
-            <a href={URL_RENAP}>30º Encontro Nacional da RENAP</a>.
+        <div className="xi-casca">
+          <p className="xi-rodape__huge" aria-hidden="true">
+            Venas
+            <br />
+            abiertas
           </p>
+
+          <div className="xi-rodape__grade">
+            <div>
+              <p className="xi-rotulo">XI Seminário</p>
+              <p className="xi-rodape__datas">
+                11—14 nov 2026
+                <br />
+                UFPB · João Pessoa/PB
+              </p>
+              <a className="xi-rodape__mail" href={`mailto:${EMAIL}`}>
+                {EMAIL}
+              </a>
+            </div>
+
+            <nav aria-label="Rodapé">
+              <a href="#sobre">Sobre</a>
+              <a href="#programacao">Programação</a>
+              <a href="#inscricoes">Inscrições</a>
+              <a href="#tres">Os três encontros</a>
+              <a href={LINKS.editais} target="_blank" rel="noopener noreferrer">
+                Editais e site do IPDMS
+              </a>
+              <a href={URL_RENAP}>Página do 30º Encontro da RENAP</a>
+            </nav>
+
+            <div className="xi-rodape__orgs">
+              <a href={LINKS.ipdms} target="_blank" rel="noopener noreferrer">
+                IPDMS · @institutoipdms
+              </a>
+              <a href={URL_RENAP}>RENAP · @renapbrasil</a>
+              <a href={LINKS.renaju} target="_blank" rel="noopener noreferrer">
+                RENAJU · @ajupsbrasil
+              </a>
+            </div>
+          </div>
+
+          <div className="xi-rodape__base">
+            <p>
+              Fontes: IPDMS e SIGEventos/UFPB. Arte: banner oficial do XI
+              Seminário. Para correções, escreva para {EMAIL}.
+            </p>
+            <p>
+              Fontes Zodiak e Satoshi (Fontshare). Componentes React Bits e
+              Lightswind.
+            </p>
+          </div>
         </div>
       </footer>
+
+      <SearchPanel />
+      <ToolsDock />
+      <PlayerRadio />
+      <Assistente escopo="seminario" />
     </>
   );
 }

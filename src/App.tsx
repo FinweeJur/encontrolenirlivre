@@ -18,6 +18,8 @@ import { Arrow } from "./components/Motifs";
 import { SearchPanel } from "./components/SearchPanel";
 import { ToolsDock } from "./components/ToolsDock";
 import { PlayerRadio } from "./components/radio/PlayerRadio";
+import { Editais } from "./components/Editais";
+import { Assistente } from "./components/Assistente";
 import { CursorEletrico } from "./components/CursorEletrico";
 import RastroTexto from "./components/RastroTexto";
 import { evento } from "./content/evento";
@@ -70,6 +72,7 @@ export function App() {
 
       <main id="conteudo">
         <Hero theme={theme} reducedMotion={reducedMotion} />
+        <Editais escopo="renap" />
         <Opening />
         <Homage />
         <Encounter />
@@ -87,6 +90,7 @@ export function App() {
       <SearchPanel />
       <ToolsDock />
       <PlayerRadio />
+      <Assistente escopo="renap" />
       <CursorEletrico />
       <RastroTexto />
 

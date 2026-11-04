@@ -2,7 +2,10 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
 import "./styles/tailwind.css";
+import "./styles/tools.css";
 import "./styles/global.css";
+import "./styles/editais.css";
+import "./styles/assistente.css";
 
 const root = document.getElementById("root");
 

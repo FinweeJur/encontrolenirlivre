@@ -26,8 +26,20 @@
     <meta property="og:image" content="https://encontrolenirlivre.pages.dev/img/og.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="preload" href="/fonts/ClashDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/GeneralSans-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/zodiak-700.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/satoshi-400.woff2" as="font" type="font/woff2" crossorigin />
+
+    <script>
+      (function () {
+        try {
+          // Tema do seminário e modo de texto maior, antes da primeira pintura.
+          var tema = localStorage.getItem("ecnl-xi-tema");
+          document.documentElement.dataset.xiTema = tema === "escuro" ? "escuro" : "claro";
+          var texto = localStorage.getItem("ecnl-texto");
+          document.documentElement.dataset.texto = texto === "grande" ? "grande" : "normal";
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

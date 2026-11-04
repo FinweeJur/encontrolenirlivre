@@ -5,6 +5,9 @@ import { SeminarioPage } from "./components/seminario/SeminarioPage";
 // (ElectroBorder usa `absolute`, `inset-0`, etc.). Sem este import, as camadas
 // da moldura caem no fluxo e o cartão abre um vão em branco.
 import "./styles/tailwind.css";
+import "./styles/tools.css";
+import "./styles/editais.css";
+import "./styles/assistente.css";
 
 /**
  * Entrada da página do XI Seminário do IPDMS (seminario.html).

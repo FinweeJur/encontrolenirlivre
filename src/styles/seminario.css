@@ -20,12 +20,94 @@
   --xi-linha: #c2b193;
   --xi-linha-forte: #b09c7b;
 
-  --xi-display: "Clash Display", "Arial Narrow", system-ui, sans-serif;
-  --xi-corpo: "General Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Fontshare: Zodiak nos títulos, Satoshi no texto. */
+  --xi-display: "Zodiak", "Clash Display", Georgia, serif;
+  --xi-corpo: "Satoshi", "General Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --xi-dados: "Tabular", ui-monospace, monospace;
+
+  /* Compatibilidade: as ferramentas compartilhadas (busca, rádio, bandeja)
+     leem estas variáveis. Aqui apontam para a paleta do seminário. */
+  --paper: var(--xi-papel);
+  --paper-2: var(--xi-papel-2);
+  --ink: var(--xi-tinta);
+  --ink-soft: var(--xi-tinta-suave);
+  --ink-mute: var(--xi-tinta-fraca);
+  --red: var(--xi-terra);
+  --line: var(--xi-linha);
+  --line-soft: var(--xi-linha);
+  --radius-lg: 12px;
+  --shadow: 0 30px 70px -40px rgba(42, 37, 33, 0.6);
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --r-primary: 191 42 38;
+  --r-surface: 233 223 198;
+  --r-surface-2: 226 214 185;
+  --r-border: 194 177 147;
+  --r-text: 42 37 33;
+  --r-text-soft: 74 66 58;
+
+  /* Nomes usados pelas peças compartilhadas com a página da RENAP
+     (faixa de editais, assistente, busca e rádio). */
+  --display: var(--xi-display);
+  --body: var(--xi-corpo);
+  --data: var(--xi-dados);
+  --shell: var(--xi-casca);
+  --gutter: var(--xi-goteira);
 
   --xi-casca: 1180px;
   --xi-goteira: clamp(1.1rem, 4vw, 2.6rem);
+}
+
+/* Tema escuro do seminário (botão de tema na barra). */
+html[data-xi-tema="escuro"] {
+  --xi-papel: #1a1512;
+  --xi-papel-2: #221b16;
+  --xi-branco: #271f19;
+  --xi-tinta: #f2e8d2;
+  --xi-tinta-suave: #d3c6ae;
+  --xi-tinta-fraca: #a99a83;
+  --xi-terra: #e8655b;
+  --xi-terra-forte: #c94a41;
+  --xi-amarelo: #e0a44d;
+  --xi-linha: #3a3027;
+  --xi-linha-forte: #4a3d31;
+  --r-primary: 232 101 91;
+  --r-surface: 26 21 18;
+  --r-surface-2: 34 27 22;
+  --r-border: 58 48 39;
+  --r-text: 242 232 210;
+  --r-text-soft: 211 198 174;
+}
+
+@font-face {
+  font-family: "Zodiak";
+  src: url("/fonts/zodiak-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
 *,
@@ -101,6 +183,49 @@ a:hover {
   background: color-mix(in srgb, var(--xi-papel) 94%, transparent);
   border-bottom: 1px solid var(--xi-linha);
   backdrop-filter: blur(10px);
+  transition: box-shadow 0.25s var(--xi-mola, ease), background-color 0.25s;
+}
+
+.xi-topo.is-fixa {
+  background: var(--xi-papel);
+  box-shadow: 0 12px 30px -24px rgba(42, 37, 33, 0.7);
+}
+
+/* Ações da barra: busca, tema, ponte e menu. */
+.xi-acoes {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.xi-icone {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid var(--xi-linha-forte);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--xi-tinta);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.xi-icone svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+}
+
+.xi-icone:hover {
+  border-color: var(--xi-terra);
+  color: var(--xi-terra);
+  transform: translateY(-1px);
 }
 
 .xi-topo__linha {
@@ -384,6 +509,50 @@ a:hover {
 
 .xi-btn--cheio:hover {
   background: var(--xi-terra-forte);
+}
+
+/* Secundário: contorno, sem preenchimento. */
+.xi-btn--linha {
+  border-color: var(--xi-linha-forte);
+  color: var(--xi-tinta);
+}
+
+.xi-btn--linha:hover {
+  border-color: var(--xi-terra);
+  color: var(--xi-terra);
+  background: color-mix(in srgb, var(--xi-terra) 8%, transparent);
+}
+
+/* Etiquetas de programa dentro da programação. */
+.xi-tag {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 100px;
+  border: 1px solid currentColor;
+  font-family: var(--xi-dados);
+  font-size: 0.58rem;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  vertical-align: 1px;
+}
+
+.xi-tag--ipdms {
+  color: var(--xi-terra);
+}
+
+.xi-tag--renap {
+  color: #8a4b00;
+}
+
+.xi-tag--renaju {
+  color: #0a6f68;
+}
+
+.xi-tag--conjunta {
+  color: var(--xi-tinta-fraca);
 }
 
 /* Pulso: hierarquia do botão principal, só no hover/foco. */
@@ -703,19 +872,95 @@ a:hover {
 /* ---------- rodapé ---------- */
 
 .xi-rodape {
-  padding-block: 1.6rem;
+  padding-block: clamp(2.4rem, 5vw, 3.6rem) 1.4rem;
   background: var(--xi-tinta);
+  color: #efe2cf;
+  overflow: hidden;
+}
+
+html[data-xi-tema="escuro"] .xi-rodape {
+  background: #100e0a;
+}
+
+.xi-rodape__huge {
+  margin: 0 0 clamp(1.4rem, 3vw, 2.2rem);
+  font-family: var(--xi-display);
+  font-size: clamp(3rem, 11vw, 9rem);
+  font-weight: 700;
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(240, 201, 168, 0.55);
+}
+
+.xi-rodape__grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr) minmax(0, 0.9fr);
+  gap: clamp(1.2rem, 4vw, 3rem);
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(240, 201, 168, 0.25);
+}
+
+.xi-rodape__grade nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.xi-rodape__grade nav a,
+.xi-rodape__orgs a {
+  font-family: var(--xi-dados);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  color: #efe2cf;
+  border-bottom: 0;
+}
+
+.xi-rodape__grade nav a:hover,
+.xi-rodape__orgs a:hover {
+  color: #f0c9a8;
+  text-decoration: underline;
+}
+
+.xi-rodape__orgs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.xi-rodape__datas {
+  margin: 0 0 0.6rem;
+  font-family: var(--xi-dados);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: #efe2cf;
 }
 
-.xi-rodape__linha {
+.xi-rodape__mail {
+  font-family: var(--xi-dados);
+  font-size: 0.8rem;
+  color: #f0c9a8;
+  border-bottom: 1px solid rgba(240, 201, 168, 0.5);
+}
+
+.xi-rodape .xi-rotulo {
+  color: #f0c9a8;
+}
+
+.xi-rodape__base {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 0.6rem;
+  gap: 0.8rem;
+  margin-top: clamp(1.6rem, 3vw, 2.4rem);
+  padding-top: 1rem;
+  border-top: 1px solid rgba(240, 201, 168, 0.25);
   font-family: var(--xi-dados);
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  color: rgba(239, 226, 207, 0.75);
 }
 
 .xi-rodape p {
@@ -724,7 +969,6 @@ a:hover {
 
 .xi-rodape a {
   color: #f0c9a8;
-  border-bottom: 1px solid rgba(240, 201, 168, 0.5);
 }
 
 /* ---------- telas menores ---------- */
@@ -737,7 +981,6 @@ a:hover {
 
   .xi-menu-btn {
     display: inline-flex;
-    margin-left: auto;
   }
 
   .xi-menu {
@@ -794,5 +1037,21 @@ a:hover {
   .xi-btn--cheio:hover::after,
   .xi-btn--cheio:focus-visible::after {
     animation: none;
+  }
+}
+
+/* Texto maior (botão da bandeja de ferramentas), igual ao da página da RENAP. */
+html[data-texto="grande"] {
+  font-size: 18px;
+}
+
+html[data-xi-tema="escuro"] .xi-menu,
+html[data-xi-tema="escuro"] .xi-topo {
+  background: var(--xi-papel);
+}
+
+@media (max-width: 900px) {
+  .xi-rodape__grade {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

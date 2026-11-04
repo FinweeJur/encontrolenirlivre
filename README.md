@@ -22,6 +22,26 @@ npm run build
 npm run preview
 ```
 
+## Assistente (GLM-4-Flash)
+
+A bolha no canto inferior esquerdo abre o assistente das duas páginas. Ele
+manda a conversa para `POST /api/chat`, uma Cloudflare Pages Function em
+`functions/api/chat.ts`. A função guarda a chave do Zhipu AI como segredo do
+projeto e usa a base de `src/content/assistente.ts` (montada a partir de
+`evento.ts` e `editais.ts`).
+
+Ligar o modelo em cada projeto (a chave não vai para o repositório):
+
+```bash
+npx wrangler pages secret put ZHIPU_API_KEY --project-name encontrolenirlivre
+npx wrangler pages secret put ZHIPU_API_KEY --project-name seminariovenasabiertas
+```
+
+Conferir se está ligado: `GET /api/chat` responde `{"ligado":true}`. Sem a
+chave, o site cai no **modo local**: respostas prontas, com o aviso de que não
+há modelo. O endpoint limita 12 perguntas por minuto por IP, recusa origem
+diferente e não registra pergunta, resposta nem chave.
+
 ## Publicar
 
 ```bash
