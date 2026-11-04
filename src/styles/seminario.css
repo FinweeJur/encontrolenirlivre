@@ -1,0 +1,682 @@
+/* ==========================================================================
+   XI Seminário do IPDMS — "Venas abiertas"
+   Identidade do site institucional do IPDMS: terracota (#9e3f00) sobre papel
+   claro, com o motivo das veias. Deliberadamente diferente do kraft escuro da
+   página da RENAP: são dois eventos, dois públicos, uma mesma luta.
+   ========================================================================== */
+
+:root {
+  --xi-papel: #f6f1e7;
+  --xi-papel-2: #efe7d8;
+  --xi-branco: #fffdf8;
+  --xi-tinta: #241a12;
+  --xi-tinta-suave: #5a4a3c;
+  --xi-tinta-fraca: #8a7767;
+  --xi-terra: #9e3f00;
+  --xi-terra-claro: #c2622300;
+  --xi-teal: #0a8f86;
+  --xi-linha: #ddcdb6;
+  --xi-linha-forte: #c7b294;
+
+  --xi-display: "Clash Display", "Arial Narrow", system-ui, sans-serif;
+  --xi-corpo: "General Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --xi-dados: "Tabular", ui-monospace, monospace;
+
+  --xi-casca: 1120px;
+  --xi-goteira: clamp(1.1rem, 4vw, 2.6rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  background: var(--xi-papel);
+  color: var(--xi-tinta);
+  font-family: var(--xi-corpo);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--xi-terra);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.xi-casca {
+  width: 100%;
+  max-width: var(--xi-casca);
+  margin-inline: auto;
+  padding-inline: var(--xi-goteira);
+}
+
+.xi-pular {
+  position: fixed;
+  top: -100px;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--xi-terra);
+  color: #fff;
+  font-family: var(--xi-dados);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.xi-pular:focus-visible {
+  top: 0.8rem;
+}
+
+/* ---------- topo ---------- */
+
+.xi-topo {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--xi-papel) 94%, transparent);
+  border-bottom: 1px solid var(--xi-linha);
+  backdrop-filter: blur(10px);
+}
+
+.xi-topo__linha {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 4.4rem;
+}
+
+.xi-marca {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--xi-tinta);
+}
+
+.xi-marca__sigla {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: var(--xi-terra);
+  color: #fff8ec;
+  font-family: var(--xi-display);
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.xi-marca__texto {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.xi-marca__texto strong {
+  font-family: var(--xi-display);
+  font-size: 0.98rem;
+  letter-spacing: 0.01em;
+}
+
+.xi-marca__texto small {
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--xi-tinta-fraca);
+}
+
+.xi-nav {
+  display: flex;
+  gap: 1.1rem;
+  margin-left: auto;
+  font-family: var(--xi-dados);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.xi-nav a {
+  color: var(--xi-tinta-suave);
+  padding-block: 0.4rem;
+  border-bottom: 2px solid transparent;
+}
+
+.xi-nav a:hover {
+  color: var(--xi-terra);
+  border-bottom-color: var(--xi-terra);
+  text-decoration: none;
+}
+
+.xi-ponte {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--xi-terra);
+  border-radius: 100px;
+  font-family: var(--xi-dados);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--xi-terra);
+}
+
+.xi-ponte:hover {
+  background: var(--xi-terra);
+  color: #fff8ec;
+  text-decoration: none;
+}
+
+.xi-menu-btn {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 2.6rem;
+  height: 2.6rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--xi-linha-forte);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.xi-menu-btn span {
+  width: 16px;
+  height: 2px;
+  background: var(--xi-tinta);
+}
+
+.xi-menu {
+  display: none;
+}
+
+/* ---------- hero ---------- */
+
+.xi-hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(2.6rem, 7vw, 5.2rem) clamp(2rem, 5vw, 3.4rem);
+  background:
+    radial-gradient(120% 90% at 90% -10%, rgba(158, 63, 0, 0.14), transparent 60%),
+    var(--xi-papel);
+}
+
+.xi-hero__veias {
+  position: absolute;
+  inset: -8% -10% auto auto;
+  width: min(46rem, 78vw);
+  color: var(--xi-terra);
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+.xi-kicker {
+  position: relative;
+  margin: 0 0 0.9rem;
+  font-family: var(--xi-dados);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--xi-terra);
+}
+
+.xi-hero__titulo {
+  position: relative;
+  margin: 0;
+  font-family: var(--xi-display);
+  font-size: clamp(3.4rem, 12vw, 8.2rem);
+  font-weight: 700;
+  line-height: 0.82;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+  color: var(--xi-terra);
+}
+
+.xi-hero__tema {
+  position: relative;
+  margin: 0.5rem 0 0;
+  max-width: 26ch;
+  font-family: var(--xi-display);
+  font-size: clamp(1.15rem, 2.4vw, 1.8rem);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--xi-tinta);
+}
+
+.xi-hero__meta {
+  position: relative;
+  margin: 1.1rem 0 0;
+  font-family: var(--xi-dados);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--xi-tinta-suave);
+}
+
+.xi-hero__acoes {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.4rem;
+}
+
+.xi-hero__nota {
+  position: relative;
+  margin: 1rem 0 0;
+  max-width: 44rem;
+  font-size: 0.92rem;
+  color: var(--xi-tinta-suave);
+}
+
+.xi-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.9rem;
+  padding: 0.7rem 1.3rem;
+  border: 1px solid var(--xi-terra);
+  border-radius: 100px;
+  font-family: var(--xi-dados);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--xi-terra);
+  cursor: pointer;
+}
+
+.xi-btn:hover {
+  background: color-mix(in srgb, var(--xi-terra) 10%, transparent);
+  text-decoration: none;
+}
+
+.xi-btn--cheio {
+  background: var(--xi-terra);
+  color: #fff8ec;
+}
+
+.xi-btn--cheio:hover {
+  background: #7f3200;
+}
+
+/* ---------- seções ---------- */
+
+.xi-secao {
+  padding-block: clamp(2.6rem, 6vw, 4.6rem);
+  border-top: 1px solid var(--xi-linha);
+}
+
+.xi-secao--creme {
+  background: var(--xi-papel-2);
+}
+
+.xi-rotulo {
+  margin: 0 0 0.7rem;
+  font-family: var(--xi-dados);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--xi-terra);
+}
+
+.xi-h2 {
+  margin: 0 0 1.2rem;
+  font-family: var(--xi-display);
+  font-size: clamp(1.9rem, 4.6vw, 3.2rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--xi-terra);
+}
+
+.xi-grade2 {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(1.4rem, 4vw, 3.2rem);
+  align-items: start;
+}
+
+.xi-texto p {
+  margin: 0 0 0.9rem;
+  color: var(--xi-tinta-suave);
+}
+
+.xi-texto strong {
+  color: var(--xi-tinta);
+}
+
+.xi-nota {
+  margin: 1rem 0 0;
+  font-size: 0.86rem;
+  color: var(--xi-tinta-fraca);
+}
+
+/* ---------- programação ---------- */
+
+.xi-dias {
+  list-style: none;
+  margin: 1.6rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1px;
+  background: var(--xi-linha);
+  border: 1px solid var(--xi-linha);
+}
+
+.xi-dia {
+  background: var(--xi-branco);
+  padding: 1rem 1.1rem 1.2rem;
+}
+
+.xi-dia__data {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  margin: 0 0 0.7rem;
+  font-family: var(--xi-dados);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--xi-tinta-fraca);
+}
+
+.xi-dia__data span {
+  font-family: var(--xi-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--xi-terra);
+}
+
+.xi-dia ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.xi-dia li {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr);
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--xi-tinta-suave);
+}
+
+.xi-dia__hora {
+  font-family: var(--xi-dados);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--xi-terra);
+  padding-top: 0.1rem;
+}
+
+/* ---------- inscrições ---------- */
+
+.xi-valores {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0 1rem;
+  text-align: left;
+}
+
+.xi-valores caption {
+  text-align: left;
+  font-family: var(--xi-dados);
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--xi-tinta-fraca);
+  padding-bottom: 0.5rem;
+}
+
+.xi-valores th,
+.xi-valores td {
+  padding: 0.8rem 0.2rem;
+  border-top: 1px solid var(--xi-linha);
+  font-weight: 400;
+  font-size: 0.92rem;
+  color: var(--xi-tinta-suave);
+}
+
+.xi-valores td {
+  text-align: right;
+  font-family: var(--xi-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--xi-terra);
+  white-space: nowrap;
+}
+
+.xi-pix {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0;
+  padding: 0.8rem 1rem;
+  border: 1px dashed var(--xi-linha-forte);
+  border-radius: 4px;
+  background: var(--xi-branco);
+}
+
+.xi-pix span {
+  font-family: var(--xi-dados);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--xi-tinta-fraca);
+}
+
+.xi-pix strong {
+  font-family: var(--xi-dados);
+  font-size: 0.86rem;
+  word-break: break-all;
+}
+
+.xi-passos {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.xi-passos li {
+  display: grid;
+  grid-template-columns: 1.7rem minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: start;
+}
+
+.xi-passos li > span {
+  display: grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border: 1px solid var(--xi-terra);
+  border-radius: 50%;
+  font-family: var(--xi-dados);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--xi-terra);
+}
+
+.xi-passos p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--xi-tinta-suave);
+}
+
+/* ---------- três encontros ---------- */
+
+.xi-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+  margin-top: 1.4rem;
+}
+
+.xi-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.2rem;
+  border: 1px solid var(--xi-linha-forte);
+  background: var(--xi-branco);
+}
+
+.xi-card--destaque {
+  border-color: var(--xi-terra);
+  background: color-mix(in srgb, var(--xi-terra) 6%, var(--xi-branco));
+}
+
+.xi-card__num {
+  font-family: var(--xi-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--xi-terra);
+}
+
+.xi-card h3 {
+  margin: 0;
+  font-family: var(--xi-display);
+  font-size: 1.2rem;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--xi-tinta);
+}
+
+.xi-card p {
+  margin: 0;
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--xi-tinta-suave);
+}
+
+.xi-card a {
+  font-family: var(--xi-dados);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.xi-contato p {
+  margin: 0 0 0.5rem;
+  font-size: 0.92rem;
+}
+
+/* ---------- rodapé ---------- */
+
+.xi-rodape {
+  padding-block: 1.6rem;
+  background: var(--xi-tinta);
+  color: #efe2cf;
+}
+
+.xi-rodape__linha {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.6rem;
+  font-family: var(--xi-dados);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+
+.xi-rodape p {
+  margin: 0;
+}
+
+.xi-rodape a {
+  color: #f0c9a8;
+  border-bottom: 1px solid rgba(240, 201, 168, 0.5);
+}
+
+/* ---------- telas menores ---------- */
+
+@media (max-width: 900px) {
+  .xi-nav,
+  .xi-ponte {
+    display: none;
+  }
+
+  .xi-menu-btn {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
+  .xi-menu {
+    display: none;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.6rem var(--xi-goteira) 1rem;
+    border-top: 1px solid var(--xi-linha);
+    background: var(--xi-papel);
+  }
+
+  .xi-menu.is-aberto {
+    display: flex;
+  }
+
+  .xi-menu a {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--xi-linha);
+    font-family: var(--xi-dados);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--xi-tinta);
+  }
+
+  .xi-grade2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .xi-dias {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

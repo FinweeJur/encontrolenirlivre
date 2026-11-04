@@ -225,6 +225,12 @@ export function Encounter() {
           Página oficial, editais e programação completa <Arrow />
         </a>
 
+        {/* Ponte entre as duas páginas: o seminário tem identidade própria. */}
+        <p className="encounter__ponte">
+          A página do <a href="/seminario">XI Seminário do IPDMS</a> também está
+          neste site.
+        </p>
+
         {/* Cartas políticas: em vez de seção própria, uma linha de links —
             o leitor que quer o histórico da rede chega pela publicação. */}
         <div className="encounter__cartas">
@@ -725,6 +731,7 @@ export function Footer() {
             <a href={evento.links.ipdms} target="_blank" rel="noopener noreferrer">
               Editais e site do IPDMS
             </a>
+            <a href="/seminario">Página do XI Seminário do IPDMS</a>
           </nav>
 
           <div className="footer__orgs">

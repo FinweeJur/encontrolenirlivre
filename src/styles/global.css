@@ -2644,6 +2644,23 @@ html[data-theme="light"] .encounter__anel {
   }
 }
 
+/* Ponte para a página do seminário do IPDMS. */
+.encounter__ponte {
+  margin-top: 0.9rem;
+  font-size: 0.9rem;
+  color: var(--ink-mute);
+}
+
+.encounter__ponte a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--red);
+  padding-bottom: 1px;
+}
+
+.encounter__ponte a:hover {
+  color: var(--red);
+}
+
 /* Cartas políticas como linha de links, dentro da seção O encontro. */
 .encounter__cartas {
   margin-top: clamp(1.6rem, 3vw, 2.4rem);
