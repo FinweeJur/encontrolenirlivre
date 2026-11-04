@@ -52,6 +52,17 @@ npx wrangler pages deploy dist --project-name encontrolenirlivre --branch main
 O `wrangler` precisa de Node 22 no PATH. Deploy é manual: `git push` não
 publica.
 
+## Grupos de Discussão
+
+A seção “Grupos de Discussão” do seminário (`src/components/seminario/Gds.tsx`)
+lê `src/content/gds.ts`, gerado a partir do PDF oficial de trabalhos aprovados
+(`Trabalhos-Aprovados-1.pdf`, publicado pela organização). São 12 GDs e 140
+títulos. O PDF não lista trabalhos para os GDs 4 e 6 — a página diz isso.
+
+Quando a organização publicar retificação, atualize `gds.ts`; a página e o
+assistente leem a mesma lista. Local e horário de cada GD ainda serão
+divulgados, e a página marca isso com o selo “Em breve”.
+
 ## Componentes de terceiros
 
 - **React Bits** — `DitherVeil` e `ElectricLogo` (TypeScript + CSS).

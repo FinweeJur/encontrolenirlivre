@@ -37,8 +37,10 @@ function responderLocal(pergunta: string): string {
   let achado = "";
 
   for (const item of RESPOSTAS_LOCAIS) {
+    // termo mais longo vale mais: "grupo de discuss" vence "gd" no desempate
     const pontos = item.termos.reduce(
-      (soma, termo) => (alvo.includes(semAcento(termo)) ? soma + 1 : soma),
+      (soma, termo) =>
+        alvo.includes(semAcento(termo)) ? soma + semAcento(termo).length : soma,
       0,
     );
     if (pontos > melhor) {

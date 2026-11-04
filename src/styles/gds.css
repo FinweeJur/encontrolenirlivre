@@ -1,0 +1,350 @@
+/* ==========================================================================
+   Grupos de Discussão do XI Seminário.
+   Papel kraft, tinta terracota. Os efeitos existem para orientar a leitura:
+   o cartão acende onde o mouse está, o número cresce no hover e a lista entra
+   em cascata uma única vez. Nada de animação que atrapalhe o texto.
+   ========================================================================== */
+
+.gds {
+  background: var(--xi-papel);
+}
+
+.gds__topo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1.2rem, 4vw, 3rem);
+  align-items: end;
+  margin-bottom: clamp(1.4rem, 3vw, 2.2rem);
+}
+
+.gds__resumo p {
+  margin: 0 0 0.7rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--xi-tinta-suave);
+}
+
+.gds__aviso {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  color: var(--xi-tinta-fraca);
+}
+
+.gds__selo {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--xi-terra);
+  border-radius: 100px;
+  font-family: var(--xi-dados);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--xi-terra);
+  animation: gds-pulso 2.6s ease-in-out infinite;
+}
+
+@keyframes gds-pulso {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--xi-terra) 32%, transparent);
+  }
+  55% {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--xi-terra) 0%, transparent);
+  }
+}
+
+.gds__fonte {
+  display: inline-block;
+  margin-top: 0.2rem;
+  font-family: var(--xi-dados);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  color: var(--xi-terra);
+  border-bottom: 1px solid color-mix(in srgb, var(--xi-terra) 40%, transparent);
+}
+
+.gds__fonte:hover {
+  border-bottom-color: var(--xi-terra);
+}
+
+/* ---------- lista ---------- */
+
+.gds__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.gd {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.5s var(--xi-suave, ease),
+    transform 0.5s var(--xi-suave, ease);
+  transition-delay: var(--atraso, 0ms);
+}
+
+.gd.is-visivel {
+  opacity: 1;
+  transform: none;
+}
+
+.gd__cartao {
+  --mx: 50%;
+  --my: 0%;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.1rem 1.05rem;
+  background: var(--xi-branco);
+  border: 1px solid var(--xi-linha);
+  border-left: 3px solid transparent;
+  transition: border-color 0.25s, transform 0.25s var(--xi-suave, ease);
+}
+
+/* brilho que acompanha o mouse */
+.gd__cartao::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    240px circle at var(--mx) var(--my),
+    color-mix(in srgb, var(--xi-terra) 12%, transparent),
+    transparent 70%
+  );
+  transition: opacity 0.3s;
+}
+
+.gd__cartao:hover::after,
+.gd__cartao:focus-within::after {
+  opacity: 1;
+}
+
+.gd__cartao:hover,
+.gd__cartao:focus-within {
+  border-left-color: var(--xi-terra);
+  transform: translateY(-2px);
+}
+
+.gd__topo {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.7rem;
+  align-items: start;
+}
+
+.gd__numero {
+  font-family: var(--xi-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 0.85;
+  color: color-mix(in srgb, var(--xi-terra) 28%, var(--xi-papel));
+  transition: color 0.25s, transform 0.25s var(--xi-suave, ease);
+}
+
+.gd__cartao:hover .gd__numero,
+.gd__cartao:focus-within .gd__numero {
+  color: var(--xi-terra);
+  transform: scale(1.06) rotate(-3deg);
+}
+
+/* o título cresce quando a linha é curta e o cartão respira igual */
+.gd__cartao > .gd__detalhes {
+  margin-top: auto;
+}
+
+.gd__eixo {
+  margin: 0 0 0.2rem;
+  font-family: var(--xi-dados);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--xi-terra);
+}
+
+.gd__titulo {
+  margin: 0;
+  font-family: var(--xi-display);
+  font-size: clamp(0.98rem, 1.15vw, 1.06rem);
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  color: var(--xi-tinta);
+  word-spacing: 0.04em;
+}
+
+.gd__contagem {
+  position: relative;
+  z-index: 1;
+  margin: 0.7rem 0 0;
+  font-family: var(--xi-dados);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: var(--xi-tinta-fraca);
+}
+
+.gd__contagem strong {
+  font-size: 0.92rem;
+  color: var(--xi-terra);
+}
+
+/* ---------- abrir e fechar ---------- */
+
+.gd__detalhes {
+  position: relative;
+  z-index: 1;
+  margin-top: 0.55rem;
+  border-top: 1px dashed color-mix(in srgb, var(--xi-linha) 80%, transparent);
+  padding-top: 0.45rem;
+}
+
+.gd__detalhes summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--xi-dados);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--xi-terra);
+}
+
+.gd__detalhes summary::-webkit-details-marker {
+  display: none;
+}
+
+.gd__seta {
+  transition: transform 0.25s var(--xi-suave, ease);
+}
+
+.gd__detalhes[open] .gd__seta {
+  transform: rotate(180deg);
+}
+
+.gd__detalhes summary:hover {
+  color: var(--xi-tinta);
+}
+
+.gd__abre::before {
+  content: "";
+}
+
+.gd__trabalhos {
+  list-style: none;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  counter-reset: trabalho;
+  max-height: 21rem;
+  overflow-y: auto;
+  padding-right: 0.3rem;
+  scrollbar-width: thin;
+}
+
+.gd__trabalhos li {
+  counter-increment: trabalho;
+  position: relative;
+  padding-left: 1.55rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--xi-tinta-suave);
+}
+
+.gd__trabalhos li::before {
+  content: counter(trabalho, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0.12rem;
+  font-family: var(--xi-dados);
+  font-size: 0.62rem;
+  color: var(--xi-terra);
+  opacity: 0.75;
+}
+
+.gds__pe {
+  margin: 1.1rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--xi-tinta-fraca);
+}
+
+.gd__oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- responsivo ---------- */
+
+@media (max-width: 1100px) {
+  .gds__lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .gds__topo {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .gds__lista {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .gd__numero {
+    font-size: 1.7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gd {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .gd__cartao,
+  .gd__numero,
+  .gd__seta {
+    transition: none;
+  }
+
+  .gd__cartao:hover,
+  .gd__cartao:focus-within {
+    transform: none;
+  }
+
+  .gds__selo {
+    animation: none;
+  }
+}

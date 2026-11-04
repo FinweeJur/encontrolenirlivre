@@ -19,8 +19,10 @@ import { ToolsDock } from "../ToolsDock";
 import { PlayerRadio } from "../radio/PlayerRadio";
 import { Editais } from "../Editais";
 import { Assistente } from "../Assistente";
-import { programacao } from "../../content/evento";
 import { Magnet } from "./Magnet";
+import { Programa } from "./Programa";
+import { Gds } from "./Gds";
+import { LayoutGrid } from "../effects/Extras";
 
 const LINKS = {
   inscricao: "https://sigeventos.ufpb.br/eventos/public/evento/SNIPDMS",
@@ -132,6 +134,7 @@ export function SeminarioPage() {
             <a href="#sobre">Sobre</a>
             <a href="#editais">Editais</a>
             <a href="#programacao">Programação</a>
+            <a href="#gds">GDs</a>
             <a href="#inscricoes">Inscrições</a>
             <a href="#tres">Os três encontros</a>
           </nav>
@@ -199,6 +202,7 @@ export function SeminarioPage() {
           <a href="#sobre" onClick={() => setMenuAberto(false)}>Sobre</a>
           <a href="#editais" onClick={() => setMenuAberto(false)}>Editais</a>
           <a href="#programacao" onClick={() => setMenuAberto(false)}>Programação</a>
+          <a href="#gds" onClick={() => setMenuAberto(false)}>Grupos de Discussão</a>
           <a href="#inscricoes" onClick={() => setMenuAberto(false)}>Inscrições</a>
           <a href="#tres" onClick={() => setMenuAberto(false)}>Os três encontros</a>
           <a href="#local" onClick={() => setMenuAberto(false)}>Onde e como</a>
@@ -324,7 +328,12 @@ export function SeminarioPage() {
           </div>
         </section>
 
-        <section className="xi-secao xi-secao--creme" id="programacao" aria-labelledby="xi-prog-titulo">
+        <section
+          className="xi-secao xi-secao--creme xi-secao--grade"
+          id="programacao"
+          aria-labelledby="xi-prog-titulo"
+        >
+          <LayoutGrid />
           <div className="xi-casca">
             <p className="xi-rotulo">Programação</p>
             <h2 id="xi-prog-titulo" className="xi-h2">
@@ -333,31 +342,7 @@ export function SeminarioPage() {
               três encontros.
             </h2>
 
-            <ol className="xi-dias">
-              {programacao.map((d) => (
-                <li key={d.dia} className="xi-dia">
-                  <p className="xi-dia__data">
-                    <span>
-                      {d.dia}/{String(11).padStart(2, "0")}
-                    </span>
-                    {d.semana}
-                  </p>
-                  <ul>
-                    {d.itens.map((item) => (
-                      <li key={`${d.dia}-${item.hora}-${item.titulo}`}>
-                        <span className="xi-dia__hora">{item.hora}</span>
-                        <span>
-                          {item.titulo}{" "}
-                          <em className={`xi-tag xi-tag--${item.tag.toLowerCase()}`}>
-                            {item.tag}
-                          </em>
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              ))}
-            </ol>
+            <Programa />
 
             <p className="xi-nota">
               Programação sujeita a atualização pela organização.{" "}
@@ -365,12 +350,12 @@ export function SeminarioPage() {
                 Ver a versão oficial
               </a>{" "}
               ·{" "}
-              <a href={LINKS.trabalhos} target="_blank" rel="noopener noreferrer">
-                Trabalhos aprovados (PDF)
-              </a>
+              <a href="#gds">Ver os GDs e os trabalhos aprovados</a>
             </p>
           </div>
         </section>
+
+        <Gds />
 
         <section className="xi-secao" id="inscricoes" aria-labelledby="xi-insc-titulo">
           <div className="xi-casca xi-grade2">

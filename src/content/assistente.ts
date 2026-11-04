@@ -13,6 +13,7 @@
 
 import { editais } from "./editais";
 import { evento, faq, programacao } from "./evento";
+import { gdResumo, gds } from "./gds";
 
 const PROGRAMACAO_TEXTO = programacao
   .map(
@@ -35,6 +36,11 @@ const EDITAIS_CURTO = editais
     (e) =>
       `- ${e.titulo}: ${e.prazo} — ${e.situacao.toLocaleLowerCase("pt-BR")}.`,
   )
+  .join("\n");
+
+/** GDs: só o essencial. Os 140 títulos não cabem no contexto do modelo. */
+const GDS_TEXTO = gds
+  .map((g) => `GD ${g.numero} — ${g.titulo} (${g.eixo}): ${g.trabalhos.length} trabalhos aprovados`)
   .join("\n");
 
 const FAQ_TEXTO = faq
@@ -67,6 +73,12 @@ A vaga é organizada a partir das respostas (nome, contato, chegada e permanênc
 
 PROGRAMAÇÃO (sujeita a atualização pela organização)
 ${PROGRAMACAO_TEXTO}
+
+GRUPOS DE DISCUSSÃO (${gdResumo.totalGds} GDs, ${gdResumo.totalTrabalhos} trabalhos aprovados)
+${GDS_TEXTO}
+Local e horário de cada GD, com a grade de apresentações, ainda serão divulgados pela organização.
+O PDF oficial não lista trabalhos para os GDs 4 e 6.
+Documento: ${gdResumo.fonte}
 
 EDITAIS E CHAMADAS (todos com prazo de submissão encerrado em 3/11/2026)
 ${EDITAIS_TEXTO}
@@ -144,8 +156,12 @@ export const RESPOSTAS_LOCAIS: ReadonlyArray<{
     resposta: `A programação vai de 11 a 14 de novembro, com credenciamento na quarta, mesas, Grupos de Discussão, minicursos e momentos conjuntos. Resumo por dia:\n\n${PROGRAMACAO_TEXTO}`,
   },
   {
-    termos: ["edital", "submiss", "trabalho", "artigo", "resumo", "grupo de discuss", "gd", "minicurso", "oficina", "livro"],
+    termos: ["edital", "submiss", "trabalho", "artigo", "resumo", "minicurso", "oficina", "livro"],
     resposta: `Os editais do encontro conjunto já tiveram os prazos de submissão encerrados:\n\n${EDITAIS_CURTO}\n\nOs documentos oficiais estão na faixa “Editais e chamadas”, no início da página.`,
+  },
+  {
+    termos: ["gds", "grupo de discuss", "trabalhos aprovados", "aprovado"],
+    resposta: `O seminário tem ${gdResumo.totalGds} Grupos de Discussão, com ${gdResumo.totalTrabalhos} trabalhos aprovados no total. Cada GD reúne pesquisas de um eixo:\n\n${GDS_TEXTO}\n\nA lista completa, com os títulos, está na seção “Grupos de Discussão” da página. Local e horário de cada GD ainda serão divulgados.`,
   },
   {
     termos: ["local", "endere", "endereço", "ufpb", "mapa", "onde e", "onde é", "campus"],
@@ -187,9 +203,9 @@ export const SUGESTOES: Record<"renap" | "seminario", string[]> = {
     "Quais editais foram publicados?",
   ],
   seminario: [
+    "Quais GDs existem?",
     "Como submeto um trabalho?",
     "Qual é a programação do dia 12?",
-    "Onde serão as atividades?",
     "Como peço isenção?",
   ],
 };

@@ -317,6 +317,9 @@ export function Program() {
           >
             Programação completa <Arrow />
           </a>
+          <a className="text-link" href={`${URL_XI}#gds`}>
+            GDs e trabalhos aprovados <Arrow />
+          </a>
           <span className="program__note">Sujeita a atualização pela organização.</span>
         </div>
       </div>
