@@ -52,24 +52,40 @@ function responderLocal(pergunta: string): string {
 
 /** Quebra o texto em pedaços, transformando URLs em links de verdade. */
 function ComLinks({ texto }: { texto: string }) {
-  const partes = texto.split(/(https?:\/\/[^\s)]+)/g);
+  // Aceita URL crua e também o formato markdown [texto](url), que o modelo
+  // às vezes devolve mesmo quando o pedido é texto simples.
+  const partes = texto.split(/(\[[^\]]+\]\(https?:\/\/[^\s)]+\)|https?:\/\/[^\s)]+)/g);
 
   return (
     <>
-      {partes.map((parte, i) =>
-        /^https?:\/\//.test(parte) ? (
-          <a
-            key={`${parte}-${i}`}
-            href={parte}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {parte}
-          </a>
-        ) : (
-          <span key={`texto-${i}`}>{parte}</span>
-        ),
-      )}
+      {partes.map((parte, i) => {
+        const markdown = parte.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/);
+        if (markdown) {
+          return (
+            <a
+              key={`md-${i}`}
+              href={markdown[2]}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {markdown[1]}
+            </a>
+          );
+        }
+        if (/^https?:\/\//.test(parte)) {
+          return (
+            <a
+              key={`url-${i}`}
+              href={parte}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {parte}
+            </a>
+          );
+        }
+        return <span key={`texto-${i}`}>{parte}</span>;
+      })}
     </>
   );
 }

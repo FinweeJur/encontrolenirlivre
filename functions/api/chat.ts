@@ -130,7 +130,9 @@ export const onRequestPost = async (contexto: {
         messages: [{ role: "system", content: montarSistema(site) }, ...mensagens],
         temperature: 0.35,
         top_p: 0.8,
-        max_tokens: 700,
+        // Resposta curta também é resposta rápida: o painel é pequeno e o
+        // leitor está no celular. Lista de editais cabe em 400 tokens.
+        max_tokens: 420,
         stream: false,
       }),
       signal: controle.signal,
