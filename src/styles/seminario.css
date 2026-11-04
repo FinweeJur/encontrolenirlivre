@@ -657,6 +657,69 @@ a:hover {
   color: var(--xi-tinta-fraca);
 }
 
+/* ---------- notas extras: isenção, alojamento, lançamento ---------- */
+
+.xi-lista-fina {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.xi-lista-fina li {
+  position: relative;
+  padding-left: 0.9rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--xi-tinta-suave);
+}
+
+.xi-lista-fina li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 0.32rem;
+  height: 0.32rem;
+  border-radius: 50%;
+  background: var(--xi-terra);
+}
+
+.xi-lista-fina strong {
+  color: var(--xi-tinta);
+}
+
+.xi-aviso {
+  margin-top: 1.4rem;
+  padding: 0.9rem 1.1rem 1rem;
+  background: color-mix(in srgb, var(--xi-branco) 70%, transparent);
+  border: 1px solid var(--xi-linha);
+  border-left: 3px solid var(--xi-terra);
+}
+
+.xi-aviso p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--xi-tinta-suave);
+}
+
+.xi-aviso__rotulo {
+  margin-bottom: 0.3rem !important;
+  font-family: var(--xi-dados);
+  font-size: 0.64rem !important;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--xi-terra) !important;
+}
+
+.xi-aviso strong {
+  color: var(--xi-tinta);
+}
+
 /* ---------- programação em abas (mesma língua visual da RENAP) ---------- */
 
 .xi-prog {
@@ -896,6 +959,11 @@ a:hover {
   font-family: var(--xi-dados);
   font-size: 0.86rem;
   word-break: break-all;
+}
+
+.xi-pix + .copia-pix {
+  display: flex;
+  margin-top: 0.55rem;
 }
 
 .xi-passos {

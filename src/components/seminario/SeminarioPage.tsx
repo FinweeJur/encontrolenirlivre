@@ -22,6 +22,7 @@ import { Assistente } from "../Assistente";
 import { Magnet } from "./Magnet";
 import { Programa } from "./Programa";
 import { Gds } from "./Gds";
+import { BotaoPix } from "../BotaoPix";
 import { LayoutGrid } from "../effects/Extras";
 
 const LINKS = {
@@ -33,6 +34,8 @@ const LINKS = {
     "https://ipdms.org.br/wp-content/uploads/2026/07/Trabalhos-Aprovados-1.pdf",
   ipdms: "https://ipdms.org.br/",
   renaju: "https://www.instagram.com/ajupsbrasil/",
+  // Formulário da organização para pedir alojamento (o mesmo da página da RENAP).
+  alojamento: "https://forms.gle/LoSeGv5YGtpNZVaJ6",
   mapa: "https://www.google.com/maps/search/?api=1&query=Universidade+Federal+da+Para%C3%ADba+Campus+I",
 };
 
@@ -352,6 +355,17 @@ export function SeminarioPage() {
               ·{" "}
               <a href="#gds">Ver os GDs e os trabalhos aprovados</a>
             </p>
+
+            {/* Informação da organização que não está na grade de horas. */}
+            <aside className="xi-aviso" aria-label="Lançamento de livros">
+              <p className="xi-aviso__rotulo">Lançamento de livros</p>
+              <p>
+                O lançamento acontece na <strong>quinta-feira à noite, 12 de
+                novembro</strong>, dentro da programação. Precisa que ao menos
+                uma pessoa autora ou organizadora esteja presente. A chamada
+                para inscrição de obras está encerrada desde 30 de outubro.
+              </p>
+            </aside>
           </div>
         </section>
 
@@ -383,6 +397,7 @@ export function SeminarioPage() {
                 <span>PIX</span>
                 <strong>{PIX}</strong>
               </p>
+              <BotaoPix valor={PIX} />
             </div>
 
             <div className="xi-texto">
@@ -399,6 +414,34 @@ export function SeminarioPage() {
                 <a href={`mailto:${EMAIL}`}>{EMAIL}</a>. Este site não processa
                 pagamentos nem guarda seus dados.
               </p>
+              <ul className="xi-lista-fina">
+                <li>
+                  <strong>Isenção:</strong> escreva para{" "}
+                  <a href={`mailto:${EMAIL}`}>{EMAIL}</a> com o assunto
+                  “Solicitação de Isenção – XI Seminário IPDMS”, informando nome
+                  completo, categoria, justificativa e e-mail de contato.
+                </li>
+                <li>
+                  <strong>Alojamento:</strong> a vaga sai do formulário da
+                  organização, com nome, contato e dados de chegada e
+                  permanência.{" "}
+                  <a
+                    href={LINKS.alojamento}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Formulário do alojamento
+                  </a>
+                </li>
+                <li>
+                  <strong>Dúvidas de submissão:</strong> secretaria do seminário
+                  em{" "}
+                  <a href="mailto:secretaria@ipdms.org.br">
+                    secretaria@ipdms.org.br
+                  </a>
+                  .
+                </li>
+              </ul>
               <Magnet>
                 <a
                   className="xi-btn xi-btn--cheio"
@@ -550,6 +593,7 @@ export function SeminarioPage() {
             <nav aria-label="Rodapé">
               <a href="#sobre">Sobre</a>
               <a href="#programacao">Programação</a>
+              <a href="#gds">Grupos de Discussão</a>
               <a href="#inscricoes">Inscrições</a>
               <a href="#tres">Os três encontros</a>
               <a href={LINKS.editais} target="_blank" rel="noopener noreferrer">

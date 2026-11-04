@@ -66,10 +66,16 @@ Passo a passo: cadastro no SIGEventos da UFPB (https://sigeventos.ufpb.br), esco
 Link de inscrição: ${evento.links.inscricao}
 Isenção: pedido por e-mail para ${evento.email}, com nome completo, categoria, justificativa e e-mail de contato.
 Comprovante, isenção e dúvidas: ${evento.email}
+Dúvidas de submissão acadêmica: secretaria@ipdms.org.br
 
 ALOJAMENTO
 O alojamento é oferecido pela organização a quem responde o formulário: ${evento.links.alojamento}
 A vaga é organizada a partir das respostas (nome, contato, chegada e permanência).
+
+LANÇAMENTO DE LIVROS
+Acontece na quinta-feira à noite, 12 de novembro, dentro da programação.
+Precisa que ao menos uma pessoa autora ou organizadora esteja presente.
+A chamada para inscrever obras encerrou em 30 de outubro de 2026.
 
 PROGRAMAÇÃO (sujeita a atualização pela organização)
 ${PROGRAMACAO_TEXTO}

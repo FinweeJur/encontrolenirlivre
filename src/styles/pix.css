@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Botão de copiar o PIX — usado nas duas páginas.
+   Usa só tokens de tema (--ink, --paper, --red, --line), então acompanha o
+   papel kraft do seminário e o escuro/claro da RENAP.
+   ========================================================================== */
+
+.copia-pix {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+}
+
+.copia-pix__botao {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.42rem 0.7rem;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.25));
+  border-radius: 100px;
+  background: transparent;
+  color: var(--red, #bf2a26);
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    color 0.2s,
+    transform 0.2s;
+}
+
+.copia-pix__botao:hover {
+  background: color-mix(in srgb, var(--red, #bf2a26) 9%, transparent);
+  border-color: var(--red, #bf2a26);
+  transform: translateY(-1px);
+}
+
+.copia-pix__botao:focus-visible {
+  outline: 2px solid var(--red, #bf2a26);
+  outline-offset: 2px;
+}
+
+.copia-pix__botao.is-copiado {
+  background: var(--red, #bf2a26);
+  border-color: var(--red, #bf2a26);
+  color: var(--paper, #fff);
+}
+
+.copia-pix__botao svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.copia-pix__aviso {
+  min-height: 0.9rem;
+  font-family: var(--body, inherit);
+  font-size: 0.72rem;
+  line-height: 1.2;
+  color: var(--ink-soft, currentColor);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copia-pix__botao {
+    transition: none;
+  }
+
+  .copia-pix__botao:hover {
+    transform: none;
+  }
+}
