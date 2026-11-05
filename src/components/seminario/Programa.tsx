@@ -8,19 +8,22 @@
  */
 import { useRef, useState } from "react";
 import { programacao } from "../../content/evento";
-import { FiltroOrgs, contarPorOrgao, type Filtro } from "../FiltroOrgs";
+import {
+  FiltroOrgs,
+  contarPorOrgao,
+  filtrarPorOrgao,
+  useFiltro,
+} from "../FiltroOrgs";
 
 export function Programa() {
   const [dia, setDia] = useState(0);
-  const [filtro, setFiltro] = useState<Filtro>("Tudo");
+  const [filtro, setFiltro] = useFiltro();
   const abas = useRef<HTMLDivElement>(null);
   const atual = programacao[dia];
 
-  const contagens = contarPorOrgao(atual.itens);
-  const itens =
-    filtro === "Tudo"
-      ? atual.itens
-      : atual.itens.filter((item) => item.tag === filtro);
+  // Contagem geral dos quatro dias: o número não muda ao trocar de dia.
+  const contagens = contarPorOrgao(programacao.flatMap((d) => d.itens));
+  const itens = filtrarPorOrgao(atual.itens, filtro);
 
   function irPara(indice: number) {
     const total = programacao.length;
@@ -72,6 +75,8 @@ export function Programa() {
         ))}
       </div>
 
+      <FiltroOrgs valor={filtro} onChange={setFiltro} contagens={contagens} />
+
       <div
         id="xi-painel"
         className="xi-painel"
@@ -81,8 +86,6 @@ export function Programa() {
         /* a key força a cascata de entrada a cada troca de dia */
         key={`${atual.dia}-${filtro}`}
       >
-        <FiltroOrgs valor={filtro} onChange={setFiltro} contagens={contagens} />
-
         {itens.length === 0 ? (
           <p className="filtro__vazio">
             Nenhuma atividade de {filtro === "Conjunta" ? "conjunta" : filtro} neste

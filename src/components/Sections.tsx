@@ -5,7 +5,12 @@ import { cartas, evento, faq, organizacoes, programacao } from "../content/event
 const URL_XI = "https://seminariovenasabiertas.pages.dev/";
 import { Arrow, Spark } from "./Motifs";
 import { ContagemInscricoes } from "./Contagem";
-import { FiltroOrgs, contarPorOrgao, type Filtro } from "./FiltroOrgs";
+import {
+  FiltroOrgs,
+  contarPorOrgao,
+  filtrarPorOrgao,
+  useFiltro,
+} from "./FiltroOrgs";
 import { LayoutGrid, ScrollStar } from "./effects/Extras";
 import ElectroBorder from "./lightswind/electro-border";
 import { Lens } from "./lightswind/lens";
@@ -264,14 +269,12 @@ export function Encounter() {
 
 export function Program() {
   const [dia, setDia] = useState(1);
-  const [filtro, setFiltro] = useState<Filtro>("Tudo");
+  const [filtro, setFiltro] = useFiltro();
   const atual = programacao[dia];
 
-  const contagens = contarPorOrgao(atual.itens);
-  const itens =
-    filtro === "Tudo"
-      ? atual.itens
-      : atual.itens.filter((item) => item.tag === filtro);
+  // Contagem geral, somando os quatro dias: o número não muda ao trocar o dia.
+  const contagens = contarPorOrgao(programacao.flatMap((d) => d.itens));
+  const itens = filtrarPorOrgao(atual.itens, filtro);
 
   return (
     <section className="band-dark program" id="programacao" aria-labelledby="programacao-titulo">
@@ -307,13 +310,13 @@ export function Program() {
           ))}
         </div>
 
+        <FiltroOrgs valor={filtro} onChange={setFiltro} contagens={contagens} />
+
         <div
           id="programa-dia"
           role="tabpanel"
           className="program__panel"
         >
-          <FiltroOrgs valor={filtro} onChange={setFiltro} contagens={contagens} />
-
           {itens.length === 0 ? (
             <p className="filtro__vazio">
               Nenhuma atividade de {filtro === "Conjunta" ? "conjunta" : filtro} neste
