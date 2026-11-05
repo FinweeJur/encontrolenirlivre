@@ -8,11 +8,19 @@
  */
 import { useRef, useState } from "react";
 import { programacao } from "../../content/evento";
+import { FiltroOrgs, contarPorOrgao, type Filtro } from "../FiltroOrgs";
 
 export function Programa() {
   const [dia, setDia] = useState(0);
+  const [filtro, setFiltro] = useState<Filtro>("Tudo");
   const abas = useRef<HTMLDivElement>(null);
   const atual = programacao[dia];
+
+  const contagens = contarPorOrgao(atual.itens);
+  const itens =
+    filtro === "Tudo"
+      ? atual.itens
+      : atual.itens.filter((item) => item.tag === filtro);
 
   function irPara(indice: number) {
     const total = programacao.length;
@@ -71,21 +79,33 @@ export function Programa() {
         aria-labelledby={`xi-aba-${atual.dia}`}
         tabIndex={0}
         /* a key força a cascata de entrada a cada troca de dia */
-        key={atual.dia}
+        key={`${atual.dia}-${filtro}`}
       >
-        <ol className="xi-painel__lista">
-          {atual.itens.map((item, i) => (
-            <li
-              className="xi-item"
-              key={`${atual.dia}-${item.hora}-${i}`}
-              style={{ ["--atraso" as string]: `${i * 45}ms` }}
-            >
-              <span className="xi-item__hora">{item.hora}</span>
-              <span className="xi-item__titulo">{item.titulo}</span>
-              <em className={`xi-tag xi-tag--${item.tag.toLowerCase()}`}>{item.tag}</em>
-            </li>
-          ))}
-        </ol>
+        <FiltroOrgs valor={filtro} onChange={setFiltro} contagens={contagens} />
+
+        {itens.length === 0 ? (
+          <p className="filtro__vazio">
+            Nenhuma atividade de {filtro === "Conjunta" ? "conjunta" : filtro} neste
+            dia.{" "}
+            <button type="button" onClick={() => setFiltro("Tudo")}>
+              Ver todas
+            </button>
+          </p>
+        ) : (
+          <ol className="xi-painel__lista">
+            {itens.map((item, i) => (
+              <li
+                className="xi-item"
+                key={`${atual.dia}-${item.hora}-${i}`}
+                style={{ ["--atraso" as string]: `${i * 45}ms` }}
+              >
+                <span className="xi-item__hora">{item.hora}</span>
+                <span className="xi-item__titulo">{item.titulo}</span>
+                <em className={`xi-tag xi-tag--${item.tag.toLowerCase()}`}>{item.tag}</em>
+              </li>
+            ))}
+          </ol>
+        )}
       </div>
     </div>
   );

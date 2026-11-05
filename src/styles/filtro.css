@@ -1,0 +1,111 @@
+/* ==========================================================================
+   Filtro por organização da programação — compartilhado pelas duas páginas.
+   Botões pequenos, com a contagem do dia. Só tokens de tema.
+   ========================================================================== */
+
+.filtro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.9rem 0 0;
+}
+
+.filtro__rotulo {
+  margin-right: 0.15rem;
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute, var(--ink-soft));
+}
+
+.filtro__botao {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.25));
+  border-radius: 100px;
+  background: transparent;
+  color: var(--ink-soft, var(--ink));
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color 0.18s,
+    border-color 0.18s,
+    color 0.18s;
+}
+
+.filtro__botao:hover:not(:disabled) {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.filtro__botao:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
+.filtro__botao.is-ativo {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--paper);
+}
+
+.filtro__botao:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.filtro__conta {
+  font-size: 0.58rem;
+  letter-spacing: 0;
+  opacity: 0.75;
+}
+
+.filtro__vazio {
+  margin: 0.8rem 0 0;
+  padding: 0.7rem 0.9rem;
+  border: 1px dashed var(--line, rgba(0, 0, 0, 0.25));
+  border-radius: var(--radius, 6px);
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--ink-mute, var(--ink-soft));
+}
+
+.filtro__vazio button {
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--red);
+  border-bottom: 1px solid color-mix(in srgb, var(--red) 45%, transparent);
+  cursor: pointer;
+}
+
+@media (max-width: 560px) {
+  .filtro {
+    gap: 0.3rem;
+  }
+
+  .filtro__rotulo {
+    display: none;
+  }
+
+  .filtro__botao {
+    font-size: 0.62rem;
+    padding: 0.28rem 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filtro__botao {
+    transition: none;
+  }
+}

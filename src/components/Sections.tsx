@@ -5,6 +5,7 @@ import { cartas, evento, faq, organizacoes, programacao } from "../content/event
 const URL_XI = "https://seminariovenasabiertas.pages.dev/";
 import { Arrow, Spark } from "./Motifs";
 import { ContagemInscricoes } from "./Contagem";
+import { FiltroOrgs, contarPorOrgao, type Filtro } from "./FiltroOrgs";
 import { LayoutGrid, ScrollStar } from "./effects/Extras";
 import ElectroBorder from "./lightswind/electro-border";
 import { Lens } from "./lightswind/lens";
@@ -263,7 +264,14 @@ export function Encounter() {
 
 export function Program() {
   const [dia, setDia] = useState(1);
+  const [filtro, setFiltro] = useState<Filtro>("Tudo");
   const atual = programacao[dia];
+
+  const contagens = contarPorOrgao(atual.itens);
+  const itens =
+    filtro === "Tudo"
+      ? atual.itens
+      : atual.itens.filter((item) => item.tag === filtro);
 
   return (
     <section className="band-dark program" id="programacao" aria-labelledby="programacao-titulo">
@@ -299,14 +307,30 @@ export function Program() {
           ))}
         </div>
 
-        <div id="programa-dia" role="tabpanel" className="program__panel">
-          {atual.itens.map((item, i) => (
-            <article className="program__item" key={`${item.hora}-${i}`}>
-              <span className="program__time">{item.hora}</span>
-              <h3>{item.titulo}</h3>
-              <span className={`tag tag--${item.tag.toLowerCase()}`}>{item.tag}</span>
-            </article>
-          ))}
+        <div
+          id="programa-dia"
+          role="tabpanel"
+          className="program__panel"
+        >
+          <FiltroOrgs valor={filtro} onChange={setFiltro} contagens={contagens} />
+
+          {itens.length === 0 ? (
+            <p className="filtro__vazio">
+              Nenhuma atividade de {filtro === "Conjunta" ? "conjunta" : filtro} neste
+              dia.{" "}
+              <button type="button" onClick={() => setFiltro("Tudo")}>
+                Ver todas
+              </button>
+            </p>
+          ) : (
+            itens.map((item, i) => (
+              <article className="program__item" key={`${item.hora}-${i}`}>
+                <span className="program__time">{item.hora}</span>
+                <h3>{item.titulo}</h3>
+                <span className={`tag tag--${item.tag.toLowerCase()}`}>{item.tag}</span>
+              </article>
+            ))
+          )}
         </div>
 
         <div className="program__foot">
