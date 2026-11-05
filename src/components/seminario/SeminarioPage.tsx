@@ -24,6 +24,7 @@ import { Programa } from "./Programa";
 import { Oficinas } from "./Oficinas";
 import { Gds } from "./Gds";
 import { BotaoPix } from "../BotaoPix";
+import { ContagemInscricoes, FaltamDias } from "../Contagem";
 import { LayoutGrid } from "../effects/Extras";
 
 const LINKS = {
@@ -256,6 +257,7 @@ export function SeminarioPage() {
               <p className="xi-hero__meta">
                 11 a 14 de novembro de 2026 · UFPB · João Pessoa/PB
               </p>
+              <FaltamDias className="xi-hero__faltam" />
 
               <div className="xi-hero__acoes">
                 <Magnet>
@@ -434,6 +436,7 @@ export function SeminarioPage() {
                 <strong>{PIX}</strong>
               </p>
               <BotaoPix valor={PIX} />
+              <ContagemInscricoes />
             </div>
 
             <div className="xi-texto">

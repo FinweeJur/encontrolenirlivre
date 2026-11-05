@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Arrow, Roots, Sun } from "./Motifs";
+import { FaltamDias } from "./Contagem";
 import ElectricLogo from "./effects/ElectricLogo";
 import DitherVeil from "./effects/DitherVeil";
 
@@ -125,10 +126,13 @@ export function Hero({
             <img src={logo} alt="" width={132} height={112} />
           </div>
 
-          <p className="kicker">
-            <span className="dot" aria-hidden="true" />
-            30º Encontro Nacional da RENAP · 2026
-          </p>
+          <div className="hero__prazos">
+            <p className="kicker">
+              <span className="dot" aria-hidden="true" />
+              30º Encontro Nacional da RENAP · 2026
+            </p>
+            <FaltamDias />
+          </div>
 
           <h1 id="hero-title" className="hero__title">
             <span>Lenir</span>

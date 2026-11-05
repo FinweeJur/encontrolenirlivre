@@ -1,0 +1,160 @@
+/* ==========================================================================
+   Contagem do prazo — dias para o encontro e relógio das inscrições.
+   Compartilhada pelas duas páginas; usa só tokens de tema.
+   ========================================================================== */
+
+/* ---------- "faltam N dias" ---------- */
+
+.faltam {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.16rem 0.55rem 0.16rem 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--red) 40%, transparent);
+  border-radius: 100px;
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--red);
+  white-space: nowrap;
+}
+
+.faltam__ponto {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--red);
+  animation: faltam-pulso 2s ease-in-out infinite;
+}
+
+/* Onde a pílula encosta no texto da página. */
+.hero__prazos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.xi-hero__faltam {
+  display: inline-flex;
+  margin: 0 0 0.9rem;
+}
+
+@media (max-width: 560px) {
+  .hero__prazos {
+    gap: 0.4rem;
+  }
+
+  .xi-hero__faltam {
+    margin-bottom: 0.8rem;
+  }
+}
+
+@keyframes faltam-pulso {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.78);
+  }
+}
+
+/* ---------- relógio das inscrições ---------- */
+
+.contagem {
+  margin-top: 1.1rem;
+  padding: 0.9rem 1rem 0.8rem;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.2));
+  border-left: 3px solid var(--red);
+  border-radius: var(--radius, 6px);
+  background: color-mix(in srgb, var(--red) 5%, transparent);
+}
+
+.contagem__rotulo {
+  margin: 0 0 0.5rem;
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.contagem__relogio {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.contagem__bloco {
+  display: grid;
+  min-width: 3.1rem;
+  padding: 0.25rem 0.45rem 0.3rem;
+  background: var(--paper, transparent);
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.2));
+  border-radius: 4px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.contagem__bloco strong {
+  font-family: var(--display, Georgia, serif);
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--ink, currentColor);
+}
+
+.contagem__bloco small {
+  margin-top: 0.1rem;
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.56rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute, currentColor);
+}
+
+.contagem__pe {
+  margin: 0.5rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--ink-mute, var(--ink-soft));
+}
+
+.contagem--fim {
+  border-left-color: var(--line, rgba(0, 0, 0, 0.3));
+  background: transparent;
+}
+
+.contagem--fim .contagem__rotulo {
+  color: var(--ink-mute, var(--ink-soft));
+}
+
+.contagem__texto {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--ink-soft, var(--ink));
+}
+
+@media (max-width: 380px) {
+  .contagem__bloco {
+    min-width: 2.6rem;
+    padding: 0.2rem 0.3rem 0.25rem;
+  }
+
+  .contagem__bloco strong {
+    font-size: 1.15rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faltam__ponto {
+    animation: none;
+  }
+}

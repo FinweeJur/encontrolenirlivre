@@ -232,12 +232,12 @@ export const SUGESTOES: Record<"renap" | "seminario", string[]> = {
     "Como faço a inscrição?",
     "Quanto custa participar?",
     "Tem alojamento?",
-    "Quais editais foram publicados?",
+    "Quais GDs existem?",
   ],
   seminario: [
+    "Como faço a inscrição?",
+    "Que oficinas têm?",
     "Quais GDs existem?",
-    "Como submeto um trabalho?",
-    "Qual é a programação do dia 12?",
-    "Como peço isenção?",
+    "Onde fica o evento?",
   ],
 };

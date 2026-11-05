@@ -4,6 +4,7 @@ import { cartas, evento, faq, organizacoes, programacao } from "../content/event
 /** Site proprio do seminario do IPDMS (projeto Cloudflare Pages separado). */
 const URL_XI = "https://seminariovenasabiertas.pages.dev/";
 import { Arrow, Spark } from "./Motifs";
+import { ContagemInscricoes } from "./Contagem";
 import { LayoutGrid, ScrollStar } from "./effects/Extras";
 import ElectroBorder from "./lightswind/electro-border";
 import { Lens } from "./lightswind/lens";
@@ -378,6 +379,8 @@ export function Registration() {
               para <a href={`mailto:${evento.email}`}>{evento.email}</a>, com o
               assunto “Solicitação de Isenção – XI Seminário IPDMS”.
             </p>
+
+            <ContagemInscricoes />
           </div>
 
           <ElectroBorder
