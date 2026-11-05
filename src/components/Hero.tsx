@@ -176,6 +176,9 @@ export function Hero({
             >
               Inscreva-se <Arrow />
             </a>
+            <a className="btn btn--ghost" href="#programacao">
+              Programação
+            </a>
             <a className="btn btn--ghost" href="#lenir">
               Entenda o caso
             </a>
