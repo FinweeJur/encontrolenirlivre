@@ -108,7 +108,7 @@ type Tema = "claro" | "escuro";
 
 export function SeminarioPage() {
   const [menuAberto, setMenuAberto] = useState(false);
-  const telaPequena = useTelaPequena(900);
+  const telaPequena = useTelaPequena(640);
   const [tema, setTema] = useState<Tema>(() =>
     typeof document !== "undefined" && document.documentElement.dataset.xiTema === "escuro"
       ? "escuro"
@@ -271,12 +271,9 @@ export function SeminarioPage() {
                   </a>
                 </Magnet>
                 <Magnet>
-                  <a
-                    className="xi-btn xi-btn--linha"
-                    href={LINKS.programacao}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  {/* Desce para a programação da própria página; o site do
+                      IPDMS fica só no link discreto da nota. */}
+                  <a className="xi-btn xi-btn--linha" href="#programacao">
                     Programação completa
                   </a>
                 </Magnet>
@@ -306,15 +303,17 @@ export function SeminarioPage() {
                     color={VERMELHO}
                     glowColor={VERMELHO}
                     theme="dark"
-                    scale={1}
-                    intensity={0.9}
+                    /* 0.88: o shader desenha o contorno por fora da forma; em
+                       escala 1 o "s" e a segunda linha encostavam na borda. */
+                    scale={0.88}
+                    intensity={1.1}
                     glow={0}
-                    thickness={0.8}
+                    thickness={0.9}
                     strands={1}
                     bend={0.35}
-                    crackle={0.8}
+                    crackle={0.85}
                     fill={0}
-                    flicker={0.4}
+                    flicker={0.45}
                     speed={0.45}
                   />
                 )}

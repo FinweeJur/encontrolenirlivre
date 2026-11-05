@@ -53,12 +53,15 @@ export function useFiltro(): [Filtro, (novo: Filtro) => void] {
   return [filtro, setFiltro];
 }
 
-/** Aplica o filtro a uma lista de itens com etiqueta. */
+/** Aplica o filtro: a organização escolhida + as atividades conjuntas. */
 export function filtrarPorOrgao<T extends { tag: string }>(
   itens: T[],
   filtro: Filtro,
 ): T[] {
-  return filtro === "Tudo" ? itens : itens.filter((item) => item.tag === filtro);
+  if (filtro === "Tudo") return itens;
+  // Conjunta é dos três encontros: some da lista se for filtrada por um só.
+  if (filtro === "Conjunta") return itens.filter((item) => item.tag === "Conjunta");
+  return itens.filter((item) => item.tag === filtro || item.tag === "Conjunta");
 }
 
 export function FiltroOrgs({
@@ -91,6 +94,10 @@ export function FiltroOrgs({
           </button>
         );
       })}
+
+      {valor !== "Tudo" && valor !== "Conjunta" ? (
+        <span className="filtro__nota">+ atividades conjuntas</span>
+      ) : null}
     </div>
   );
 }

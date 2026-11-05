@@ -337,18 +337,21 @@ export function Program() {
         </div>
 
         <div className="program__foot">
-          <a
-            className="text-link"
-            href={evento.links.programacao}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Programação completa <Arrow />
-          </a>
           <a className="text-link" href={`${URL_XI}#gds`}>
             GDs e trabalhos aprovados <Arrow />
           </a>
-          <span className="program__note">Sujeita a atualização pela organização.</span>
+          <span className="program__note">
+            Sujeita a atualização pela organização.{" "}
+            <a
+              className="program__fonte"
+              href={evento.links.programacao}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Grade oficial no site do IPDMS
+            </a>
+            .
+          </span>
         </div>
       </div>
     </section>

@@ -69,6 +69,13 @@
   opacity: 0.75;
 }
 
+.filtro__nota {
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-mute, var(--ink-soft));
+}
+
 .filtro__vazio {
   margin: 0.8rem 0 0;
   padding: 0.7rem 0.9rem;

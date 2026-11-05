@@ -1716,6 +1716,17 @@ html[data-theme="light"] .encounter__anel {
   color: var(--ink-mute);
 }
 
+/* Link discreto da fonte oficial, dentro da nota. */
+.program__fonte {
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--line);
+}
+
+.program__fonte:hover {
+  color: var(--red);
+  border-bottom-color: var(--red);
+}
+
 /* ==========================================================================
    Seção 05 — inscrições
    ========================================================================== */
