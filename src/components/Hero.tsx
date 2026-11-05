@@ -1,6 +1,31 @@
+import { useEffect, useState } from "react";
 import { Arrow, Roots, Sun } from "./Motifs";
 import ElectricLogo from "./effects/ElectricLogo";
 import DitherVeil from "./effects/DitherVeil";
+
+/**
+ * Abaixo de 900 px o ElectricLogo da logo vira imagem estática.
+ *
+ * Medido no navegador: em 768 px o canvas pintava um retângulo branco com o
+ * ícone de imagem quebrada dentro do sol — o traçado não fechava em telas
+ * médias. A imagem estática é a mesma logo, sempre visível, e ainda economiza
+ * WebGL no celular e no tablet.
+ */
+function useTelaMedia(limite = 900) {
+  const [media, setMedia] = useState(
+    () => typeof window !== "undefined" && window.matchMedia(`(max-width: ${limite}px)`).matches,
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${limite}px)`);
+    const ouvir = () => setMedia(mq.matches);
+    ouvir();
+    mq.addEventListener("change", ouvir);
+    return () => mq.removeEventListener("change", ouvir);
+  }, [limite]);
+
+  return media;
+}
 
 export function Hero({
   theme,
@@ -9,6 +34,8 @@ export function Hero({
   theme: "dark" | "light";
   reducedMotion: boolean;
 }) {
+  const porta = useTelaMedia(900);
+  const estatica = reducedMotion || porta;
   const portrait =
     theme === "dark" ? "/img/portrait-dark.webp" : "/img/portrait-light.webp";
   const logo = theme === "dark" ? "/img/logo-white.png" : "/img/logo-ink.png";
@@ -27,7 +54,7 @@ export function Hero({
             <Sun className="hero__sun" />
             {/* Electric leve no SOL inteiro: círculo + raios, sem brilho de
                 bloom (glow 0), para não aparecer o retângulo do canvas. */}
-            {!reducedMotion && (
+            {!estatica && (
               <ElectricLogo
                 key={`sol-${theme}`}
                 src="/img/sun.png"
@@ -52,8 +79,8 @@ export function Hero({
             )}
           </div>
           <div className="hero__logo-wrap">
-            {reducedMotion ? (
-              <img className="hero__logo" src={logo} alt="RENAP" />
+            {estatica ? (
+              <img className="hero__logo" src={logo} alt="RENAP" width={900} height={790} />
             ) : (
               <ElectricLogo
                 key={theme}
@@ -92,6 +119,12 @@ export function Hero({
 
       <div className="shell hero__grid">
         <div className="hero__copy">
+          {/* Marca no celular: o sol com o electric fica escondido no mobile,
+              então a logo entra em fluxo, antes do título. */}
+          <div className="hero__marca-mobile" aria-hidden="true">
+            <img src={logo} alt="" width={132} height={112} />
+          </div>
+
           <p className="kicker">
             <span className="dot" aria-hidden="true" />
             30º Encontro Nacional da RENAP · 2026

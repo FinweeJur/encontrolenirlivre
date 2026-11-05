@@ -450,6 +450,13 @@ a:hover {
   height: 100%;
 }
 
+/* Logo estática: entra no celular, onde o electric fica miúdo ou não pinta. */
+.xi-logo-estatico {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .xi-hero__raizes {
   position: relative;
   width: 100%;
@@ -1217,6 +1224,7 @@ html[data-xi-tema="escuro"] .xi-rodape {
   .xi-hero__marca {
     align-self: center;
     margin-right: 0;
+    width: clamp(9rem, 42vw, 12rem);
   }
 }
 

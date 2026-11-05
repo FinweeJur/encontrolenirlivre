@@ -71,6 +71,22 @@
   border-bottom-color: var(--xi-terra);
 }
 
+.gds__quando {
+  font-size: 0.9rem;
+  color: var(--xi-tinta) !important;
+}
+
+.gds__quando strong {
+  color: var(--xi-terra);
+}
+
+.gds__fonte-nota {
+  font-family: var(--xi-dados);
+  font-size: 0.7rem !important;
+  letter-spacing: 0.02em;
+  color: var(--xi-tinta-fraca) !important;
+}
+
 /* ---------- lista ---------- */
 
 .gds__lista {
@@ -250,17 +266,75 @@
   content: "";
 }
 
+/* ---------- sessões dentro do cartão ---------- */
+
+.gd__sessao {
+  margin-top: 0.7rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed color-mix(in srgb, var(--xi-linha) 65%, transparent);
+}
+
+.gd__sessao:first-of-type {
+  border-top: 0;
+  padding-top: 0.2rem;
+}
+
+.gd__sessao-quando {
+  margin: 0;
+  font-family: var(--xi-dados);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--xi-tinta-fraca);
+}
+
+.gd__sessao-quando span {
+  display: inline-block;
+  margin-right: 0.35rem;
+  font-family: var(--xi-display);
+  font-size: 1rem;
+  letter-spacing: 0;
+  color: var(--xi-terra);
+}
+
+.gd__sessao-sala {
+  margin: 0.1rem 0 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--xi-tinta);
+}
+
+.gd__sessao-tema {
+  margin: 0.25rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--xi-terra);
+}
+
+.gd__sessao-coord {
+  margin: 0.3rem 0 0;
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: var(--xi-tinta-fraca);
+}
+
+.gd__sessao-coord strong {
+  color: var(--xi-tinta-suave);
+  font-weight: 600;
+}
+
 .gd__trabalhos {
   list-style: none;
-  margin: 0.6rem 0 0;
-  padding: 0;
+  margin: 0.55rem 0 0;
+  padding: 0 0.3rem 0 0;
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
   counter-reset: trabalho;
-  max-height: 21rem;
+  max-height: 18rem;
   overflow-y: auto;
-  padding-right: 0.3rem;
   scrollbar-width: thin;
 }
 

@@ -21,6 +21,7 @@ import { Editais } from "../Editais";
 import { Assistente } from "../Assistente";
 import { Magnet } from "./Magnet";
 import { Programa } from "./Programa";
+import { Oficinas } from "./Oficinas";
 import { Gds } from "./Gds";
 import { BotaoPix } from "../BotaoPix";
 import { LayoutGrid } from "../effects/Extras";
@@ -44,6 +45,27 @@ const EMAIL = "ipdmscorreio@gmail.com";
 
 /** Vermelho da paleta (igual ao tema claro da página da RENAP). */
 const VERMELHO = "#bf2a26";
+
+/**
+ * Em tela pequena o ElectricLogo sai de cena e entra a logo estática.
+ * Motivo duplo: abaixo de ~900 px o canvas do shader pintava um retângulo
+ * branco com ícone de imagem quebrada, e em aparelho sem WebGL ele nem pinta.
+ */
+function useTelaPequena(limite = 640) {
+  const [pequena, setPequena] = useState(
+    () => typeof window !== "undefined" && window.matchMedia(`(max-width: ${limite}px)`).matches,
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${limite}px)`);
+    const ouvir = () => setPequena(mq.matches);
+    ouvir();
+    mq.addEventListener("change", ouvir);
+    return () => mq.removeEventListener("change", ouvir);
+  }, [limite]);
+
+  return pequena;
+}
 
 /** Este site vive em domínio próprio; a página da RENAP aponta de volta. */
 const URL_RENAP = "https://encontrolenirlivre.pages.dev/";
@@ -85,6 +107,7 @@ type Tema = "claro" | "escuro";
 
 export function SeminarioPage() {
   const [menuAberto, setMenuAberto] = useState(false);
+  const telaPequena = useTelaPequena(900);
   const [tema, setTema] = useState<Tema>(() =>
     typeof document !== "undefined" && document.documentElement.dataset.xiTema === "escuro"
       ? "escuro"
@@ -205,6 +228,7 @@ export function SeminarioPage() {
           <a href="#sobre" onClick={() => setMenuAberto(false)}>Sobre</a>
           <a href="#editais" onClick={() => setMenuAberto(false)}>Editais</a>
           <a href="#programacao" onClick={() => setMenuAberto(false)}>Programação</a>
+          <a href="#oficinas" onClick={() => setMenuAberto(false)}>Oficinas e minicursos</a>
           <a href="#gds" onClick={() => setMenuAberto(false)}>Grupos de Discussão</a>
           <a href="#inscricoes" onClick={() => setMenuAberto(false)}>Inscrições</a>
           <a href="#tres" onClick={() => setMenuAberto(false)}>Os três encontros</a>
@@ -265,23 +289,33 @@ export function SeminarioPage() {
             {/* Arte oficial: o punho saindo das raízes, sobre o sol. */}
             <div className="xi-hero__arte">
               <div className="xi-hero__marca">
-                <ElectricLogo
-                  src="/img/ipdms-logo.png"
-                  className="xi-logo-electrico"
-                  color={VERMELHO}
-                  glowColor={VERMELHO}
-                  theme="dark"
-                  scale={1}
-                  intensity={0.9}
-                  glow={0}
-                  thickness={0.8}
-                  strands={1}
-                  bend={0.35}
-                  crackle={0.8}
-                  fill={0}
-                  flicker={0.4}
-                  speed={0.45}
-                />
+                {telaPequena ? (
+                  <img
+                    className="xi-logo-estatico"
+                    src="/img/ipdms-logo.png"
+                    alt="IPDMS — Instituto de Pesquisa, Direitos e Movimentos Sociais"
+                    width={344}
+                    height={293}
+                  />
+                ) : (
+                  <ElectricLogo
+                    src="/img/ipdms-logo.png"
+                    className="xi-logo-electrico"
+                    color={VERMELHO}
+                    glowColor={VERMELHO}
+                    theme="dark"
+                    scale={1}
+                    intensity={0.9}
+                    glow={0}
+                    thickness={0.8}
+                    strands={1}
+                    bend={0.35}
+                    crackle={0.8}
+                    fill={0}
+                    flicker={0.4}
+                    speed={0.45}
+                  />
+                )}
               </div>
 
               <div className="xi-hero__raizes">
@@ -368,6 +402,8 @@ export function SeminarioPage() {
             </aside>
           </div>
         </section>
+
+        <Oficinas />
 
         <Gds />
 
@@ -540,8 +576,9 @@ export function SeminarioPage() {
                 Campus I.
               </h2>
               <p className="xi-texto">
-                Universidade Federal da Paraíba, Campus I — João Pessoa/PB. A
-                sala de cada atividade é divulgada pela organização.
+                Universidade Federal da Paraíba, Campus I — Cidade
+                Universitária, s/n, Castelo Branco, João Pessoa/PB. A sala de
+                cada atividade é divulgada pela organização.
               </p>
               <Magnet>
                 <a className="xi-btn xi-btn--linha" href={LINKS.mapa} target="_blank" rel="noopener noreferrer">
@@ -593,6 +630,7 @@ export function SeminarioPage() {
             <nav aria-label="Rodapé">
               <a href="#sobre">Sobre</a>
               <a href="#programacao">Programação</a>
+              <a href="#oficinas">Oficinas e minicursos</a>
               <a href="#gds">Grupos de Discussão</a>
               <a href="#inscricoes">Inscrições</a>
               <a href="#tres">Os três encontros</a>

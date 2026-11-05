@@ -12,6 +12,7 @@ export const evento = {
   dataLonga: "11 a 14 de novembro de 2026",
   local: "UFPB · Campus I",
   cidade: "João Pessoa · PB",
+  endereco: "Cidade Universitária, s/n, Castelo Branco, João Pessoa/PB",
   inscricoesAte: "6 de novembro",
   inscricoesPeriodo: "13 de outubro a 6 de novembro de 2026",
   valores: [

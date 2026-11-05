@@ -1,0 +1,167 @@
+/* ==========================================================================
+   Oficinas e minicursos do XI Seminário.
+   Cada linha é uma oficina: hora, título e um botão pequeno de inscrever,
+   com ímã leve. O botão é secundário de propósito — o texto manda.
+   ========================================================================== */
+
+.xi-oficinas__topo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1rem, 4vw, 3rem);
+  align-items: end;
+  margin-bottom: clamp(1.3rem, 3vw, 2rem);
+}
+
+.xi-oficinas__nota {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--xi-tinta-suave);
+}
+
+.xi-oficinas__nota strong {
+  color: var(--xi-tinta);
+}
+
+.xi-oficinas__dias {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.9rem, 2.5vw, 1.6rem);
+  align-items: start;
+}
+
+.xi-oficinas__dia {
+  padding: 1rem 1.1rem 1.1rem;
+  background: var(--xi-branco);
+  border: 1px solid var(--xi-linha);
+  border-top: 2px solid var(--xi-terra);
+}
+
+.xi-oficinas__data {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  margin: 0 0 0.8rem;
+  font-family: var(--xi-dados);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--xi-tinta-fraca);
+}
+
+.xi-oficinas__data span {
+  font-family: var(--xi-display);
+  font-size: 1.35rem;
+  letter-spacing: 0;
+  color: var(--xi-terra);
+}
+
+.xi-oficinas__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.xi-oficina {
+  display: grid;
+  grid-template-columns: 3.4rem minmax(0, 1fr) auto;
+  gap: 0.5rem 0.7rem;
+  align-items: start;
+  padding: 0.7rem 0;
+  border-bottom: 1px dashed color-mix(in srgb, var(--xi-linha) 75%, transparent);
+}
+
+.xi-oficina:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.xi-oficina__hora {
+  font-family: var(--xi-dados);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--xi-terra);
+  padding-top: 0.15rem;
+}
+
+.xi-oficina__titulo {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.42;
+  color: var(--xi-tinta);
+}
+
+.xi-oficina__inscricao {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.32rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--xi-terra) 45%, transparent);
+  border-radius: 100px;
+  font-family: var(--xi-dados);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--xi-terra);
+  white-space: nowrap;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.xi-oficina__inscricao:hover,
+.xi-oficina__inscricao:focus-visible {
+  background: var(--xi-terra);
+  border-color: var(--xi-terra);
+  color: var(--xi-branco);
+}
+
+.xi-oficina__inscricao:focus-visible {
+  outline: 2px solid var(--xi-terra);
+  outline-offset: 2px;
+}
+
+.xi-oficina__oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 900px) {
+  .xi-oficinas__dias {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .xi-oficinas__topo {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .xi-oficina {
+    grid-template-columns: 3.2rem minmax(0, 1fr);
+  }
+
+  .xi-oficina .magnet {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: 0.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xi-oficina__inscricao {
+    transition: none;
+  }
+}

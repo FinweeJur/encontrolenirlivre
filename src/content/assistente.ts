@@ -13,7 +13,8 @@
 
 import { editais } from "./editais";
 import { evento, faq, programacao } from "./evento";
-import { gdResumo, gds } from "./gds";
+import { eixosGd, gdSessoes } from "./gdSessoes";
+import { oficinaResumo, oficinas } from "./oficinas";
 
 const PROGRAMACAO_TEXTO = programacao
   .map(
@@ -38,9 +39,25 @@ const EDITAIS_CURTO = editais
   )
   .join("\n");
 
-/** GDs: só o essencial. Os 140 títulos não cabem no contexto do modelo. */
-const GDS_TEXTO = gds
-  .map((g) => `GD ${g.numero} — ${g.titulo} (${g.eixo}): ${g.trabalhos.length} trabalhos aprovados`)
+/** GDs: uma linha por grupo, com sessões e total. Os títulos não entram. */
+const GDS_TEXTO = [...new Set(gdSessoes.map((s) => s.gd))]
+  .sort((a, b) => a - b)
+  .map((numero) => {
+    const sessoes = gdSessoes.filter((s) => s.gd === numero);
+    const trabalhos = sessoes.reduce((soma, s) => soma + s.trabalhos.length, 0);
+    const quando = sessoes
+      .map((s) => `${s.dia} às ${s.hora} (${s.sala})${s.sessao ? `, ${s.sessao}` : ""}`)
+      .join("; ");
+    return `GD ${numero} — ${sessoes[0].titulo} (${eixosGd[numero] ?? "GD"}): ${trabalhos} trabalhos. ${quando}`;
+  })
+  .join("\n");
+
+const TOTAL_GDS = new Set(gdSessoes.map((s) => s.gd)).size;
+const TOTAL_TRABALHOS_GD = gdSessoes.reduce((soma, s) => soma + s.trabalhos.length, 0);
+
+/** Oficinas: dia, hora e título. Cada uma tem inscrição própria. */
+const OFICINAS_TEXTO = oficinas
+  .map((o) => `- ${o.dia}/11, ${o.hora}: ${o.titulo}\n  Inscrição: ${o.url}`)
   .join("\n");
 
 const FAQ_TEXTO = faq
@@ -53,7 +70,8 @@ const FAQ_TEXTO = faq
 export const BASE_CONHECIMENTO = `ENCONTRO
 ${evento.nome}, com o tema "${evento.tema}".
 Datas: ${evento.dataLonga} (${evento.dataCurta}).
-Local: ${evento.local}, ${evento.cidade} — Universidade Federal da Paraíba, Campus I.
+Local: ${evento.local}, ${evento.cidade} — ${evento.endereco}.
+Universidade Federal da Paraíba, Campus I.
 O encontro acontece junto com:
 - XI Seminário Nacional Direitos, Pesquisa e Movimentos Sociais (IPDMS), tema "Venas abiertas: pesquisas e insurgências na América Latina";
 - 20º Encontro Nacional da RENAJU, tema "Memórias e dilemas renajupianos".
@@ -80,11 +98,13 @@ A chamada para inscrever obras encerrou em 30 de outubro de 2026.
 PROGRAMAÇÃO (sujeita a atualização pela organização)
 ${PROGRAMACAO_TEXTO}
 
-GRUPOS DE DISCUSSÃO (${gdResumo.totalGds} GDs, ${gdResumo.totalTrabalhos} trabalhos aprovados)
+GRUPOS DE DISCUSSÃO (${TOTAL_GDS} GDs, ${TOTAL_TRABALHOS_GD} trabalhos, com sala e horário)
 ${GDS_TEXTO}
-Local e horário de cada GD, com a grade de apresentações, ainda serão divulgados pela organização.
-O PDF oficial não lista trabalhos para os GDs 4 e 6.
-Documento: ${gdResumo.fonte}
+As sessões acontecem em 11/11 (quarta, 13h) e 12/11 (quinta, 13h30), no Campus I.
+A organização não abriu GDs 4 e 6 neste encontro.
+
+OFICINAS E MINICURSOS (${oficinaResumo.total} oficinas, ${oficinaResumo.vagas} vagas cada, inscrição separada da inscrição geral)
+${OFICINAS_TEXTO}
 
 EDITAIS E CHAMADAS (todos com prazo de submissão encerrado em 3/11/2026)
 ${EDITAIS_TEXTO}
@@ -167,12 +187,18 @@ export const RESPOSTAS_LOCAIS: ReadonlyArray<{
   },
   {
     termos: ["gds", "grupo de discuss", "trabalhos aprovados", "aprovado"],
-    resposta: `O seminário tem ${gdResumo.totalGds} Grupos de Discussão, com ${gdResumo.totalTrabalhos} trabalhos aprovados no total. Cada GD reúne pesquisas de um eixo:\n\n${GDS_TEXTO}\n\nA lista completa, com os títulos, está na seção “Grupos de Discussão” da página. Local e horário de cada GD ainda serão divulgados.`,
+    resposta: `O seminário tem ${TOTAL_GDS} Grupos de Discussão, com ${TOTAL_TRABALHOS_GD} trabalhos, em 11/11 às 13h e 12/11 às 13h30. Cada GD reúne pesquisas de um eixo:\n\n${GDS_TEXTO}\n\nSala, horário e a lista de cada sessão estão na seção “Grupos de Discussão” da página.`,
+  },
+  {
+    termos: ["oficina", "minicurso", "vagas"],
+    resposta: `São ${oficinaResumo.total} oficinas e minicursos, com ${oficinaResumo.vagas} vagas cada e inscrição em formulário próprio — separada da inscrição geral:\n\n${oficinas
+      .map((o) => `- ${o.dia}/11, ${o.hora}: ${o.titulo}\n  ${o.url}`)
+      .join("\n")}`,
   },
   {
     termos: ["local", "endere", "endereço", "ufpb", "mapa", "onde e", "onde é", "campus"],
     resposta:
-      "As atividades são no Campus I da Universidade Federal da Paraíba, em João Pessoa/PB. A sala de cada atividade é divulgada pela organização.\n\nhttps://www.google.com/maps/search/?api=1&query=Universidade+Federal+da+Para%C3%ADba+Campus+I",
+      "As atividades são no Campus I da Universidade Federal da Paraíba, na Cidade Universitária, s/n, Castelo Branco, João Pessoa/PB. A sala de cada atividade é divulgada pela organização.\n\nhttps://www.google.com/maps/search/?api=1&query=Universidade+Federal+da+Para%C3%ADba+Campus+I",
   },
   {
     termos: ["lenir", "homenage", "homenagem", "quem foi"],

@@ -1,84 +1,83 @@
 /**
- * Faixa de editais e chamadas, no início das duas páginas.
+ * Faixa de editais e chamadas — versão curta.
  *
- * O resumo vem de `content/editais.ts`. Nada de número solto no JSX:
- * prazo, situação e link são os mesmos que o assistente cita. Enquanto
- * houver prazo aberto, o rodapé convida a submeter; quando todos fecham,
- * o texto assume isso com clareza, em vez de fingir que ainda dá tempo.
+ * Todos os prazos já encerraram, então a faixa antiga (quatro cartões com
+ * resumo, prazo e situação) ocupava espaço para dizer o que o leitor não pode
+ * mais fazer. Agora fica uma linha com o resultado de cada chamada e o link
+ * do documento oficial.
+ *
+ * Quem quiser o detalhe — prazo, regra de submissão — encontra na página
+ * oficial do IPDMS, e o assistente ainda responde com o histórico completo:
+ * ele lê `editais.ts`, que continua guardando prazo e situação.
  */
 import { editais } from "../content/editais";
 import { evento } from "../content/evento";
 
-export function Editais({ escopo }: { escopo: "renap" | "seminario" }) {
-  const abertos = editais.filter((e) => e.status === "aberto");
+/** Para onde vai cada resultado: seção interna ou documento oficial. */
+const RESULTADOS: Record<string, { texto: string; href: string }> = {
+  trabalhos: {
+    texto: "Trabalhos aprovados",
+    href: "https://ipdms.org.br/wp-content/uploads/2026/07/Trabalhos-Aprovados-1.pdf",
+  },
+  gds: { texto: "Grupos de discussão", href: "#gds" },
+  minicursos: { texto: "Oficinas e minicursos", href: "#oficinas" },
+};
 
-  const nota =
-    escopo === "renap"
-      ? "O 30º Encontro da RENAP acontece junto ao XI Seminário do IPDMS e ao 20º Encontro da RENAJU. Os editais abaixo são do encontro conjunto; cada card leva ao documento oficial."
-      : "Os editais abaixo são do encontro conjunto — XI Seminário do IPDMS, 30º Encontro da RENAP e 20º Encontro da RENAJU. Cada card leva ao documento oficial no site do IPDMS.";
+/** Na página da RENAP as seções internas moram no site do seminário. */
+const URL_XI = "https://seminariovenasabiertas.pages.dev/";
+
+export function Editais({ escopo }: { escopo: "renap" | "seminario" }) {
+  const links = editais
+    .map((e) => {
+      const alvo = RESULTADOS[e.id];
+      if (!alvo) return null;
+      const href =
+        escopo === "renap" && alvo.href.startsWith("#")
+          ? `${URL_XI}${alvo.href}`
+          : alvo.href;
+      return { id: e.id, texto: alvo.texto, href, interno: href.startsWith("#") };
+    })
+    .filter((l): l is { id: string; texto: string; href: string; interno: boolean } => l !== null);
 
   return (
-    <section className="editais" id="editais" aria-labelledby="editais-titulo">
+    <section className="editais editais--curta" id="editais" aria-labelledby="editais-titulo">
       <div className="editais__shell">
-        <div className="editais__topo">
-          <p className="editais__rotulo">Editais e chamadas</p>
-          <h2 id="editais-titulo" className="editais__titulo">
-            O que está publicado
-          </h2>
-          <p className="editais__nota">{nota}</p>
+        <div className="editais__faixa">
+          <p className="editais__rotulo" id="editais-titulo">
+            Editais e chamadas
+          </p>
+          <p className="editais__fecho">
+            {escopo === "seminario"
+              ? "Prazos encerrados."
+              : "Prazos encerrados no encontro conjunto."}
+          </p>
+
+          <ul className="editais__resultados">
+            {links.map((l) => (
+              <li key={l.id}>
+                <a
+                  href={l.href}
+                  {...(l.interno
+                    ? {}
+                    : { target: "_blank", rel: "noopener noreferrer" })}
+                >
+                  {l.texto}
+                  <span aria-hidden="true"> {l.interno ? "↓" : "↗"}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <a
+            className="editais__inscricao"
+            href={evento.links.inscricao}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Inscrições até {evento.inscricoesAte}
+            <span aria-hidden="true"> ↗</span>
+          </a>
         </div>
-
-        <ul className="editais__lista">
-          {editais.map((e, i) => (
-            <li className="edital" key={e.id}>
-              <p className="edital__meta">
-                <span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
-                {e.tipo}
-              </p>
-              <h3 className="edital__titulo">{e.titulo}</h3>
-              <p className="edital__resumo">{e.resumo}</p>
-              <dl className="edital__dados">
-                <dt>Prazo</dt>
-                <dd>{e.prazo}</dd>
-                <dt>Situação</dt>
-                <dd>
-                  <span className={`edital__selo edital__selo--${e.status}`}>
-                    {e.situacao}
-                  </span>
-                </dd>
-              </dl>
-              <a
-                className="edital__link"
-                href={e.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {e.urlTexto}
-                <span aria-hidden="true"> ↗</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <p className="editais__rodape">
-          {abertos.length > 0 ? (
-            <>
-              Há {abertos.length} chamada{abertos.length > 1 ? "s" : ""} com prazo
-              aberto. As inscrições do encontro vão até {evento.inscricoesAte} de
-              2026.{" "}
-            </>
-          ) : (
-            <>
-              Todos os prazos de submissão já encerraram. As inscrições do
-              encontro vão até {evento.inscricoesAte} de 2026.{" "}
-            </>
-          )}
-          <a href={evento.links.inscricao} target="_blank" rel="noopener noreferrer">
-            Inscrever-se no SIGEventos
-          </a>{" "}
-          ·{" "}
-          <a href="#programacao">Ver a programação</a>
-        </p>
       </div>
     </section>
   );

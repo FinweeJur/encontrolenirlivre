@@ -738,10 +738,26 @@ html[data-theme="light"] .hero__sun {
   }
 }
 
+/* Marca no celular: aparece só quando o sol sai de cena. */
+.hero__marca-mobile {
+  display: none;
+}
+
 @media (max-width: 640px) {
-  /* No celular o cabeçalho já traz a marca; o sol sairia cortado. */
+  /* No celular o sol sairia cortado; a marca entra em fluxo, antes do título. */
   .hero__sun-wrap {
     display: none;
+  }
+
+  .hero__marca-mobile {
+    display: block;
+    width: 8.2rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .hero__marca-mobile img {
+    width: 100%;
+    height: auto;
   }
 }
 

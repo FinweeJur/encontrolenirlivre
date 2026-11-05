@@ -650,7 +650,9 @@ export function LocalFaq() {
             <address className="address">
               <strong>Universidade Federal da Paraíba</strong>
               <br />
-              Campus I · João Pessoa/PB
+              Campus I · Cidade Universitária, s/n
+              <br />
+              Castelo Branco · João Pessoa/PB
               <br />
               11 a 14 de novembro de 2026
             </address>
