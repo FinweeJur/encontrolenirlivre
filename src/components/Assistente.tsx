@@ -1,19 +1,23 @@
 /**
  * Assistente do encontro — bolha no canto inferior esquerdo.
  *
- * Conversa com o endpoint `/api/chat` (Cloudflare Pages Functions), que
- * consulta o GLM-4-Flash com a base de `content/assistente.ts`. Se o
- * endpoint não estiver configurado ou falhar, responde em modo local com
- * as mesmas informações — e diz que está em modo local, sem fingir que é IA.
+ * Primeiro tenta uma resposta curada (revisada à mão, em
+ * `content/assistente.ts`). Se a pergunta não casar com nenhuma, chama
+ * `/api/chat`, a Cloudflare Pages Function que consulta o GLM-4-Flash.
+ *
+ * Por que curada primeiro: prazo, preço e endereço são números que não podem
+ * variar nem envelhecer. A resposta revisada também chega na hora, sem
+ * depender de rede. O modelo responde o resto — e, se falhar, o site continua
+ * com as curadas e uma resposta padrão honesta.
  *
  * Nunca guarda conversa: fechou a página, apagou. Também não pede dado
  * pessoal e não substitui a secretaria do encontro.
  */
 import { useEffect, useRef, useState } from "react";
 import {
-  RESPOSTAS_LOCAIS,
   RESPOSTA_PADRAO,
   SUGESTOES,
+  responderCurada,
 } from "../content/assistente";
 
 type Papel = "user" | "assistente";
@@ -21,36 +25,9 @@ type Papel = "user" | "assistente";
 type Mensagem = {
   papel: Papel;
   texto: string;
-  /** Resposta determinística, sem modelo. */
+  /** Resposta pronta, sem modelo. */
   local?: boolean;
 };
-
-const semAcento = (t: string) =>
-  t
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
-
-function responderLocal(pergunta: string): string {
-  const alvo = semAcento(pergunta);
-  let melhor = 0;
-  let achado = "";
-
-  for (const item of RESPOSTAS_LOCAIS) {
-    // termo mais longo vale mais: "grupo de discuss" vence "gd" no desempate
-    const pontos = item.termos.reduce(
-      (soma, termo) =>
-        alvo.includes(semAcento(termo)) ? soma + semAcento(termo).length : soma,
-      0,
-    );
-    if (pontos > melhor) {
-      melhor = pontos;
-      achado = item.resposta;
-    }
-  }
-
-  return melhor > 0 ? achado : RESPOSTA_PADRAO;
-}
 
 /** Quebra o texto em pedaços, transformando URLs em links de verdade. */
 function ComLinks({ texto }: { texto: string }) {
@@ -135,6 +112,17 @@ export function Assistente({ escopo }: { escopo: "renap" | "seminario" }) {
     ];
     setMensagens(historico);
     setTexto("");
+
+    // Resposta revisada à mão tem prioridade: número errado aqui é dano.
+    const curada = responderCurada(limpa);
+    if (curada) {
+      setMensagens((atuais) => [
+        ...atuais,
+        { papel: "assistente", texto: curada.resposta, local: true },
+      ]);
+      return;
+    }
+
     setCarregando(true);
 
     try {
@@ -165,7 +153,7 @@ export function Assistente({ escopo }: { escopo: "renap" | "seminario" }) {
       setModoLocal(true);
       setMensagens((atuais) => [
         ...atuais,
-        { papel: "assistente", texto: responderLocal(limpa), local: true },
+        { papel: "assistente", texto: RESPOSTA_PADRAO, local: true },
       ]);
     } finally {
       setCarregando(false);

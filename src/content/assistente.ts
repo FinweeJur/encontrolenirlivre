@@ -126,6 +126,7 @@ Página do 30º Encontro da RENAP: https://encontrolenirlivre.pages.dev/
 
 OBSERVAÇÕES
 - Lenir Correia é advogada popular e liderança da luta pela terra; o encontro leva o nome dela como homenagem e pelo lema "Lenir Correia Livre".
+- A presença será registrada por QR code em cada atividade, com check-in no local. A regra de certificado (carga mínima e como pedir) ainda será divulgada pela organização.
 - O site não processa pagamentos nem guarda dados pessoais.
 - O endereço exato de cada atividade é divulgado pela organização.`;
 
@@ -153,72 +154,130 @@ ${BASE_CONHECIMENTO}`;
 }
 
 /** Respostas determinísticas usadas quando o modelo não está disponível. */
-export const RESPOSTAS_LOCAIS: ReadonlyArray<{
+export type RespostaCurada = {
+  /** Identificador curto, para depurar e para amarrar sugestões. */
+  id: string;
   termos: string[];
   resposta: string;
-}> = [
+};
+
+export const RESPOSTAS_LOCAIS: ReadonlyArray<RespostaCurada> = [
   {
-    termos: ["inscri", "sigeventos", "cadastr", "participar"],
-    resposta:
-      "A inscrição é pelo SIGEventos da UFPB, até 6 de novembro de 2026: cadastre-se escolhendo RENAP, IPDMS ou RENAJU como instituição, confirme o e-mail, inscreva-se como participante e selecione o evento. Depois faça o PIX e envie o comprovante para ipdmscorreio@gmail.com.\n\nhttps://sigeventos.ufpb.br",
+    id: "inscricao",
+    termos: ["inscri", "sigeventos", "cadastr", "participar", "matricul"],
+    resposta: `A inscrição é pelo SIGEventos da UFPB, de ${evento.inscricoesPeriodo}, e fecha em ${evento.inscricoesAte}. Escolha RENAP, IPDMS ou RENAJU como instituição, confirme o e-mail, inscreva-se como participante e selecione o evento. Depois pague o PIX e envie o comprovante para ${evento.email}.\n\n${evento.links.inscricao}`,
   },
   {
-    termos: ["valor", "preco", "preço", "quanto custa", "quanto e", "quanto é", "taxa", "pix"],
-    resposta:
-      "R$ 100 para advogadas, advogados, profissionais e pós-graduação; R$ 50 para estudantes de graduação. O PIX é para ipdmscorreio@gmail.com, e o comprovante vai para o mesmo e-mail.",
+    id: "valores",
+    termos: [
+      "valor",
+      "preco",
+      "preço",
+      "quanto custa",
+      "quanto e",
+      "quanto é",
+      "taxa",
+      "pix",
+      "pagamento",
+      "comprovante",
+    ],
+    resposta: `R$ 100 para advogadas, advogados, profissionais e pós-graduação; R$ 50 para estudantes de graduação. O PIX é para ${evento.pix} e o comprovante vai para o mesmo e-mail. O botão “Copiar PIX” na seção de inscrições copia a chave.`,
   },
   {
-    termos: ["isenc", "gratuit", "bolsa"],
-    resposta:
-      "É possível pedir isenção por e-mail para ipdmscorreio@gmail.com, com nome completo, categoria, justificativa e e-mail de contato.",
+    id: "isencao",
+    termos: ["isenc", "gratuit", "bolsa", "sem pagar"],
+    resposta: `Dá para pedir isenção por e-mail para ${evento.email}, com o assunto “Solicitação de Isenção – XI Seminário IPDMS”, informando nome completo, categoria, justificativa e e-mail de contato.`,
   },
   {
-    termos: ["alojamento", "moradia", "hospedagem", "dormir", "onde ficar"],
-    resposta:
-      "O alojamento é organizado a partir do formulário da organização. Preencha com nome, contato e dados de chegada e permanência:\n\nhttps://forms.gle/LoSeGv5YGtpNZVaJ6",
+    id: "alojamento",
+    termos: ["alojamento", "moradia", "hospedagem", "dormir", "onde ficar", "vaga"],
+    resposta: `O alojamento é organizado a partir do formulário da organização, com nome, contato e dados de chegada e permanência:\n\n${evento.links.alojamento}`,
   },
   {
-    termos: ["programa", "horario", "horário", "cronograma", "dia 11", "dia 12", "dia 13", "dia 14", "mesa"],
-    resposta: `A programação vai de 11 a 14 de novembro, com credenciamento na quarta, mesas, Grupos de Discussão, minicursos e momentos conjuntos. Resumo por dia:\n\n${PROGRAMACAO_TEXTO}`,
+    id: "programacao",
+    termos: [
+      "programa",
+      "horario",
+      "horário",
+      "cronograma",
+      "agenda",
+      "dia 11",
+      "dia 12",
+      "dia 13",
+      "dia 14",
+      "mesa",
+      "abertura",
+      "credenciamento",
+    ],
+    resposta: `A programação vai de 11 a 14 de novembro. O credenciamento abre em 11/11 ao meio-dia; os Grupos de Discussão acontecem em 11/11 às 13h e 12/11 às 13h30; as oficinas em 11/11 à tarde e 13/11 pela manhã; o lançamento de livros é em 12/11 à noite. A grade completa, com filtro por organização, está na seção “Programação” da página.`,
   },
   {
-    termos: ["edital", "submiss", "trabalho", "artigo", "resumo", "minicurso", "oficina", "livro"],
+    id: "editais",
+    termos: ["edital", "submiss", "submet", "artigo", "resumo", "chamada"],
     resposta: `Os editais do encontro conjunto já tiveram os prazos de submissão encerrados:\n\n${EDITAIS_CURTO}\n\nOs documentos oficiais estão na faixa “Editais e chamadas”, no início da página.`,
   },
   {
-    termos: ["gds", "grupo de discuss", "trabalhos aprovados", "aprovado"],
-    resposta: `O seminário tem ${TOTAL_GDS} Grupos de Discussão, com ${TOTAL_TRABALHOS_GD} trabalhos, em 11/11 às 13h e 12/11 às 13h30. Cada GD reúne pesquisas de um eixo:\n\n${GDS_TEXTO}\n\nSala, horário e a lista de cada sessão estão na seção “Grupos de Discussão” da página.`,
+    id: "gds",
+    termos: ["gds", "grupo de discuss", "grupos de discuss", "trabalho", "aprovad"],
+    resposta: `São ${TOTAL_GDS} Grupos de Discussão, com ${TOTAL_TRABALHOS_GD} trabalhos, em 11/11 às 13h e 12/11 às 13h30. Cada GD tem sala própria e uma ou mais sessões. As submissões já encerraram e a lista aprovada está na seção “Grupos de Discussão”, com sala e ordem das apresentações.`,
   },
   {
+    id: "oficinas",
     termos: ["oficina", "minicurso", "vagas"],
     resposta: `São ${oficinaResumo.total} oficinas e minicursos, com ${oficinaResumo.vagas} vagas cada e inscrição em formulário próprio — separada da inscrição geral:\n\n${oficinas
-      .map((o) => `- ${o.dia}/11, ${o.hora}: ${o.titulo}\n  ${o.url}`)
+      .map((o) => `- ${o.dia}/11, ${o.hora}: ${o.titulo}`)
       .join("\n")}`,
   },
   {
-    termos: ["local", "endere", "endereço", "ufpb", "mapa", "onde e", "onde é", "campus"],
-    resposta:
-      "As atividades são no Campus I da Universidade Federal da Paraíba, na Cidade Universitária, s/n, Castelo Branco, João Pessoa/PB. A sala de cada atividade é divulgada pela organização.\n\nhttps://www.google.com/maps/search/?api=1&query=Universidade+Federal+da+Para%C3%ADba+Campus+I",
+    id: "local",
+    termos: [
+      "local",
+      "endere",
+      "endereço",
+      "ufpb",
+      "onde e",
+      "onde é",
+      "onde fica",
+      "campus",
+      "cheg",
+      "mapa",
+    ],
+    resposta: `As atividades são no Campus I da Universidade Federal da Paraíba, na Cidade Universitária, s/n, Castelo Branco, João Pessoa/PB. A sala de cada atividade está na programação.\n\nhttps://www.google.com/maps/search/?api=1&query=Universidade+Federal+da+Para%C3%ADba+Campus+I`,
   },
   {
+    id: "presenca",
+    termos: ["certificad", "presenca", "presença", "check-in", "checkin", "qr", "frequencia", "frequência"],
+    resposta: "A organização vai registrar presença por QR code em cada atividade, com check-in no local. A regra de certificado — carga mínima e como pedir — ainda não foi publicada; confirme na secretaria: ipdmscorreio@gmail.com.",
+  },
+  {
+    id: "livros",
+    termos: ["lancamento", "lançamento", "livro", "obra"],
+    resposta: "O lançamento de livros acontece em 12 de novembro, quinta-feira à noite, dentro da programação. Precisa que ao menos uma pessoa autora ou organizadora esteja presente. A chamada para inscrever obras encerrou em 30 de outubro.",
+  },
+  {
+    id: "lenir",
     termos: ["lenir", "homenage", "homenagem", "quem foi"],
-    resposta:
-      "O 30º Encontro da RENAP tem o tema “Lenir Correia Livre”, em homenagem a Lenir Correia, advogada popular e liderança da luta pela terra. A trajetória dela abre a seção de homenagem da página, com a nota pública da RENAP.",
+    resposta: "O 30º Encontro da RENAP tem o tema “Lenir Correia Livre”, em homenagem a Lenir Correia, advogada popular e liderança da luta pela terra. A trajetória dela abre a seção de homenagem da página, com a nota pública da RENAP.",
   },
   {
+    id: "seminario",
     termos: ["seminario", "seminário", "ipdms", "venas"],
-    resposta:
-      "O XI Seminário do IPDMS tem o tema “Venas abiertas: pesquisas e insurgências na América Latina” e acontece junto ao 30º Encontro da RENAP e ao 20º Encontro da RENAJU, de 11 a 14 de novembro, na UFPB.\n\nhttps://seminariovenasabiertas.pages.dev/",
+    resposta: "O XI Seminário do IPDMS tem o tema “Venas abiertas: pesquisas e insurgências na América Latina” e acontece junto ao 30º Encontro da RENAP e ao 20º Encontro da RENAJU, de 11 a 14 de novembro, na UFPB.\n\nhttps://seminariovenasabiertas.pages.dev/",
   },
   {
-    termos: ["renaju", "renajupiano"],
-    resposta:
-      "O 20º Encontro da RENAJU tem o tema “Memórias e dilemas renajupianos” e integra a programação conjunta na UFPB. A RENAJU se apresenta no Instagram como @ajupsbrasil.",
+    id: "renap",
+    termos: ["renap", "30º", "30o encontro", "lenir correia livre"],
+    resposta: "O 30º Encontro Nacional da RENAP tem o tema “Lenir Correia Livre” e acontece de 11 a 14 de novembro de 2026, na UFPB, em João Pessoa, junto ao XI Seminário do IPDMS e ao 20º Encontro da RENAJU.\n\nhttps://encontrolenirlivre.pages.dev/",
   },
   {
-    termos: ["contato", "email", "e-mail", "secretaria", "duvida", "dúvida", "telefone"],
-    resposta:
-      "Fale com a secretaria do encontro: ipdmscorreio@gmail.com. O site não processa pagamentos nem guarda dados pessoais.",
+    id: "renaju",
+    termos: ["renaju", "renajupiano", "ajups"],
+    resposta: "O 20º Encontro da RENAJU tem o tema “Memórias e dilemas renajupianos” e integra a programação conjunta na UFPB. A RENAJU se apresenta no Instagram como @ajupsbrasil.",
+  },
+  {
+    id: "contato",
+    termos: ["contato", "email", "e-mail", "secretaria", "duvida", "dúvida", "telefone", "falo", "falar"],
+    resposta: `Fale com a secretaria do encontro: ${evento.email}. Dúvidas de submissão acadêmica vão para secretaria@ipdms.org.br. O site não processa pagamentos nem guarda dados pessoais.`,
   },
 ];
 
@@ -226,18 +285,51 @@ export const RESPOSTAS_LOCAIS: ReadonlyArray<{
 export const RESPOSTA_PADRAO =
   "Não encontrei isso nas fontes do site. Escreva para ipdmscorreio@gmail.com ou consulte a página oficial do seminário: https://ipdms.org.br/xi-sn-ipdms/";
 
+const semAcento = (t: string) =>
+  t
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+
+/**
+ * Procura a resposta curada mais provável.
+ *
+ * A pontuação soma o tamanho dos termos encontrados: "grupo de discussão"
+ * (18) vence "gd" (2) numa pergunta que cita os dois. Exige pontuação mínima
+ * para não responder besteira — abaixo disso o modelo (ou a resposta padrão)
+ * assume.
+ */
+export function responderCurada(pergunta: string): RespostaCurada | null {
+  const alvo = semAcento(pergunta);
+  let melhor: RespostaCurada | null = null;
+  let pontos = 0;
+
+  for (const item of RESPOSTAS_LOCAIS) {
+    const soma = item.termos.reduce(
+      (total, termo) => (alvo.includes(semAcento(termo)) ? total + semAcento(termo).length : total),
+      0,
+    );
+    if (soma > pontos) {
+      pontos = soma;
+      melhor = item;
+    }
+  }
+
+  return pontos >= 3 ? melhor : null;
+}
+
 /** Sugestões de pergunta, por página. */
 export const SUGESTOES: Record<"renap" | "seminario", string[]> = {
   renap: [
     "Como faço a inscrição?",
     "Quanto custa participar?",
     "Tem alojamento?",
-    "Quais GDs existem?",
+    "Onde fica o evento?",
   ],
   seminario: [
     "Como faço a inscrição?",
     "Que oficinas têm?",
     "Quais GDs existem?",
-    "Onde fica o evento?",
+    "Como funciona a presença?",
   ],
 };
