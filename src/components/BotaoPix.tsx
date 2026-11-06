@@ -7,6 +7,7 @@
  * copiado. Não guarda nada e não envia o endereço para servidor nenhum.
  */
 import { useEffect, useRef, useState } from "react";
+import { copiarTexto } from "../lib/copiar";
 import "../styles/pix.css";
 
 export function BotaoPix({ valor }: { valor: string }) {
@@ -21,13 +22,8 @@ export function BotaoPix({ valor }: { valor: string }) {
   );
 
   async function copiar() {
-    try {
-      if (!navigator.clipboard) throw new Error("sem-clipboard");
-      await navigator.clipboard.writeText(valor);
-      setEstado("copiado");
-    } catch {
-      setEstado("falhou");
-    }
+    const deuCerto = await copiarTexto(valor);
+    setEstado(deuCerto ? "copiado" : "falhou");
 
     if (relogio.current) window.clearTimeout(relogio.current);
     relogio.current = window.setTimeout(() => setEstado("parado"), 2600);

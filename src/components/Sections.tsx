@@ -5,6 +5,7 @@ import { cartas, evento, faq, organizacoes, programacao } from "../content/event
 const URL_XI = "https://seminariovenasabiertas.pages.dev/";
 import { Arrow, Spark } from "./Motifs";
 import { ContagemInscricoes } from "./Contagem";
+import { copiarTexto } from "../lib/copiar";
 import {
   FiltroOrgs,
   contarPorOrgao,
@@ -359,16 +360,12 @@ export function Program() {
 }
 
 export function Registration() {
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState<"parado" | "copiado" | "falhou">("parado");
 
   async function copyPix() {
-    try {
-      await navigator.clipboard.writeText(evento.pix);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2200);
-    } catch {
-      setCopied(false);
-    }
+    const deuCerto = await copiarTexto(evento.pix);
+    setCopied(deuCerto ? "copiado" : "falhou");
+    window.setTimeout(() => setCopied("parado"), 2600);
   }
 
   return (
@@ -454,12 +451,23 @@ export function Registration() {
                 </li>
               </ol>
 
-              <button type="button" className="pix" onClick={copyPix}>
+              <button
+                type="button"
+                className="pix"
+                onClick={copyPix}
+                aria-live="polite"
+              >
                 <span>
                   <small>Chave PIX</small>
                   {evento.pix}
                 </span>
-                <strong>{copied ? "Copiado" : "Copiar"}</strong>
+                <strong>
+                  {copied === "copiado"
+                    ? "Copiado"
+                    : copied === "falhou"
+                      ? "Copie à mão"
+                      : "Copiar"}
+                </strong>
               </button>
 
               <a
