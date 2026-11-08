@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Programação completa — Encontrão RENAP · IPDMS · RENAJU 2026</title>
+<meta name="description" content="Programação completa do 30º Encontro Nacional da RENAP, do XI Seminário do IPDMS e do 20º Encontro da RENAJU, de 11 a 14 de novembro de 2026, na UFPB.">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="/img/favicon.png">
+<style>
+  :root {
+    --tinta: #2a2521;
+    --tinta-fraca: #6d6153;
+    --linha: #d9ccb2;
+    --papel: #f6f1e7;
+    --vermelho: #bf2a26;
+    --amarelo: #b8791a;
+    --verde: #0a6f68;
+    --azul: #3c5d86;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--papel);
+    color: var(--tinta);
+    font-family: "Satoshi", system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.5;
+  }
+  .casca { max-width: 60rem; margin: 0 auto; padding: 2rem 1.2rem 3rem; }
+  header { border-bottom: 3px solid var(--vermelho); padding-bottom: 1rem; margin-bottom: 1.6rem; }
+  .olho {
+    margin: 0 0 .4rem;
+    font-family: ui-monospace, "SFMono-Regular", monospace;
+    font-size: .68rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--vermelho);
+  }
+  h1 {
+    margin: 0 0 .35rem;
+    font-size: clamp(1.8rem, 6vw, 2.8rem);
+    line-height: .95;
+    letter-spacing: -.02em;
+    text-transform: uppercase;
+  }
+  .sub { margin: 0; color: var(--tinta-fraca); }
+  .meta { margin: .6rem 0 0; font-size: .8rem; color: var(--tinta-fraca); }
+  .imprimir {
+    margin-top: 1rem;
+    padding: .5rem .9rem;
+    border: 1px solid var(--vermelho);
+    border-radius: 100px;
+    background: transparent;
+    color: var(--vermelho);
+    font: inherit;
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .imprimir:hover { background: var(--vermelho); color: var(--papel); }
+  .dia { margin: 0 0 1.8rem; }
+  .dia h2 {
+    display: flex;
+    align-items: baseline;
+    gap: .5rem;
+    margin: 0 0 .6rem;
+    padding-bottom: .35rem;
+    border-bottom: 1px solid var(--linha);
+    font-size: 1.05rem;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+  .num {
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--vermelho);
+    font-family: Georgia, serif;
+  }
+  ol { list-style: none; margin: 0; padding: 0; }
+  li {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr) auto;
+    gap: .3rem .9rem;
+    align-items: baseline;
+    padding: .5rem 0;
+    border-bottom: 1px dotted var(--linha);
+  }
+  .hora {
+    font-family: ui-monospace, "SFMono-Regular", monospace;
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--tinta-fraca);
+  }
+  .texto strong { display: block; font-size: .92rem; font-weight: 600; }
+  .local {
+    display: block;
+    margin-top: .12rem;
+    font-size: .76rem;
+    color: var(--tinta-fraca);
+  }
+  .tag {
+    font-family: ui-monospace, "SFMono-Regular", monospace;
+    font-size: .6rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: .1rem .45rem;
+    border: 1px solid currentColor;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .tag--ipdms { color: var(--amarelo); }
+  .tag--renap { color: var(--vermelho); }
+  .tag--renaju { color: var(--verde); }
+  .tag--conjunta { color: var(--tinta-fraca); }
+  .tag--cultural { color: var(--azul); }
+  footer {
+    margin-top: 2rem;
+    padding-top: .8rem;
+    border-top: 1px solid var(--linha);
+    font-size: .74rem;
+    color: var(--tinta-fraca);
+  }
+  footer a { color: var(--vermelho); }
+  @media (max-width: 560px) {
+    li { grid-template-columns: 1fr auto; }
+    .hora { grid-column: 1 / -1; }
+    .texto { grid-column: 1; }
+    .tag { grid-row: 2; }
+  }
+  @media print {
+    :root { --tinta: #000; --tinta-fraca: #333; --linha: #bbb; --papel: #fff; }
+    .casca { max-width: none; padding: 0; }
+    .imprimir { display: none; }
+    .dia { break-inside: avoid; }
+    li { break-inside: avoid; }
+    a { color: inherit; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<div class="casca">
+  <header>
+    <p class="olho">30º Encontro Nacional da RENAP · XI Seminário do IPDMS · 20º Encontro da RENAJU</p>
+    <h1>Programação completa</h1>
+    <p class="sub">11 a 14 de novembro de 2026 · UFPB, Campus I · João Pessoa/PB</p>
+    <p class="meta">43 atividades em 4 dias. Versão de 08/11/2026.</p>
+    <button class="imprimir" type="button" onclick="window.print()">Imprimir</button>
+  </header>
+
+  <main>
+      <section class="dia">
+        <h2><span class="num">11</span> quarta-feira</h2>
+        <ol>
+        <li>
+          <span class="hora">manhã</span>
+          <span class="texto">
+            <strong>Chegança — equipe de acolhimento recebe as pessoas</strong>
+            
+          </span>
+          <span class="tag tag--conjunta">Conjunta</span>
+        </li>
+        <li>
+          <span class="hora">12h às 13h</span>
+          <span class="texto">
+            <strong>Credenciamento</strong>
+            <span class="local">Pátio do CCJ</span>
+          </span>
+          <span class="tag tag--conjunta">Conjunta</span>
+        </li>
+        <li>
+          <span class="hora">13h às 16h30</span>
+          <span class="texto">
+            <strong>GD1 — Direito e Marxismo</strong>
+            <span class="local">Sala 1 PPGCJ (CCJ, 1º andar)</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h às 16h30</span>
+          <span class="texto">
+            <strong>GD3 — Sistema de justiça e conflitos fundiários</strong>
+            <span class="local">Sala H (CCSA)</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h às 16h30</span>
+          <span class="texto">
+            <strong>GD6 — Ditaduras e empresas: responsabilização por graves violações de direitos humanos</strong>
+            <span class="local">Sala Multimídia (CCJ, 1º andar)</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h às 16h30</span>
+          <span class="texto">
+            <strong>GD8 — Direito para resistir + GD11 — Conflitos minerários e estratégias jurídico-políticas</strong>
+            <span class="local">Sala 4 CCJ (1º andar)</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h às 16h30</span>
+          <span class="texto">
+            <strong>GD7 — Gênero, direito e violências interseccionais</strong>
+            <span class="local">Sala A CCSA</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h às 16h30</span>
+          <span class="texto">
+            <strong>GD9 — Criminologia crítica e movimentos sociais</strong>
+            <span class="local">Sala B CCSA</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h às 16h30</span>
+          <span class="texto">
+            <strong>GD13 — Conflitos socioambientais, ilegalismos do poder e resistências territoriais</strong>
+            <span class="local">Sala C CCSA</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h às 16h30</span>
+          <span class="texto">
+            <strong>GD14 — AJUPs, assessoria jurídica popular e educação popular</strong>
+            <span class="local">Sala D CCSA</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">14h</span>
+          <span class="texto">
+            <strong>Oficina — Justiça reprodutiva e racismo: AJUP em casos de violência estatal</strong>
+            <span class="local">Sala E CCSA</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">14h30</span>
+          <span class="texto">
+            <strong>Oficina — AJUP, violações de direitos humanos e agrotóxicos</strong>
+            <span class="local">Sala F CCSA</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">14h</span>
+          <span class="texto">
+            <strong>Oficina — No tempo da maré e da comunidade: protocolo de consulta dos povos das Águas de Acaú-PB</strong>
+            <span class="local">Sala G CCSA</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">14h</span>
+          <span class="texto">
+            <strong>Oficina — Direito humano à alimentação e à nutrição adequadas e captura corporativa das políticas de alimentação escolar</strong>
+            <span class="local">Sala 2 PPGCJ (CCJ, 1º andar)</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">18h</span>
+          <span class="texto">
+            <strong>Abertura do encontro</strong>
+            <span class="local">OAB/PB — Av. João Cirilo da Silva, 444, Altiplano</span>
+          </span>
+          <span class="tag tag--conjunta">Conjunta</span>
+        </li>
+        <li>
+          <span class="hora">22h</span>
+          <span class="texto">
+            <strong>Luau na praia de Tambaú, no Busto de Tamandaré</strong>
+            
+          </span>
+          <span class="tag tag--cultural">Cultural</span>
+        </li></ol>
+      </section>
+      <section class="dia">
+        <h2><span class="num">12</span> quinta-feira</h2>
+        <ol>
+        <li>
+          <span class="hora">8h30 às 12h</span>
+          <span class="texto">
+            <strong>RENAP — Análise de conjuntura da advocacia popular no Brasil</strong>
+            <span class="local">Auditório do CT</span>
+          </span>
+          <span class="tag tag--renap">RENAP</span>
+        </li>
+        <li>
+          <span class="hora">8h30 às 12h</span>
+          <span class="texto">
+            <strong>RENAJU — Memórias e dilemas ajupianos</strong>
+            <span class="local">Armazém do Campo</span>
+          </span>
+          <span class="tag tag--renaju">RENAJU</span>
+        </li>
+        <li>
+          <span class="hora">8h30 às 12h</span>
+          <span class="texto">
+            <strong>IPDMS — Avanços e desafios: a reforma do estatuto</strong>
+            <span class="local">Sala 2 PPGCJ (CCJ, 1º andar)</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h30 às 16h30</span>
+          <span class="texto">
+            <strong>GD1 — Direito e Marxismo (2ª e 3ª sessões)</strong>
+            <span class="local">Salas 1 e 2 PPGCJ (CCJ, 1º andar)</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h30 às 16h30</span>
+          <span class="texto">
+            <strong>GD2 — Lutas por justiça socioambiental + GD10 — Direito à consulta e consentimento</strong>
+            <span class="local">Sala 4 CCJ (1º andar)</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h30 às 16h30</span>
+          <span class="texto">
+            <strong>GD3 — Sistema de justiça e conflitos territoriais</strong>
+            <span class="local">Sala H (CCSA)</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h30 às 16h30</span>
+          <span class="texto">
+            <strong>GD5 — Movimentos sociais e direito à cidade</strong>
+            <span class="local">Sala Multimídia (CCJ, 1º andar)</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h30 às 16h30</span>
+          <span class="texto">
+            <strong>GD7 — Gênero, direito e violências interseccionais</strong>
+            <span class="local">Sala A CCSA</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h30 às 16h30</span>
+          <span class="texto">
+            <strong>GD9 — Criminologia crítica e movimentos sociais</strong>
+            <span class="local">Sala B CCSA</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h30 às 16h30</span>
+          <span class="texto">
+            <strong>GD12 — Territórios e crise climática</strong>
+            <span class="local">Sala 2 CCJ (1º andar)</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h30 às 16h30</span>
+          <span class="texto">
+            <strong>GD13 — Conflitos socioambientais, ilegalismos do poder e resistências territoriais</strong>
+            <span class="local">Sala C CCSA</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h30 às 16h30</span>
+          <span class="texto">
+            <strong>GD14 — AJUPs, assessoria jurídica popular e educação popular</strong>
+            <span class="local">Sala D CCSA</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h30</span>
+          <span class="texto">
+            <strong>RENAP — Discussões por região: Nordeste, Norte, Sudeste, Centro-Oeste e Sul</strong>
+            <span class="local">Salas 2, 5, 6, 8 e 9 do CCJ</span>
+          </span>
+          <span class="tag tag--renap">RENAP</span>
+        </li>
+        <li>
+          <span class="hora">19h</span>
+          <span class="texto">
+            <strong>Lançamento de livros e publicações</strong>
+            <span class="local">Armazém do Campo</span>
+          </span>
+          <span class="tag tag--conjunta">Conjunta</span>
+        </li>
+        <li>
+          <span class="hora">19h</span>
+          <span class="texto">
+            <strong>Cultural — Samba Ponta Firme</strong>
+            <span class="local">Armazém do Campo</span>
+          </span>
+          <span class="tag tag--cultural">Cultural</span>
+        </li></ol>
+      </section>
+      <section class="dia">
+        <h2><span class="num">13</span> sexta-feira</h2>
+        <ol>
+        <li>
+          <span class="hora">8h30 às 12h</span>
+          <span class="texto">
+            <strong>RENAP — Roda de conversa sobre sustentabilidade na advocacia popular</strong>
+            <span class="local">Auditório 411 CCHLA</span>
+          </span>
+          <span class="tag tag--renap">RENAP</span>
+        </li>
+        <li>
+          <span class="hora">8h30 às 12h</span>
+          <span class="texto">
+            <strong>RENAJU — Experiências contemporâneas de AJUP e próximos passos da RENAJU</strong>
+            <span class="local">Auditório 412 CCHLA</span>
+          </span>
+          <span class="tag tag--renaju">RENAJU</span>
+        </li>
+        <li>
+          <span class="hora">8h30 às 12h</span>
+          <span class="texto">
+            <strong>Oficina — Inteligência artificial, ética e direitos humanos: teatro do oprimido</strong>
+            <span class="local">Auditório do CT</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">8h30 às 12h</span>
+          <span class="texto">
+            <strong>Oficina — Violências e discriminações nas universidades: ferramentas de enfrentamento</strong>
+            <span class="local">Sala 1 PPGCJ (CCJ, 1º andar)</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">8h30 às 12h</span>
+          <span class="texto">
+            <strong>Oficina — O direito achado na rua e a luta pela terra: sujeito coletivo e conflitos fundiários</strong>
+            <span class="local">Sala 2 PPGCJ (CCJ, 1º andar)</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h30 às 16h</span>
+          <span class="texto">
+            <strong>Plenária do IPDMS</strong>
+            <span class="local">Auditório 411 CCHLA</span>
+          </span>
+          <span class="tag tag--ipdms">IPDMS</span>
+        </li>
+        <li>
+          <span class="hora">13h30 às 16h</span>
+          <span class="texto">
+            <strong>RENAJU — Teorias críticas da assessoria jurídica popular</strong>
+            <span class="local">Auditório 412 CCHLA</span>
+          </span>
+          <span class="tag tag--renaju">RENAJU</span>
+        </li>
+        <li>
+          <span class="hora">17h</span>
+          <span class="texto">
+            <strong>Mesa de encerramento do encontro conjunto</strong>
+            <span class="local">Auditório 412 CCHLA</span>
+          </span>
+          <span class="tag tag--conjunta">Conjunta</span>
+        </li>
+        <li>
+          <span class="hora">depois da mesa</span>
+          <span class="texto">
+            <strong>Cultural — Centro Cultural Caravela</strong>
+            <span class="local">Centro da cidade — Av. General Osório</span>
+          </span>
+          <span class="tag tag--cultural">Cultural</span>
+        </li></ol>
+      </section>
+      <section class="dia">
+        <h2><span class="num">14</span> sábado</h2>
+        <ol>
+        <li>
+          <span class="hora">8h30 às 12h</span>
+          <span class="texto">
+            <strong>Plenária da RENAP</strong>
+            <span class="local">Auditório 412 CCHLA</span>
+          </span>
+          <span class="tag tag--renap">RENAP</span>
+        </li>
+        <li>
+          <span class="hora">8h30 às 12h</span>
+          <span class="texto">
+            <strong>Plenária da RENAJU</strong>
+            <span class="local">Auditório 411 CCHLA</span>
+          </span>
+          <span class="tag tag--renaju">RENAJU</span>
+        </li>
+        <li>
+          <span class="hora">depois das plenárias</span>
+          <span class="texto">
+            <strong>Cultural — Sabadinho Bom, Beco da Cachaçaria e Bar da Cléa</strong>
+            
+          </span>
+          <span class="tag tag--cultural">Cultural</span>
+        </li></ol>
+      </section>
+  </main>
+
+  <footer>
+    <p>Programação sujeita a alteração pela organização. Salas e horários conferidos com o documento de 8 de novembro de 2026.</p>
+    <p>Site do encontro: <a href="https://encontrolenirlivre.pages.dev">encontrolenirlivre.pages.dev</a> · Seminário: <a href="https://seminariovenasabiertas.pages.dev">seminariovenasabiertas.pages.dev</a></p>
+  </footer>
+</div>
+</body>
+</html>

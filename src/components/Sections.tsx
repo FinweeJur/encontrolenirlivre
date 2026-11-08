@@ -353,6 +353,9 @@ export function Program() {
           <a className="text-link" href={`${URL_XI}#gds`}>
             GDs e trabalhos aprovados <Arrow />
           </a>
+          <a className="text-link" href="/programa.html">
+            Programa para imprimir <Arrow />
+          </a>
           <span className="program__note">
             Sujeita a atualização pela organização.{" "}
             <a

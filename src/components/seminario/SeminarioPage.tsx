@@ -407,7 +407,9 @@ export function SeminarioPage() {
                 Ver a versão oficial
               </a>{" "}
               ·{" "}
-              <a href="#gds">Ver os GDs e os trabalhos aprovados</a>
+              <a href="#gds">Ver os GDs e os trabalhos aprovados</a>{" "}
+              ·{" "}
+              <a href="/programa.html">Programa para imprimir</a>
             </p>
 
             {/* Informação da organização que não está na grade de horas. */}
