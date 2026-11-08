@@ -6,6 +6,7 @@
  * por grupo de discussão. Os dados são os mesmos do site do seminário
  * (`content/gdSessoes.ts`), então corrigir num lugar corrige nos dois.
  */
+import { useEffect, useRef } from "react";
 import { gdSessoes, eixosGd } from "../content/gdSessoes";
 import "../styles/trabalhos.css";
 
@@ -39,9 +40,22 @@ function agrupar(): Grupo[] {
 export function TrabalhosAcademicos() {
   const grupos = agrupar();
   const total = grupos.reduce((soma, g) => soma + g.trabalhos.length, 0);
+  const caixa = useRef<HTMLDetailsElement>(null);
+
+  // Quem chega por link direto (#trabalhos) encontra o bloco já aberto.
+  useEffect(() => {
+    const abrir = () => {
+      if (window.location.hash === "#trabalhos" && caixa.current) {
+        caixa.current.open = true;
+      }
+    };
+    abrir();
+    window.addEventListener("hashchange", abrir);
+    return () => window.removeEventListener("hashchange", abrir);
+  }, []);
 
   return (
-    <details className="trabalhos" id="trabalhos">
+    <details className="trabalhos" id="trabalhos" ref={caixa}>
       <summary>
         <span className="trabalhos__rotulo">Trabalhos acadêmicos</span>
         <span className="trabalhos__resumo">
@@ -73,6 +87,17 @@ export function TrabalhosAcademicos() {
           </details>
         ))}
       </div>
+
+      <p className="trabalhos__pe">
+        Sala, horário e ordem das apresentações estão no site do seminário:{" "}
+        <a
+          href="https://seminariovenasabiertas.pages.dev/#gds"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Grupos de Discussão e sessões →
+        </a>
+      </p>
     </details>
   );
 }

@@ -187,7 +187,7 @@ export function Gds() {
           O documento de trabalhos aprovados não lista títulos para os GDs 4 e 6.
           O GD6 tem sessão na programação, mas sem lista publicada. Sala e horário
           podem mudar: confirme com a secretaria em{" "}
-          <a href="mailto:secretaria@ipdms.org.br">secretaria@ipdms.org.br</a>.
+          <a href="mailto:ipdmscorreio@gmail.com">ipdmscorreio@gmail.com</a>.
         </p>
       </div>
     </section>

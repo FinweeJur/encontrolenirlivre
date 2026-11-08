@@ -500,6 +500,11 @@ html[data-theme="light"] .brand__logo--light {
   gap: 1.5rem;
 }
 
+/* Sem quebra: com o botão de calendário, "O ENCONTRO" partia em duas linhas. */
+.nav a {
+  white-space: nowrap;
+}
+
 .nav a {
   font-family: var(--data);
   font-size: 0.72rem;
@@ -570,6 +575,37 @@ html[data-theme="light"] .brand__logo--light {
   stroke: currentColor;
   stroke-width: 1.8;
   stroke-linecap: round;
+}
+
+/* Atalho da programação na barra: calendário discreto, sempre visível. */
+.nav-programa {
+  display: inline-grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--ink);
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background-color 0.2s;
+}
+
+.nav-programa:hover,
+.nav-programa:focus-visible {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.nav-programa svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .nav-busca:hover {
@@ -675,6 +711,17 @@ html[data-theme="light"] .brand__logo--light {
       transparent 60%
     ),
     var(--paper);
+}
+
+/* Faixa do "acontecendo agora": encosta no topo do hero, abaixo da barra. */
+.hero__faixa {
+  position: relative;
+  z-index: 2;
+  margin-bottom: clamp(0.6rem, 1.6vw, 1.1rem);
+}
+
+.hero__faixa:empty {
+  display: none;
 }
 
 .hero__atmosphere {

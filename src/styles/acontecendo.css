@@ -1,0 +1,173 @@
+/* ==========================================================================
+   Faixa "Acontecendo agora" — abaixo da navbar, no topo do hero.
+   Fundo: --red misturado com --ink, que sempre puxa a cor para o lado oposto
+   do --paper; o texto em --paper se mantém legível no hero escuro, no kraft
+   e na banda vermelha. Só tokens de tema, nenhuma cor fixa.
+   ========================================================================== */
+
+.acontecendo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 3rem; /* ~49,5 px na raiz padrão: dentro dos 44–56 px */
+  padding: 0.4rem var(--gutter, clamp(1.1rem, 4vw, 3rem));
+  background: color-mix(in srgb, var(--red) 80%, var(--ink));
+  color: var(--paper);
+  border-bottom: 1px solid color-mix(in srgb, var(--paper) 24%, transparent);
+  box-shadow: 0 12px 28px -22px rgba(0, 0, 0, 0.75);
+  font-family: var(--body, system-ui, sans-serif);
+  line-height: 1.35;
+}
+
+/* ---------- rótulo ---------- */
+
+.acontecendo__rotulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 0 0 auto;
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.acontecendo__ponto {
+  flex: none;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.acontecendo--vivo .acontecendo__ponto {
+  animation: acontecendo-pulso 2s ease-in-out infinite;
+}
+
+/* ---------- linha da atividade ---------- */
+
+.acontecendo__texto {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.acontecendo__titulo {
+  font-weight: 600;
+}
+
+.acontecendo__hora {
+  font-family: var(--data, ui-monospace, monospace);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.acontecendo__sep {
+  padding: 0 0.15rem;
+  opacity: 0.65;
+}
+
+.acontecendo__local {
+  color: inherit;
+}
+
+/* ---------- etiqueta da organização ---------- */
+
+.acontecendo__tag {
+  flex: 0 0 auto;
+  padding: 0.12rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--paper) 48%, transparent);
+  border-radius: 100px;
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--paper);
+}
+
+/* "+7": quantas outras atividades correm no mesmo horário. */
+.acontecendo__mais {
+  flex: 0 0 auto;
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.7rem;
+  font-weight: 600;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+/* ---------- leitura em voz alta ---------- */
+
+.acontecendo__leitura {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- celular: no máximo 3 linhas (rótulo + 2 de texto) ---------- */
+
+@media (max-width: 640px) {
+  .acontecendo {
+    flex-wrap: wrap;
+    gap: 0.15rem 0.6rem;
+    min-height: 0;
+    padding-block: 0.45rem 0.55rem;
+  }
+
+  .acontecendo__rotulo {
+    order: 1;
+  }
+
+  .acontecendo__mais {
+    order: 2;
+  }
+
+  .acontecendo__tag {
+    order: 3;
+    margin-left: auto;
+  }
+
+  .acontecendo__texto {
+    order: 4;
+    flex-basis: 100%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    font-size: 0.82rem;
+    white-space: normal;
+    text-overflow: clip;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .acontecendo--vivo .acontecendo__ponto {
+    animation: none;
+  }
+}
+
+@keyframes acontecendo-pulso {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.78);
+  }
+}

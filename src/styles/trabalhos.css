@@ -132,6 +132,22 @@
   font-size: 0.7rem;
 }
 
+.trabalhos__pe {
+  margin: 0;
+  padding: 0.2rem 1rem 1rem;
+  font-size: 0.76rem;
+  color: var(--ink-mute);
+}
+
+.trabalhos__pe a {
+  color: var(--red);
+  border-bottom: 1px solid color-mix(in srgb, var(--red) 45%, transparent);
+}
+
+.trabalhos__pe a:hover {
+  border-bottom-color: var(--red);
+}
+
 @media (max-width: 900px) {
   .trabalhos__corpo {
     grid-template-columns: minmax(0, 1fr);

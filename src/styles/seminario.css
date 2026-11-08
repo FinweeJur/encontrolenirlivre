@@ -356,6 +356,17 @@ a:hover {
     var(--xi-papel);
 }
 
+/* Faixa "acontecendo agora" no topo do hero do seminário. */
+.xi-hero__faixa {
+  position: relative;
+  z-index: 2;
+  margin-bottom: clamp(0.8rem, 2vw, 1.4rem);
+}
+
+.xi-hero__faixa:empty {
+  display: none;
+}
+
 .xi-hero__veias {
   position: absolute;
   inset: -8% -10% auto auto;

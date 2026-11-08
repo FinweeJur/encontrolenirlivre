@@ -370,3 +370,16 @@ export const totalPorTag = programaDetalhado
     soma[item.tag] = (soma[item.tag] ?? 0) + 1;
     return soma;
   }, {});
+
+/**
+ * Índice do dia de hoje na programação, no fuso de Brasília.
+ * `null` quando a data está fora do encontro — aí a página abre no dia padrão.
+ */
+export function indiceDoDiaAtual(): number | null {
+  const agora = new Date(Date.now() - 3 * 3_600_000);
+  if (agora.getUTCMonth() + 1 !== 11) return null;
+
+  const dia = agora.getUTCDate();
+  const indice = programaDetalhado.findIndex((d) => Number(d.dia) === dia);
+  return indice >= 0 ? indice : null;
+}

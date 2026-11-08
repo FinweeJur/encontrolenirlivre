@@ -1,0 +1,72 @@
+/* ==========================================================================
+   Sala da programação com atalhos de mapa.
+   Pino = OpenStreetMap (aberto). "G" = Google Maps, para quem prefere.
+   ========================================================================== */
+
+.local-mapa {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.local-mapa__texto {
+  /* o texto já herda a cor e o tamanho do contexto onde está */
+}
+
+.local-mapa__pino,
+.local-mapa__google {
+  display: inline-grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  color: var(--red);
+  opacity: 0.75;
+  flex: none;
+  transition:
+    opacity 0.2s,
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.local-mapa__pino:hover,
+.local-mapa__pino:focus-visible,
+.local-mapa__google:hover,
+.local-mapa__google:focus-visible {
+  opacity: 1;
+  background: var(--red);
+  color: var(--paper);
+  outline: none;
+}
+
+.local-mapa__pino svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.local-mapa__google {
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.local-mapa__pino--cultural {
+  color: var(--yellow, #f0b25a);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .local-mapa__pino,
+  .local-mapa__google {
+    transition: none;
+  }
+}

@@ -73,7 +73,7 @@ export function FaltamDias({ className = "" }: { className?: string }) {
     agora >= FIM_EVENTO
       ? "Encontro encerrado"
       : agora >= INICIO_EVENTO
-        ? "Acontecendo agora"
+        ? `Dia ${diaBrasilia(agora) - diaBrasilia(INICIO_EVENTO) + 1} de 4`
         : dias <= 0
           ? "É hoje"
           : dias === 1

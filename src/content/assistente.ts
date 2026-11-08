@@ -90,7 +90,7 @@ Passo a passo: cadastro no SIGEventos da UFPB (https://sigeventos.ufpb.br), esco
 Link de inscrição: ${evento.links.inscricao}
 Isenção: pedido por e-mail para ${evento.email}, com nome completo, categoria, justificativa e e-mail de contato.
 Comprovante, isenção e dúvidas: ${evento.email}
-Dúvidas de submissão acadêmica: secretaria@ipdms.org.br
+Dúvidas de submissão acadêmica: ${evento.email}
 
 ALOJAMENTO
 O alojamento é oferecido pela organização a quem responde o formulário: ${evento.links.alojamento}
@@ -225,14 +225,12 @@ export const RESPOSTAS_LOCAIS: ReadonlyArray<RespostaCurada> = [
   {
     id: "gds",
     termos: ["gds", "grupo de discuss", "grupos de discuss", "trabalho", "aprovad"],
-    resposta: `São ${TOTAL_GDS} Grupos de Discussão, com ${TOTAL_TRABALHOS_GD} trabalhos, em 11/11 às 13h e 12/11 às 13h30. Cada GD tem sala própria e uma ou mais sessões. As submissões já encerraram e a lista aprovada está na seção “Grupos de Discussão”, com sala e ordem das apresentações.`,
+    resposta: `São ${TOTAL_GDS} Grupos de Discussão, com ${TOTAL_TRABALHOS_GD} trabalhos, em 11/11 às 13h e 12/11 às 13h30. Cada GD tem sala própria e uma ou mais sessões. As submissões já encerraram e a lista aprovada está na seção “Grupos de Discussão”: https://seminariovenasabiertas.pages.dev/#gds`,
   },
   {
     id: "oficinas",
     termos: ["oficina", "minicurso", "vagas"],
-    resposta: `São ${oficinaResumo.total} oficinas e minicursos, com ${oficinaResumo.vagas} vagas cada e inscrição em formulário próprio — separada da inscrição geral:\n\n${oficinas
-      .map((o) => `- ${o.dia}/11, ${o.hora}: ${o.titulo}`)
-      .join("\n")}`,
+    resposta: `São ${oficinaResumo.total} oficinas e minicursos, com ${oficinaResumo.vagas} vagas cada e inscrição em formulário próprio — separada da inscrição geral. Programação e links: https://seminariovenasabiertas.pages.dev/#oficinas`,
   },
   {
     id: "local",
@@ -283,7 +281,7 @@ export const RESPOSTAS_LOCAIS: ReadonlyArray<RespostaCurada> = [
   {
     id: "contato",
     termos: ["contato", "email", "e-mail", "secretaria", "duvida", "dúvida", "telefone", "falo", "falar"],
-    resposta: `Fale com a secretaria do encontro: ${evento.email}. Dúvidas de submissão acadêmica vão para secretaria@ipdms.org.br. O site não processa pagamentos nem guarda dados pessoais.`,
+    resposta: `Fale com a secretaria do encontro: ${evento.email}. O site não processa pagamentos nem guarda dados pessoais.`,
   },
 ];
 
@@ -324,18 +322,52 @@ export function responderCurada(pergunta: string): RespostaCurada | null {
   return pontos >= 3 ? melhor : null;
 }
 
-/** Sugestões de pergunta, por página. */
+/**
+ * Tópicos perguntáveis, na ordem em que aparecem no painel.
+ *
+ * Cada `pergunta` foi escrita para casar com os `termos` de `RESPOSTAS_LOCAIS`
+ * (e não com o modelo): é o que garante resposta pronta, na hora e revisada.
+ * `rotulo` é o texto curto do chip; a pergunta completa fica no `title` e na
+ * lista de "Ver mais perguntas".
+ */
+export type Topico = {
+  id: string;
+  rotulo: string;
+  pergunta: string;
+};
+
+export const TOPICOS: Topico[] = [
+  { id: "inscricao", rotulo: "Inscrição", pergunta: "Como faço a inscrição?" },
+  { id: "valores", rotulo: "Valores", pergunta: "Quanto custa e qual é o PIX?" },
+  { id: "isencao", rotulo: "Isenção", pergunta: "Como pedir isenção?" },
+  { id: "alojamento", rotulo: "Alojamento", pergunta: "Tem alojamento?" },
+  { id: "programacao", rotulo: "Programação", pergunta: "Qual é a programação?" },
+  { id: "editais", rotulo: "Editais", pergunta: "Qual é o prazo dos editais?" },
+  { id: "gds", rotulo: "GDs", pergunta: "Quais GDs e trabalhos aprovados?" },
+  { id: "oficinas", rotulo: "Oficinas", pergunta: "Que oficinas têm?" },
+  { id: "local", rotulo: "Local", pergunta: "Onde fica e como chego?" },
+  { id: "presenca", rotulo: "Presença", pergunta: "Como funciona a presença?" },
+  { id: "livros", rotulo: "Livros", pergunta: "Como funciona o lançamento de livros?" },
+  { id: "contato", rotulo: "Contato", pergunta: "Com quem falo?" },
+];
+
+/**
+ * Sugestões de pergunta, por página.
+ *
+ * São quatro perguntas que existem em `TOPICOS` — o texto é o mesmo, de
+ * propósito, para não criar duas versões da mesma pergunta.
+ */
 export const SUGESTOES: Record<"renap" | "seminario", string[]> = {
   renap: [
     "Como faço a inscrição?",
-    "Quanto custa participar?",
+    "Quanto custa e qual é o PIX?",
     "Tem alojamento?",
-    "Onde fica o evento?",
+    "Onde fica e como chego?",
   ],
   seminario: [
     "Como faço a inscrição?",
     "Que oficinas têm?",
-    "Quais GDs existem?",
+    "Quais GDs e trabalhos aprovados?",
     "Como funciona a presença?",
   ],
 };

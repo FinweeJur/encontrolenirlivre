@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Arrow, Roots, Sun } from "./Motifs";
+import { AcontecendoAgora } from "./AcontecendoAgora";
 import { FaltamDias } from "./Contagem";
 import ElectricLogo from "./effects/ElectricLogo";
 import DitherVeil from "./effects/DitherVeil";
@@ -45,6 +46,11 @@ export function Hero({
 
   return (
     <section className="hero" id="top" aria-labelledby="hero-title">
+      {/* Faixa do que está acontecendo agora: só aparece nos dias do encontro. */}
+      <div className="hero__faixa">
+        <AcontecendoAgora />
+      </div>
+
       <div className="hero__atmosphere" aria-hidden="true">
         {/* O sol e a logo dividem o mesmo quadrado: assim a logo fica
             exatamente no centro do círculo do sol em qualquer tela. */}

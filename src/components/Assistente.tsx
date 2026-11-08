@@ -17,6 +17,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   RESPOSTA_PADRAO,
   SUGESTOES,
+  TOPICOS,
   responderCurada,
 } from "../content/assistente";
 
@@ -28,6 +29,15 @@ type Mensagem = {
   /** Resposta pronta, sem modelo. */
   local?: boolean;
 };
+
+/**
+ * Atalhos fixos que ficam acima do campo depois da primeira mensagem.
+ * A ordem aqui é a ordem na tela; o rótulo e a pergunta vêm de `TOPICOS`,
+ * então não existe uma segunda versão do texto.
+ */
+const ATALHOS = ["inscricao", "programacao", "gds", "oficinas", "presenca", "contato"];
+
+const TOPICOS_FIXOS = TOPICOS.filter((topico) => ATALHOS.includes(topico.id));
 
 /** Quebra o texto em pedaços, transformando URLs em links de verdade. */
 function ComLinks({ texto }: { texto: string }) {
@@ -75,10 +85,13 @@ export function Assistente({ escopo }: { escopo: "renap" | "seminario" }) {
   const [texto, setTexto] = useState("");
   const [carregando, setCarregando] = useState(false);
   const [modoLocal, setModoLocal] = useState(false);
+  const [maisAberto, setMaisAberto] = useState(false);
 
   const campo = useRef<HTMLTextAreaElement>(null);
   const conversa = useRef<HTMLDivElement>(null);
   const botao = useRef<HTMLButtonElement>(null);
+  /** Muda ao voltar ao início: resposta velha em voo é descartada. */
+  const geracao = useRef(0);
 
   useEffect(() => {
     if (aberto) campo.current?.focus();
@@ -102,10 +115,25 @@ export function Assistente({ escopo }: { escopo: "renap" | "seminario" }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [aberto]);
 
+  /** Volta ao estado inicial sem fechar o painel nem perder o foco de lugar. */
+  function voltarAoInicio() {
+    geracao.current += 1;
+    setMensagens([]);
+    setTexto("");
+    setModoLocal(false);
+    setMaisAberto(false);
+    setCarregando(false);
+    campo.current?.focus();
+  }
+
   async function enviar(pergunta: string) {
     const limpa = pergunta.trim();
     if (!limpa || carregando) return;
 
+    // A pergunta saiu da lista; a lista encolhe para devolver espaço.
+    setMaisAberto(false);
+
+    const minhaGeracao = geracao.current;
     const historico: Mensagem[] = [
       ...mensagens,
       { papel: "user", texto: limpa },
@@ -138,9 +166,11 @@ export function Assistente({ escopo }: { escopo: "renap" | "seminario" }) {
         }),
       });
 
+      if (geracao.current !== minhaGeracao) return;
       if (!resposta.ok) throw new Error("sem-modelo");
 
       const dados = (await resposta.json()) as { resposta?: unknown };
+      if (geracao.current !== minhaGeracao) return;
       if (typeof dados.resposta !== "string" || !dados.resposta.trim()) {
         throw new Error("resposta-vazia");
       }
@@ -150,13 +180,15 @@ export function Assistente({ escopo }: { escopo: "renap" | "seminario" }) {
         { papel: "assistente", texto: dados.resposta as string },
       ]);
     } catch {
+      if (geracao.current !== minhaGeracao) return;
       setModoLocal(true);
       setMensagens((atuais) => [
         ...atuais,
         { papel: "assistente", texto: RESPOSTA_PADRAO, local: true },
       ]);
     } finally {
-      setCarregando(false);
+      // Só a requisição da geração atual pode apagar o indicador.
+      if (geracao.current === minhaGeracao) setCarregando(false);
     }
   }
 
@@ -190,25 +222,40 @@ export function Assistente({ escopo }: { escopo: "renap" | "seminario" }) {
         aria-labelledby="assistente-titulo"
       >
         <header className="assistente__topo">
-          <div>
+          <div className="assistente__identidade">
             <p className="assistente__rotulo">Assistente do encontro</p>
             <h2 id="assistente-titulo" className="assistente__titulo">
               Dúvidas sobre o evento
             </h2>
           </div>
-          <button
-            type="button"
-            className="assistente__fechar"
-            onClick={() => {
-              setAberto(false);
-              botao.current?.focus();
-            }}
-            aria-label="Fechar o assistente"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m6 6 12 12M18 6 6 18" />
-            </svg>
-          </button>
+          <div className="assistente__acoes">
+            <button
+              type="button"
+              className="assistente__reiniciar"
+              onClick={voltarAoInicio}
+              aria-label="Voltar ao início e limpar a conversa"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 11.5 12 5l8 6.5" />
+                <path d="M6.6 10.2V19h10.8v-8.8" />
+                <path d="M10 19v-4.4h4V19" />
+              </svg>
+              <span>Início</span>
+            </button>
+            <button
+              type="button"
+              className="assistente__fechar"
+              onClick={() => {
+                setAberto(false);
+                botao.current?.focus();
+              }}
+              aria-label="Fechar o assistente"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m6 6 12 12M18 6 6 18" />
+              </svg>
+            </button>
+          </div>
         </header>
 
         <div className="assistente__conversa" aria-live="polite" ref={conversa}>
@@ -251,6 +298,66 @@ export function Assistente({ escopo }: { escopo: "renap" | "seminario" }) {
             ))}
           </div>
         )}
+
+        {/* Atalhos fixos: só depois da primeira mensagem, sempre acima do campo. */}
+        <div className="assistente__atalhos">
+          {mensagens.length > 0 && (
+            <div
+              className="assistente__topicos"
+              role="group"
+              aria-label="Perguntas rápidas"
+            >
+              {TOPICOS_FIXOS.map((topico) => (
+                <button
+                  key={topico.id}
+                  type="button"
+                  className="assistente__topico"
+                  onClick={() => void enviar(topico.pergunta)}
+                  disabled={carregando}
+                  title={topico.pergunta}
+                  aria-label={`Perguntar sobre ${topico.rotulo}`}
+                >
+                  {topico.rotulo}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <button
+            type="button"
+            className="assistente__mais"
+            aria-expanded={maisAberto}
+            aria-controls="assistente-perguntas"
+            onClick={() => setMaisAberto((v) => !v)}
+          >
+            {maisAberto ? "Ver menos perguntas" : "Ver mais perguntas"}
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              className={maisAberto ? "is-aberto" : undefined}
+            >
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </button>
+        </div>
+
+        <ul
+          id="assistente-perguntas"
+          className="assistente__perguntas"
+          hidden={!maisAberto}
+        >
+          {TOPICOS.map((topico) => (
+            <li key={topico.id}>
+              <button
+                type="button"
+                onClick={() => void enviar(topico.pergunta)}
+                disabled={carregando}
+              >
+                {topico.pergunta}
+              </button>
+            </li>
+          ))}
+        </ul>
 
         <form
           className="assistente__form"

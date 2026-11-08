@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { cartas, evento, faq, organizacoes } from "../content/evento";
-import { programaDetalhado } from "../content/programacaoDetalhada";
+import { programaDetalhado, indiceDoDiaAtual } from "../content/programacaoDetalhada";
 
 /** Site proprio do seminario do IPDMS (projeto Cloudflare Pages separado). */
 const URL_XI = "https://seminariovenasabiertas.pages.dev/";
 import { Arrow, Spark } from "./Motifs";
 import { ContagemInscricoes } from "./Contagem";
 import { TrabalhosAcademicos } from "./TrabalhosAcademicos";
+import { LocalComMapa } from "./LocalComMapa";
 import { copiarTexto } from "../lib/copiar";
 import {
   FiltroOrgs,
@@ -271,7 +272,8 @@ export function Encounter() {
 }
 
 export function Program() {
-  const [dia, setDia] = useState(1);
+  // No dia do encontro, abre já no dia certo; fora dele, no dia 12.
+  const [dia, setDia] = useState(() => indiceDoDiaAtual() ?? 1);
   const [filtro, setFiltro] = useFiltro();
   const atual = programaDetalhado[dia];
 
@@ -336,7 +338,9 @@ export function Program() {
                 <div className="program__texto">
                   <h3>{item.titulo}</h3>
                   {item.local ? (
-                    <p className="program__local">{item.local}</p>
+                    <p className="program__local">
+                      <LocalComMapa texto={item.local} />
+                    </p>
                   ) : null}
                 </div>
                 <span className={`tag tag--${item.tag.toLowerCase()}`}>{item.tag}</span>

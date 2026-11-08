@@ -7,7 +7,8 @@
  * mesma programação conjunta.
  */
 import { useRef, useState } from "react";
-import { programaDetalhado } from "../../content/programacaoDetalhada";
+import { programaDetalhado, indiceDoDiaAtual } from "../../content/programacaoDetalhada";
+import { LocalComMapa } from "../LocalComMapa";
 import {
   FiltroOrgs,
   contarPorOrgao,
@@ -16,7 +17,8 @@ import {
 } from "../FiltroOrgs";
 
 export function Programa() {
-  const [dia, setDia] = useState(0);
+  // No dia do encontro, abre já no dia certo; fora dele, no primeiro dia.
+  const [dia, setDia] = useState(() => indiceDoDiaAtual() ?? 0);
   const [filtro, setFiltro] = useFiltro();
   const abas = useRef<HTMLDivElement>(null);
   const atual = programaDetalhado[dia];
@@ -106,7 +108,9 @@ export function Programa() {
                 <span className="xi-item__titulo">
                   {item.titulo}
                   {item.local ? (
-                    <span className="xi-item__local">{item.local}</span>
+                    <span className="xi-item__local">
+                      <LocalComMapa texto={item.local} />
+                    </span>
                   ) : null}
                 </span>
                 <em className={`xi-tag xi-tag--${item.tag.toLowerCase()}`}>{item.tag}</em>

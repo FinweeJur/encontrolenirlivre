@@ -24,6 +24,7 @@ import { Programa } from "./Programa";
 import { Oficinas } from "./Oficinas";
 import { Gds } from "./Gds";
 import { BotaoPix } from "../BotaoPix";
+import { AcontecendoAgora } from "../AcontecendoAgora";
 import { ContagemInscricoes, FaltamDias } from "../Contagem";
 import { LayoutGrid } from "../effects/Extras";
 
@@ -167,6 +168,19 @@ export function SeminarioPage() {
           </nav>
 
           <div className="xi-acoes">
+            {/* Atalho direto para a programação, igual ao da página da RENAP. */}
+            <a
+              className="xi-icone"
+              href="#programacao"
+              aria-label="Ir para a programação"
+              title="Ir para a programação"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3.5" y="5" width="17" height="15" rx="2.5" />
+                <path d="M3.5 10h17M8 3.5v3M16 3.5v3" />
+              </svg>
+            </a>
+
             <button
               type="button"
               className="xi-icone"
@@ -240,6 +254,11 @@ export function SeminarioPage() {
 
       <main id="xi-conteudo">
         <section className="xi-hero" id="topo" aria-labelledby="xi-titulo">
+          {/* Faixa do que está acontecendo agora, abaixo da barra fixa. */}
+          <div className="xi-hero__faixa">
+            <AcontecendoAgora />
+          </div>
+
           <Veias className="xi-hero__veias" />
           <div className="xi-casca xi-hero__grade">
             <div className="xi-hero__texto">
@@ -474,8 +493,8 @@ export function SeminarioPage() {
                 <li>
                   <strong>Dúvidas de submissão:</strong> secretaria do seminário
                   em{" "}
-                  <a href="mailto:secretaria@ipdms.org.br">
-                    secretaria@ipdms.org.br
+                  <a href="mailto:ipdmscorreio@gmail.com">
+                    ipdmscorreio@gmail.com
                   </a>
                   .
                 </li>
@@ -636,6 +655,7 @@ export function SeminarioPage() {
               <a href="#gds">Grupos de Discussão</a>
               <a href="#inscricoes">Inscrições</a>
               <a href="#tres">Os três encontros</a>
+              <a href={`${URL_RENAP}#trabalhos`}>Trabalhos acadêmicos (RENAP)</a>
               <a href={LINKS.editais} target="_blank" rel="noopener noreferrer">
                 Editais e site do IPDMS
               </a>

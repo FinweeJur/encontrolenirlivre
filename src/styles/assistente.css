@@ -64,6 +64,7 @@
   flex-direction: column;
   width: min(24rem, calc(100vw - 2rem));
   max-height: min(34rem, calc(100vh - 8rem));
+  max-height: min(34rem, calc(100dvh - 8rem));
   overflow: hidden;
   background: var(--paper);
   color: var(--ink);
@@ -90,6 +91,56 @@
   padding: 0.8rem 0.9rem 0.6rem;
   border-bottom: 1px solid var(--line);
   background: color-mix(in srgb, var(--paper-2, var(--paper)) 70%, var(--paper));
+}
+
+.assistente__identidade {
+  min-width: 0;
+}
+
+.assistente__acoes {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* "Início": limpa a conversa, não fecha o painel. */
+.assistente__reiniciar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  height: 1.9rem;
+  padding: 0 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--ink-soft, var(--ink));
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background-color 0.2s;
+}
+
+.assistente__reiniciar:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.assistente__reiniciar svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .assistente__rotulo {
@@ -139,8 +190,8 @@
 /* ---------- conversa ---------- */
 
 .assistente__conversa {
-  flex: 1;
-  min-height: 10rem;
+  flex: 1 1 auto;
+  min-height: 6rem;
   padding: 0.85rem 0.9rem;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -220,6 +271,160 @@
   color: var(--red);
 }
 
+/* ---------- atalhos fixos, "ver mais" e lista ---------- */
+
+.assistente__atalhos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.5rem 0.9rem 0.55rem;
+  border-top: 1px solid var(--line);
+}
+
+/* Rola no celular sem alargar o painel: chips nunca encolhem. */
+.assistente__topicos {
+  display: flex;
+  gap: 0.35rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding-bottom: 0.1rem;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--ink) 28%, transparent) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+.assistente__topicos::-webkit-scrollbar {
+  height: 4px;
+}
+
+.assistente__topicos::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--ink) 28%, transparent);
+}
+
+.assistente__topico {
+  flex: none;
+  padding: 0.28rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--ink-soft, var(--ink));
+  font-family: var(--body, inherit);
+  font-size: 0.72rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background-color 0.2s;
+}
+
+.assistente__topico:hover:not(:disabled),
+.assistente__topico:focus-visible {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.assistente__topico:disabled,
+.assistente__perguntas button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.assistente__mais {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.1rem 0;
+  border: 0;
+  background: none;
+  color: var(--ink-mute, var(--ink-soft));
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.assistente__mais:hover {
+  color: var(--red);
+}
+
+.assistente__mais svg {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.2s var(--ease, ease);
+}
+
+.assistente__mais svg.is-aberto {
+  transform: rotate(180deg);
+}
+
+.assistente__perguntas {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 auto;
+  min-height: 0;
+  max-height: 8.5rem;
+  margin: 0;
+  padding: 0 0.55rem 0.55rem;
+  list-style: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+/* `display: flex` ganharia do `hidden` do navegador; não deixa. */
+.assistente__perguntas[hidden] {
+  display: none;
+}
+
+.assistente__perguntas button {
+  display: block;
+  width: 100%;
+  padding: 0.35rem 0.35rem;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 65%, transparent);
+  background: none;
+  color: var(--ink-soft, var(--ink));
+  font-family: var(--body, inherit);
+  font-size: 0.76rem;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    background-color 0.2s;
+}
+
+.assistente__perguntas li:last-child button {
+  border-bottom: 0;
+}
+
+.assistente__perguntas button:hover:not(:disabled) {
+  color: var(--red);
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+}
+
+/* Foco visível próprio: o amarelo global some sobre o papel kraft. */
+.assistente__reiniciar:focus-visible,
+.assistente__topico:focus-visible,
+.assistente__mais:focus-visible,
+.assistente__perguntas button:focus-visible,
+.assistente__sugestoes button:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
 /* ---------- formulário ---------- */
 
 .assistente__form {
@@ -228,6 +433,11 @@
   gap: 0.4rem;
   padding: 0.65rem 0.7rem 0.5rem;
   border-top: 1px solid var(--line);
+}
+
+/* A faixa de atalhos já desenhou a linha; evita borda dupla. */
+.assistente__atalhos ~ .assistente__form {
+  border-top: 0;
 }
 
 .assistente__form textarea {
@@ -320,7 +530,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .assistente__bolha {
+  .assistente__bolha,
+  .assistente__reiniciar,
+  .assistente__topico,
+  .assistente__mais,
+  .assistente__mais svg,
+  .assistente__perguntas button {
     transition: none;
   }
 }
