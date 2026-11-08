@@ -14,9 +14,15 @@
 import { useEffect, useState } from "react";
 import "../styles/filtro.css";
 
-export type Filtro = "Tudo" | "IPDMS" | "RENAP" | "RENAJU" | "Conjunta";
+export type Filtro =
+  | "Tudo"
+  | "IPDMS"
+  | "RENAP"
+  | "RENAJU"
+  | "Conjunta"
+  | "Cultural";
 
-const ORDEM: Filtro[] = ["Tudo", "IPDMS", "RENAP", "RENAJU", "Conjunta"];
+const ORDEM: Filtro[] = ["Tudo", "IPDMS", "RENAP", "RENAJU", "Conjunta", "Cultural"];
 
 const ROTULO: Record<Filtro, string> = {
   Tudo: "Todas",
@@ -24,6 +30,7 @@ const ROTULO: Record<Filtro, string> = {
   RENAP: "RENAP",
   RENAJU: "RENAJU",
   Conjunta: "Conjuntas",
+  Cultural: "Cultural",
 };
 
 const CHAVE = "ecnl-filtro-programa";
@@ -53,15 +60,18 @@ export function useFiltro(): [Filtro, (novo: Filtro) => void] {
   return [filtro, setFiltro];
 }
 
-/** Aplica o filtro: a organização escolhida + as atividades conjuntas. */
+/** Aplica o filtro: a organização escolhida + o que é de todos. */
 export function filtrarPorOrgao<T extends { tag: string }>(
   itens: T[],
   filtro: Filtro,
 ): T[] {
   if (filtro === "Tudo") return itens;
-  // Conjunta é dos três encontros: some da lista se for filtrada por um só.
   if (filtro === "Conjunta") return itens.filter((item) => item.tag === "Conjunta");
-  return itens.filter((item) => item.tag === filtro || item.tag === "Conjunta");
+  if (filtro === "Cultural") return itens.filter((item) => item.tag === "Cultural");
+  // Conjunta e cultural são dos três encontros: não somem no filtro de um só.
+  return itens.filter(
+    (item) => item.tag === filtro || item.tag === "Conjunta" || item.tag === "Cultural",
+  );
 }
 
 export function FiltroOrgs({
@@ -95,8 +105,8 @@ export function FiltroOrgs({
         );
       })}
 
-      {valor !== "Tudo" && valor !== "Conjunta" ? (
-        <span className="filtro__nota">+ atividades conjuntas</span>
+      {valor !== "Tudo" && valor !== "Conjunta" && valor !== "Cultural" ? (
+        <span className="filtro__nota">+ conjuntas e culturais</span>
       ) : null}
     </div>
   );
@@ -112,6 +122,7 @@ export function contarPorOrgao(
     RENAP: 0,
     RENAJU: 0,
     Conjunta: 0,
+    Cultural: 0,
   };
 
   for (const item of itens) {

@@ -184,8 +184,9 @@ export function Gds() {
         </ol>
 
         <p className="gds__pe">
-          A organização não abriu GDs 4 e 6 neste encontro. Sala e horário podem
-          mudar: confirme com a secretaria em{" "}
+          O documento de trabalhos aprovados não lista títulos para os GDs 4 e 6.
+          O GD6 tem sessão na programação, mas sem lista publicada. Sala e horário
+          podem mudar: confirme com a secretaria em{" "}
           <a href="mailto:secretaria@ipdms.org.br">secretaria@ipdms.org.br</a>.
         </p>
       </div>

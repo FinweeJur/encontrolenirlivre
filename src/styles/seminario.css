@@ -564,6 +564,11 @@ a:hover {
   color: var(--xi-tinta-fraca);
 }
 
+/* Cultural: noite, festa, praia. Amarelo do sol, para não confundir. */
+.xi-tag--cultural {
+  color: var(--xi-amarelo);
+}
+
 /* Pulso: hierarquia do botão principal, só no hover/foco. */
 .xi-btn--cheio::after {
   content: "";
@@ -865,6 +870,16 @@ a:hover {
   font-size: 0.92rem;
   line-height: 1.4;
   color: var(--xi-tinta);
+}
+
+/* Sala da atividade, embaixo do título. */
+.xi-item__local {
+  display: block;
+  margin-top: 0.15rem;
+  font-family: var(--xi-dados);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  color: var(--xi-tinta-fraca);
 }
 
 @keyframes xi-item-entra {

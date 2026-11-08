@@ -12,15 +12,21 @@
  */
 
 import { editais } from "./editais";
-import { evento, faq, programacao } from "./evento";
+import { evento, faq } from "./evento";
 import { eixosGd, gdSessoes } from "./gdSessoes";
 import { oficinaResumo, oficinas } from "./oficinas";
+import { programaDetalhado } from "./programacaoDetalhada";
 
-const PROGRAMACAO_TEXTO = programacao
+const PROGRAMACAO_TEXTO = programaDetalhado
   .map(
     (dia) =>
       `${dia.dia}/11/2026 (${dia.semana}):\n` +
-      dia.itens.map((i) => `  ${i.hora} — ${i.titulo} [${i.tag}]`).join("\n"),
+      dia.itens
+        .map(
+          (i) =>
+            `  ${i.hora} — ${i.titulo}${i.local ? ` (${i.local})` : ""} [${i.tag}]`,
+        )
+        .join("\n"),
   )
   .join("\n");
 
@@ -209,7 +215,7 @@ export const RESPOSTAS_LOCAIS: ReadonlyArray<RespostaCurada> = [
       "abertura",
       "credenciamento",
     ],
-    resposta: `A programação vai de 11 a 14 de novembro. O credenciamento abre em 11/11 ao meio-dia; os Grupos de Discussão acontecem em 11/11 às 13h e 12/11 às 13h30; as oficinas em 11/11 à tarde e 13/11 pela manhã; o lançamento de livros é em 12/11 à noite. A grade completa, com filtro por organização, está na seção “Programação” da página.`,
+    resposta: `A programação vai de 11 a 14 de novembro, com sala em cada atividade. O credenciamento é em 11/11, das 12h às 13h, no pátio do CCJ; os GDs começam às 13h. A abertura é às 18h na OAB/PB, na Av. João Cirilo da Silva, 444. Em 12/11 o lançamento de livros e o samba são no Armazém do Campo. A grade completa, com filtro por organização, está na seção “Programação” da página.`,
   },
   {
     id: "editais",

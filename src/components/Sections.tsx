@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { cartas, evento, faq, organizacoes, programacao } from "../content/evento";
+import { cartas, evento, faq, organizacoes } from "../content/evento";
+import { programaDetalhado } from "../content/programacaoDetalhada";
 
 /** Site proprio do seminario do IPDMS (projeto Cloudflare Pages separado). */
 const URL_XI = "https://seminariovenasabiertas.pages.dev/";
 import { Arrow, Spark } from "./Motifs";
 import { ContagemInscricoes } from "./Contagem";
+import { TrabalhosAcademicos } from "./TrabalhosAcademicos";
 import { copiarTexto } from "../lib/copiar";
 import {
   FiltroOrgs,
@@ -271,10 +273,10 @@ export function Encounter() {
 export function Program() {
   const [dia, setDia] = useState(1);
   const [filtro, setFiltro] = useFiltro();
-  const atual = programacao[dia];
+  const atual = programaDetalhado[dia];
 
   // Contagem geral, somando os quatro dias: o número não muda ao trocar o dia.
-  const contagens = contarPorOrgao(programacao.flatMap((d) => d.itens));
+  const contagens = contarPorOrgao(programaDetalhado.flatMap((d) => d.itens));
   const itens = filtrarPorOrgao(atual.itens, filtro);
 
   return (
@@ -289,13 +291,14 @@ export function Program() {
             <span className="red">de encontro.</span>
           </h2>
           <p>
-            Destaques da RENAP e atividades conjuntas. A programação completa,
-            com salas e horários atualizados, está no site do IPDMS.
+            A programação completa, com sala de cada atividade, grupos de
+            discussão, oficinas e a programação cultural. Filtre por organização
+            para ver só o que interessa.
           </p>
         </div>
 
         <div className="program__tabs" role="tablist" aria-label="Dias do encontro">
-          {programacao.map((d, i) => (
+          {programaDetalhado.map((d, i) => (
             <button
               key={d.dia}
               type="button"
@@ -330,7 +333,12 @@ export function Program() {
             itens.map((item, i) => (
               <article className="program__item" key={`${item.hora}-${i}`}>
                 <span className="program__time">{item.hora}</span>
-                <h3>{item.titulo}</h3>
+                <div className="program__texto">
+                  <h3>{item.titulo}</h3>
+                  {item.local ? (
+                    <p className="program__local">{item.local}</p>
+                  ) : null}
+                </div>
                 <span className={`tag tag--${item.tag.toLowerCase()}`}>{item.tag}</span>
               </article>
             ))
@@ -354,6 +362,8 @@ export function Program() {
             .
           </span>
         </div>
+
+        <TrabalhosAcademicos />
       </div>
     </section>
   );

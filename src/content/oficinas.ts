@@ -48,8 +48,8 @@ export const oficinas: Oficina[] = [
     id: "alimentacao-escolar",
     titulo:
       "Direito humano à alimentação e à nutrição adequadas e conflitos de interesses e captura corporativa das políticas de alimentação escolar",
-    hora: "08h30",
-    dia: "13",
+    hora: "14h",
+    dia: "11",
     url: "https://docs.google.com/forms/d/e/1FAIpQLSd1ppgwKcBKPmyuDx-e0ZI1gaQN_SoVR1RNkirRrC1FYbNMiw/viewform",
   },
   {

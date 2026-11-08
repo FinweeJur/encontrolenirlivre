@@ -7,7 +7,7 @@
  * mesma programação conjunta.
  */
 import { useRef, useState } from "react";
-import { programacao } from "../../content/evento";
+import { programaDetalhado } from "../../content/programacaoDetalhada";
 import {
   FiltroOrgs,
   contarPorOrgao,
@@ -19,14 +19,14 @@ export function Programa() {
   const [dia, setDia] = useState(0);
   const [filtro, setFiltro] = useFiltro();
   const abas = useRef<HTMLDivElement>(null);
-  const atual = programacao[dia];
+  const atual = programaDetalhado[dia];
 
   // Contagem geral dos quatro dias: o número não muda ao trocar de dia.
-  const contagens = contarPorOrgao(programacao.flatMap((d) => d.itens));
+  const contagens = contarPorOrgao(programaDetalhado.flatMap((d) => d.itens));
   const itens = filtrarPorOrgao(atual.itens, filtro);
 
   function irPara(indice: number) {
-    const total = programacao.length;
+    const total = programaDetalhado.length;
     const destino = (indice + total) % total;
     setDia(destino);
     const botoes = abas.current?.querySelectorAll<HTMLButtonElement>("[role='tab']");
@@ -52,11 +52,11 @@ export function Programa() {
             irPara(0);
           } else if (e.key === "End") {
             e.preventDefault();
-            irPara(programacao.length - 1);
+            irPara(programaDetalhado.length - 1);
           }
         }}
       >
-        {programacao.map((d, i) => (
+        {programaDetalhado.map((d, i) => (
           <button
             key={d.dia}
             type="button"
@@ -103,7 +103,12 @@ export function Programa() {
                 style={{ ["--atraso" as string]: `${i * 45}ms` }}
               >
                 <span className="xi-item__hora">{item.hora}</span>
-                <span className="xi-item__titulo">{item.titulo}</span>
+                <span className="xi-item__titulo">
+                  {item.titulo}
+                  {item.local ? (
+                    <span className="xi-item__local">{item.local}</span>
+                  ) : null}
+                </span>
                 <em className={`xi-tag xi-tag--${item.tag.toLowerCase()}`}>{item.tag}</em>
               </li>
             ))}
