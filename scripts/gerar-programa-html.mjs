@@ -16,20 +16,23 @@ import { mkdirSync, writeFileSync } from "node:fs";
 
 const SAIDA = "public/programa.html";
 
-const resultado = await build({
-  entryPoints: ["src/content/programacaoDetalhada.ts"],
-  bundle: true,
-  format: "esm",
-  platform: "node",
-  target: "node18",
-  write: false,
-  logLevel: "silent",
-});
+const carregar = async (caminho) => {
+  const saida = await build({
+    entryPoints: [caminho],
+    bundle: true,
+    format: "esm",
+    platform: "node",
+    target: "node18",
+    write: false,
+    logLevel: "silent",
+  });
 
-const codigo = resultado.outputFiles[0].text;
-const modulo = await import(
-  "data:text/javascript;base64," + Buffer.from(codigo).toString("base64")
-);
+  const codigo = saida.outputFiles[0].text;
+  return import("data:text/javascript;base64," + Buffer.from(codigo).toString("base64"));
+};
+
+const modulo = await carregar("src/content/programacaoDetalhada.ts");
+const locaisMod = await carregar("src/content/locais.ts");
 
 const dias = modulo.programaDetalhado;
 if (!Array.isArray(dias) || dias.length === 0) {
@@ -56,17 +59,22 @@ const hoje = new Date();
 const blocos = dias
   .map((dia) => {
     const itens = dia.itens
-      .map(
-        (item) => `
+      .map((item) => {
+        const lugar = item.local ? locaisMod.acharLocal(item.local) : null;
+        const mapa = lugar
+          ? ` <a class="mapa" href="${escapar(locaisMod.linkOpenStreetMap(lugar))}" target="_blank" rel="noopener noreferrer">mapa</a>`
+          : "";
+
+        return `
         <li>
           <span class="hora">${escapar(item.hora)}</span>
           <span class="texto">
             <strong>${escapar(item.titulo)}</strong>
-            ${item.local ? `<span class="local">${escapar(item.local)}</span>` : ""}
+            ${item.local ? `<span class="local">${escapar(item.local)}${mapa}</span>` : ""}
           </span>
           <span class="tag tag--${escapar(item.tag.toLowerCase())}">${escapar(item.tag)}</span>
-        </li>`,
-      )
+        </li>`;
+      })
       .join("");
 
     return `
@@ -181,6 +189,15 @@ const html = `<!doctype html>
     font-size: .76rem;
     color: var(--tinta-fraca);
   }
+  .mapa {
+    margin-left: .35rem;
+    font-family: ui-monospace, "SFMono-Regular", monospace;
+    font-size: .68rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--vermelho);
+    border-bottom: 1px solid currentColor;
+  }
   .tag {
     font-family: ui-monospace, "SFMono-Regular", monospace;
     font-size: .6rem;
@@ -252,6 +269,8 @@ const html = `<!doctype html>
 
     footer { margin-top: .6rem; padding-top: .35rem; font-size: 6.8pt; }
     a { color: inherit; text-decoration: none; }
+    /* No papel, "mapa" vira link morto: sai da impressão. */
+    .mapa { display: none; }
   }
 </style>
 </head>

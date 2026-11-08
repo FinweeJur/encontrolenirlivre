@@ -70,6 +70,12 @@ const LOCAIS: Local[] = [
     tipo: "cultural",
   },
   {
+    chave: "General Osório",
+    busca: "Avenida General Osório, Centro, João Pessoa",
+    rotulo: "Av. General Osório (Centro)",
+    tipo: "cultural",
+  },
+  {
     chave: "Caravela",
     busca: "Centro Cultural Caravela, João Pessoa",
     rotulo: "Centro Cultural Caravela",

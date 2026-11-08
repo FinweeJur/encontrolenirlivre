@@ -18,12 +18,12 @@
 .local-mapa__google {
   display: inline-grid;
   place-items: center;
-  width: 1.35rem;
-  height: 1.35rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border: 1px solid currentColor;
   border-radius: 50%;
   color: var(--red);
-  opacity: 0.75;
+  opacity: 0.85;
   flex: none;
   transition:
     opacity 0.2s,
