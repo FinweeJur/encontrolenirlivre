@@ -206,10 +206,18 @@ const html = `<!doctype html>
   }
   footer a { color: var(--vermelho); }
   @media (max-width: 560px) {
-    li { grid-template-columns: 1fr auto; }
-    .hora { grid-column: 1 / -1; }
-    .texto { grid-column: 1; }
-    .tag { grid-row: 2; }
+    li {
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: .15rem .6rem;
+    }
+    .hora { grid-row: 1; grid-column: 1; }
+    .tag {
+      grid-row: 1;
+      grid-column: 2;
+      justify-self: end;
+      align-self: center;
+    }
+    .texto { grid-row: 2; grid-column: 1 / -1; }
   }
   @media print {
     :root { --tinta: #000; --tinta-fraca: #333; --linha: #bbb; --papel: #fff; }
