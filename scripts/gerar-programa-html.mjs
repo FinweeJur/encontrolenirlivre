@@ -220,11 +220,37 @@ const html = `<!doctype html>
     .texto { grid-row: 2; grid-column: 1 / -1; }
   }
   @media print {
+    @page { size: A4; margin: 11mm 12mm 13mm; }
     :root { --tinta: #000; --tinta-fraca: #333; --linha: #bbb; --papel: #fff; }
+    body { font-size: 9.5pt; line-height: 1.3; }
     .casca { max-width: none; padding: 0; }
     .imprimir { display: none; }
-    .dia { break-inside: avoid; }
-    li { break-inside: avoid; }
+
+    /* Cabeçalho enxuto: ele repetia espaço que faltava nas atividades. */
+    header { padding-bottom: .4rem; margin-bottom: .6rem; border-bottom-width: 2px; }
+    h1 { font-size: 21pt; margin-bottom: .2rem; }
+    .olho { font-size: 6.8pt; margin-bottom: .2rem; }
+    .sub { font-size: 10pt; }
+    .meta { font-size: 7.6pt; margin-top: .25rem; }
+
+    /* Dia pode quebrar entre páginas; item, não. Era isso que sobrava em branco. */
+    .dia { margin-bottom: .8rem; break-inside: auto; }
+    .dia h2 {
+      font-size: 9.6pt;
+      margin: 0 0 .2rem;
+      padding-bottom: .18rem;
+      break-after: avoid;
+      break-inside: avoid;
+    }
+    .num { font-size: 13pt; }
+
+    li { padding: .18rem 0; break-inside: avoid; }
+    .hora { font-size: 6.9pt; }
+    .texto strong { font-size: 8.9pt; line-height: 1.22; }
+    .local { font-size: 7.3pt; margin-top: 0; }
+    .tag { font-size: 6.2pt; padding: 0 5px; }
+
+    footer { margin-top: .6rem; padding-top: .35rem; font-size: 6.8pt; }
     a { color: inherit; text-decoration: none; }
   }
 </style>

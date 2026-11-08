@@ -83,8 +83,12 @@ const LOCAIS: Local[] = [
   },
   {
     chave: "Cléa",
-    busca: "Bar da Cléa, João Pessoa",
-    rotulo: "Bar da Cléa",
+    // Não há registro público deste bar no OpenStreetMap nem nos buscadores.
+    // A rota cultural do sábado é no Centro Histórico, ao lado do Sabadinho
+    // Bom e do Beco da Cachaçaria: o pino leva para a região, não para um
+    // número inventado.
+    busca: "Centro Histórico, João Pessoa",
+    rotulo: "Centro Histórico (rota cultural)",
     tipo: "cultural",
   },
   {
