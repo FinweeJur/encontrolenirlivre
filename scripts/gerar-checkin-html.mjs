@@ -68,7 +68,7 @@ const html = `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Check-in — Encontrão RENAP · IPDMS · RENAJU 2026</title>
+<title>Presença no Evento — Encontrão RENAP · IPDMS · RENAJU 2026</title>
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#1a1512">
 <link rel="icon" href="/img/favicon.png">
@@ -106,7 +106,6 @@ const html = `<!doctype html>
     font-size: 1.6rem;
     line-height: 1.05;
     letter-spacing: -.02em;
-    text-transform: uppercase;
   }
   .sub { margin: 0 0 1rem; font-size: .85rem; color: var(--tinta-fraca); }
 
@@ -311,8 +310,8 @@ const html = `<!doctype html>
 </head>
 <body>
 <div class="casca">
-  <p class="olho" id="olho">30º Encontro da RENAP · XI Seminário do IPDMS · RENAJU</p>
-  <h1>Check-in</h1>
+  <p class="olho" id="olho">30º Encontro da RENAP · XI Seminário do IPDMS · 20º Encontro da RENAJU</p>
+  <h1>Presença no Evento</h1>
   <p class="sub">Marque sua presença nesta atividade. Leva 15 segundos.</p>
 
   <div class="recepcao" id="recepcao" hidden>
@@ -512,7 +511,7 @@ const html = `<!doctype html>
     document.getElementById("sessao-local").textContent = sessao.local || "";
     document.getElementById("sessao-org").textContent = sessao.organizacao;
     select.value = sessao.chave;
-    document.title = "Check-in — " + sessao.titulo;
+    document.title = "Presença no Evento — " + sessao.titulo;
   }
 
   /* ---------- entrada: /c/chave, ?s=chave ou nada ---------- */
