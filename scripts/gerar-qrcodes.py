@@ -23,8 +23,8 @@ ARTE = os.path.join(PROJ, "public", "img", "xi-raizes.png")
 SESSOES = os.path.join(PROJ, ".cache", "sessoes.json")
 CURTOS = os.path.join(PROJ, ".cache", "curtos.json")
 FONTES = os.path.join(PROJ, ".cache", "fonts")
-PASTA_QR = os.path.join(PROJ, "public", "qr")
-PDF = os.path.join(PROJ, "public", "qrcodes-encontrao.pdf")
+PASTA_QR = os.path.join(PROJ, "public", "entrega-encontro", "qrcodes")
+PDF = os.path.join(PROJ, "public", "entrega-encontro", "qrcodes-encontrao.pdf")
 
 BASE = "https://encontrolenirlivre.pages.dev/c/"
 

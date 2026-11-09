@@ -284,7 +284,7 @@ const html = `<!doctype html>
       hoje.toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" }),
     )}.</p>
     <button class="imprimir" type="button" onclick="window.print()">Imprimir</button>
-    <p class="meta" style="margin-top:.5rem">Presença por atividade: <a href="/checkin">check-in</a> · Cartazes com QR para imprimir: <a href="/qrcodes-encontrao.pdf">PDF com 43 cartazes</a>.</p>
+    <p class="meta" style="margin-top:.5rem">Presença por atividade: <a href="/checkin">check-in</a> · Cartazes com QR para imprimir: <a href="/entrega-encontro/qrcodes-encontrao.pdf">PDF com 43 cartazes</a>.</p>
   </header>
 
   <main>${blocos}

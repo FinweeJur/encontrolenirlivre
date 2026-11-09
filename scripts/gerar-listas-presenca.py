@@ -1,48 +1,60 @@
 """
-Gera as listas de presença físicas do encontro, uma por dia, em .docx.
+Gera a lista de presença física do encontro num único .docx, com um dia por
+seção. Cada seção tem cabeçalho próprio, repetido em todas as páginas, com o
+nome do evento e o dia da programação.
 
-Por que existem: o check-in digital é a fonte principal, mas papel não cai com
+Por que existe: o check-in digital é a fonte principal, mas papel não cai com
 a rede. A lista impressa é a redundância — nome, e-mail, rede, turno e
 assinatura — para conferir depois e digitar o que faltar.
 
 Layout pensado para A4 e caneta:
   - nome com 6 cm e assinatura com 4,5 cm;
-  - linha de 1,05 cm, que cabe folgado e ainda deixa 70+ assinaturas;
+  - linha de 1,05 cm, que cabe folgado e ainda deixa 72 assinaturas;
   - cabeçalho da tabela repetido em cada página;
-  - resumo do dia no topo, com horário, atividade e sala.
+  - resumo do dia no topo, sem as atividades culturais.
 
 As logos da RENAP e do IPDMS saem de `public/img`. A marca da RENAJU veio
 do PDF oficial de trabalhos aprovados do IPDMS e está em
 `public/img/renaju-logo.png`; se a organização enviar outra versão, basta
 substituir o arquivo. Sem ele, o gerador desenha um letreiro tipográfico.
 
+O QR da abertura fica dentro do resumo do dia 11, antes da linha da mesa de
+abertura. O arquivo final vai para `public/entrega-encontro/`, junto dos QR.
+
 Fonte da programação: `src/content/programacaoDetalhada.ts`, via
 `scripts/avisos/textos.py`. Nada de horário digitado duas vezes.
 """
-import argparse
 import os
 import sys
 
+import qrcode
 from docx import Document
+from docx.enum.section import WD_SECTION
 from docx.enum.table import WD_ALIGN_VERTICAL, WD_ROW_HEIGHT_RULE, WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Cm, Pt, RGBColor
 from PIL import Image, ImageDraw, ImageFont
+from qrcode.constants import ERROR_CORRECT_H
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from avisos import textos  # noqa: E402
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SAIDA = os.path.join(RAIZ, "listas-presenca")
+ENTREGA = os.path.join(RAIZ, "public", "entrega-encontro")
+DOCX = os.path.join(ENTREGA, "listas-presenca-encontro-2026.docx")
 CACHE = os.path.join(RAIZ, ".cache")
 
 LOGO_RENAP = os.path.join(RAIZ, "public", "img", "logo-ink.png")
 LOGO_IPDMS = os.path.join(RAIZ, "public", "img", "ipdms-logo.png")
 LOGO_RENAJU = os.path.join(RAIZ, "public", "img", "renaju-logo.png")
 MARCA_RENAJU = os.path.join(CACHE, "renaju-marca.png")
+
+ARTE_QR = os.path.join(RAIZ, "public", "img", "xi-raizes.png")
+QR_ABERTURA = os.path.join(CACHE, "qr-abertura.png")
+BASE_QR = "https://encontrolenirlivre.pages.dev/c/"
 
 TINTA = RGBColor(0x2A, 0x25, 0x21)
 TINTA_FRACA = RGBColor(0x6D, 0x61, 0x53)
@@ -85,8 +97,12 @@ def _predio(local):
 
 
 def resumo_do_dia(dia):
-    """Uma linha por bloco de horário: “13h às 16h30 — GDs 1, 3… (CCJ/CCSA)”."""
-    itens = textos.por_dia().get(dia, [])
+    """Uma linha por bloco de horário, sem as atividades culturais."""
+    itens = [
+        item
+        for item in textos.por_dia().get(dia, [])
+        if item.get("organizacao") != "Cultural"
+    ]
     ordem = []
     grupos = {}
     for item in itens:
@@ -148,6 +164,56 @@ def resumo_do_dia(dia):
     return linhas
 
 
+def _linhas_resumo(celula, dia, usar_primeiro=False):
+    """Escreve as linhas do resumo numa célula, com a hora em negrito."""
+    primeira = usar_primeiro
+    for linha in resumo_do_dia(dia):
+        hora, _, resto = linha.partition(" — ")
+        p = celula.paragraphs[0] if primeira else celula.add_paragraph()
+        primeira = False
+        p.paragraph_format.space_before = Pt(0)
+        p.paragraph_format.space_after = Pt(0)
+        p.paragraph_format.line_spacing = 1.0
+        p.paragraph_format.left_indent = Cm(0.05)
+        run = p.add_run(f"{hora}  ")
+        run.bold = True
+        run.font.size = Pt(7.3)
+        run.font.color.rgb = TINTA
+        run.font.name = "Arial"
+        run = p.add_run(resto)
+        run.font.size = Pt(7.3)
+        run.font.color.rgb = TINTA
+        run.font.name = "Arial"
+
+
+def _bloco_qr(celula):
+    """QR da abertura, no canto do resumo do dia 11."""
+    p = celula.paragraphs[0]
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_before = Pt(1)
+    p.paragraph_format.space_after = Pt(0)
+    run = p.add_run()
+    run.add_picture(qr_com_arte(BASE_QR + "11-14"), width=Cm(2.4))
+
+    p = celula.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_before = Pt(1)
+    p.paragraph_format.space_after = Pt(0)
+    run = p.add_run("Check-in da abertura")
+    run.bold = True
+    run.font.size = Pt(6.4)
+    run.font.color.rgb = TINTA
+    run.font.name = "Arial"
+
+    p = celula.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_after = Pt(0)
+    run = p.add_run("aponte a câmera")
+    run.font.size = Pt(6.2)
+    run.font.color.rgb = TINTA_FRACA
+    run.font.name = "Arial"
+
+
 # ------------------------------------------------------------------- imagem
 
 
@@ -195,6 +261,33 @@ def marca_renaju():
 
     imagem.save(MARCA_RENAJU)
     return MARCA_RENAJU
+
+
+def qr_com_arte(url, lado=1000):
+    """QR do check-in com a arte da mão no centro, igual ao cartaz."""
+    qr = qrcode.QRCode(error_correction=ERROR_CORRECT_H, box_size=12, border=2)
+    qr.add_data(url)
+    qr.make(fit=True)
+    imagem = qr.make_image(fill_color=(42, 37, 33), back_color="white").convert("RGB")
+    imagem = imagem.resize((lado, lado), Image.NEAREST)
+
+    arte = Image.open(ARTE_QR).convert("RGBA")
+    alvo = int(lado * 0.28)
+    escala = alvo / max(arte.size)
+    arte = arte.resize(
+        (round(arte.width * escala), round(arte.height * escala)), Image.LANCZOS
+    )
+
+    margem = int(alvo * 0.14)
+    fundo = Image.new(
+        "RGB", (arte.width + margem * 2, arte.height + margem * 2), (255, 255, 255)
+    )
+    fundo.paste(arte, (margem, margem), arte)
+    imagem.paste(fundo, ((lado - fundo.width) // 2, (lado - fundo.height) // 2))
+
+    os.makedirs(CACHE, exist_ok=True)
+    imagem.save(QR_ABERTURA)
+    return QR_ABERTURA
 
 
 # --------------------------------------------------------------- docx helpers
@@ -441,10 +534,7 @@ def paragrafo(doc, texto="", tamanho=9, negrito=False, cor=TINTA, alinhamento=No
 # ------------------------------------------------------------------- desenho
 
 
-def desenhar(doc, dia):
-    semana, data_extenso, data_curta = DIAS[dia]
-
-    section = doc.sections[0]
+def configurar_pagina(section):
     section.page_width = Cm(21)
     section.page_height = Cm(29.7)
     section.top_margin = Cm(1.3)
@@ -453,40 +543,69 @@ def desenhar(doc, dia):
     section.right_margin = Cm(1.4)
     section.header_distance = Cm(0.55)
     section.footer_distance = Cm(0.45)
+    reiniciar_pagina(section)
 
-    # Cabeçalho repetido em todas as páginas.
+
+def reiniciar_pagina(section):
+    """Cada dia começa na página 1, para o rodapé não misturar os dias."""
+    sect_pr = section._sectPr
+    for existente in sect_pr.findall(qn("w:pgNumType")):
+        sect_pr.remove(existente)
+    numero = OxmlElement("w:pgNumType")
+    numero.set(qn("w:start"), "1")
+    colunas = sect_pr.find(qn("w:cols"))
+    if colunas is not None:
+        colunas.addprevious(numero)
+    else:
+        sect_pr.append(numero)
+
+
+def configurar_cabecalho(section, dia):
+    """Nome do evento e dia da programação em todas as páginas da seção."""
+    semana, data_extenso, _ = DIAS[dia]
+    section.header.is_linked_to_previous = False
+    section.footer.is_linked_to_previous = False
+
     cabecalho = section.header.paragraphs[0]
+    cabecalho.text = ""
     cabecalho.alignment = WD_ALIGN_PARAGRAPH.CENTER
     cabecalho.paragraph_format.space_after = Pt(0)
     run = cabecalho.add_run(
         "30º Encontro Nacional da RENAP  ·  XI Seminário do IPDMS  ·  "
-        "20º Encontro da RENAJU  ·  "
+        "20º Encontro da RENAJU"
     )
     run.font.size = Pt(7)
     run.font.color.rgb = TINTA_FRACA
     run.font.name = "Arial"
-    run = cabecalho.add_run(f"Lista de presença — {data_curta}")
-    run.font.size = Pt(7)
+
+    dia_linha = section.header.add_paragraph()
+    dia_linha.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    dia_linha.paragraph_format.space_before = Pt(1)
+    dia_linha.paragraph_format.space_after = Pt(0)
+    run = dia_linha.add_run(f"{semana.capitalize()}, {data_extenso}")
+    run.font.size = Pt(7.6)
     run.bold = True
     run.font.color.rgb = VERMELHO
     run.font.name = "Arial"
+    run = dia_linha.add_run("  ·  Lista de presença")
+    run.font.size = Pt(7)
+    run.font.color.rgb = TINTA_FRACA
+    run.font.name = "Arial"
+    borda_paragrafo(dia_linha, "bottom", 4, LINHA)
 
-    borda_paragrafo(cabecalho, "bottom", 4, LINHA)
-
-    # Rodapé com número de página.
     rodape = section.footer.paragraphs[0]
+    rodape.text = ""
     rodape.alignment = WD_ALIGN_PARAGRAPH.CENTER
     rodape.paragraph_format.space_after = Pt(0)
-    run = rodape.add_run(f"Lista de presença · {data_extenso} · página ")
+    run = rodape.add_run("Lista de presença · página ")
     run.font.size = Pt(7)
     run.font.color.rgb = TINTA_FRACA
     run.font.name = "Arial"
     campo(rodape, "PAGE")
-    run = rodape.add_run(" de ")
-    run.font.size = Pt(7)
-    run.font.color.rgb = TINTA_FRACA
-    run.font.name = "Arial"
-    campo(rodape, "NUMPAGES")
+
+
+def desenhar_corpo(doc, dia):
+    semana, data_extenso, data_curta = DIAS[dia]
 
     # Logos.
     paragrafo(
@@ -615,22 +734,31 @@ def desenhar(doc, dia):
     run.font.color.rgb = VERMELHO
     run.font.name = "Arial"
 
-    for linha in resumo_do_dia(dia):
-        hora, _, resto = linha.partition(" — ")
+    if dia == "11":
+        # Duas colunas: o resumo à esquerda e o QR da abertura à direita,
+        # antes da linha da mesa de abertura.
+        grade = celula.add_table(rows=1, cols=2)
+        grade.alignment = WD_TABLE_ALIGNMENT.CENTER
+        grade.autofit = False
+        sem_bordas(grade)
+        largura_tabela(grade, 17.6)
+        for indice, largura in enumerate([Cm(13.2), Cm(4.4)]):
+            grade.columns[indice].width = largura
+            grade.rows[0].cells[indice].width = largura
+        esquerda, direita = grade.rows[0].cells
+        for coluna in (esquerda, direita):
+            coluna.vertical_alignment = WD_ALIGN_VERTICAL.TOP
+            margens_celula(coluna, topo=0, esquerda=0, baixo=0, direita=0)
+        _linhas_resumo(esquerda, dia, usar_primeiro=True)
+        _bloco_qr(direita)
+        # Word exige um parágrafo depois da tabela dentro da célula.
         p = celula.add_paragraph()
         p.paragraph_format.space_before = Pt(0)
         p.paragraph_format.space_after = Pt(0)
         p.paragraph_format.line_spacing = 1.0
-        p.paragraph_format.left_indent = Cm(0.05)
-        run = p.add_run(f"{hora}  ")
-        run.bold = True
-        run.font.size = Pt(7.3)
-        run.font.color.rgb = TINTA
-        run.font.name = "Arial"
-        run = p.add_run(resto)
-        run.font.size = Pt(7.3)
-        run.font.color.rgb = TINTA
-        run.font.name = "Arial"
+        p.add_run("").font.size = Pt(1)
+    else:
+        _linhas_resumo(celula, dia)
 
     # Campos de identificação.
     p = doc.add_paragraph()
@@ -776,20 +904,29 @@ def desenhar(doc, dia):
     run.font.name = "Arial"
 
 
-def gerar(dia):
+def gerar():
     doc = Document()
     doc.styles["Normal"].font.name = "Arial"
     doc.styles["Normal"].font.size = Pt(9)
     doc.styles["Normal"].font.color.rgb = TINTA
 
-    desenhar(doc, dia)
+    for indice, dia in enumerate(("11", "12", "13", "14")):
+        if indice == 0:
+            section = doc.sections[0]
+        else:
+            section = doc.add_section(WD_SECTION.NEW_PAGE)
+        configurar_pagina(section)
+        configurar_cabecalho(section, dia)
+        desenhar_corpo(doc, dia)
 
-    semana, data_extenso, data_curta = DIAS[dia]
-    doc.core_properties.title = f"Lista de presença — {data_extenso}"
+    doc.core_properties.title = (
+        "Listas de presença — 30º Encontro Nacional da RENAP · "
+        "XI Seminário Nacional do IPDMS · 20º Encontro Nacional da RENAJU"
+    )
     doc.core_properties.author = "RENAP · IPDMS · RENAJU"
     doc.core_properties.subject = (
         "30º Encontro Nacional da RENAP · XI Seminário Nacional do IPDMS · "
-        "20º Encontro Nacional da RENAJU"
+        "20º Encontro Nacional da RENAJU — 11 a 14 de novembro de 2026"
     )
     doc.core_properties.keywords = "lista de presença, check-in, encontro 2026"
     doc.core_properties.comments = (
@@ -797,21 +934,14 @@ def gerar(dia):
         "oficial do encontro."
     )
 
-    os.makedirs(SAIDA, exist_ok=True)
-    caminho = os.path.join(SAIDA, f"lista-presenca-{data_curta.replace('/', '-')}.docx")
-    doc.save(caminho)
-    return caminho
+    os.makedirs(ENTREGA, exist_ok=True)
+    doc.save(DOCX)
+    return DOCX
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Listas de presença em .docx.")
-    parser.add_argument("--dia", choices=["11", "12", "13", "14"], help="gerar só um dia")
-    args = parser.parse_args()
-
-    dias = [args.dia] if args.dia else ["11", "12", "13", "14"]
-    for dia in dias:
-        caminho = gerar(dia)
-        print(f"{caminho} — {os.path.getsize(caminho) // 1024} KB")
+    caminho = gerar()
+    print(f"{caminho} — {os.path.getsize(caminho) // 1024} KB")
     return 0
 
 

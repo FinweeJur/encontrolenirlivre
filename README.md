@@ -119,24 +119,29 @@ a mensagem fica na fila por até duas horas.
 
 ## Listas de presença impressas
 
-`python scripts/gerar-listas-presenca.py` gera quatro `.docx` em
-`listas-presenca/`, um por dia. Cada folha traz:
+`python scripts/gerar-listas-presenca.py` gera **um único** `.docx` em
+`public/entrega-encontro/`, com os quatro dias em seções separadas. Cada dia
+tem cabeçalho próprio, repetido em todas as páginas, com o nome do evento e o
+dia da programação.
+
+Cada folha traz:
 
 - as três organizações e as logos (RENAP, IPDMS e RENAJU);
-- o nome completo do evento e o resumo da programação do dia;
+- o nome completo do evento e o resumo do dia, **sem as atividades culturais**;
 - 72 linhas com nome, e-mail, rede, manhã, tarde e assinatura;
-- cabeçalho repetido e número de página em cada folha.
+- o QR da abertura no resumo do dia 11, antes da linha da mesa de abertura.
 
 A marca da RENAJU veio do PDF oficial de trabalhos aprovados do IPDMS e está
 em `public/img/renaju-logo.png`. Se a organização enviar outra versão, basta
 substituir o arquivo e rodar de novo. A largura das colunas foi medida para
 caneta: nome com 6 cm, assinatura com 4,5 cm e linha de 1,05 cm.
 
-Para gerar também os PDFs de impressão:
+A pasta `public/entrega-encontro/` reúne a lista em `.docx` e `.pdf`, os 43
+QR em `qrcodes/` e o PDF único dos cartazes. Para gerar o PDF da lista:
 
 ```bash
 python scripts/gerar-listas-presenca.py
-soffice --headless --convert-to pdf --outdir listas-presenca listas-presenca/*.docx
+soffice --headless --convert-to pdf --outdir public/entrega-encontro public/entrega-encontro/listas-presenca-encontro-2026.docx
 ```
 
 ## Grupos de Discussão

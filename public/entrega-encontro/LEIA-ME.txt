@@ -1,0 +1,23 @@
+ENTREGA — 30º ENCONTRO NACIONAL DA RENAP
+XI SEMINÁRIO NACIONAL DO IPDMS · 20º ENCONTRO NACIONAL DA RENAJU
+11 a 14 de novembro de 2026 · UFPB, Campus I · João Pessoa/PB
+
+listas-presenca-encontro-2026.docx
+  Lista de presença física, os quatro dias em um só arquivo.
+  Cada dia começa em uma seção nova, com o dia no cabeçalho de todas as
+  páginas. São 72 linhas por dia: nome, e-mail, rede, manhã, tarde e
+  assinatura. As atividades culturais ficaram fora do resumo.
+  O QR da abertura está no resumo do dia 11, antes da linha da mesa.
+
+listas-presenca-encontro-2026.pdf
+  O mesmo arquivo em PDF, para imprimir sem abrir o Word.
+
+qrcodes/
+  43 cartazes A4 em PNG, um por atividade, com a arte da mão no centro
+  do QR e o link curto embaixo.
+
+qrcodes-encontrao.pdf
+  Os 43 cartazes em um PDF único, na ordem da programação.
+
+Para regerar as listas: python scripts/gerar-listas-presenca.py
+Para regerar os QR:      python scripts/gerar-qrcodes.py
