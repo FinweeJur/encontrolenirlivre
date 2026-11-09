@@ -492,7 +492,21 @@ html[data-xi-tema="escuro"] .xi-hero {
 /* No escuro a arte oficial é um raster claro sobre fundo quase preto:
    sem segurar a saturação, o sol e as raízes estouram. */
 html[data-xi-tema="escuro"] .xi-hero__raizes img {
-  filter: brightness(0.9) saturate(0.82);
+  filter: brightness(0.96) saturate(0.92);
+}
+
+/*
+ * No tema claro, os vãos entre as raízes mostram o papel kraft — é isso que
+ * desenha a forma. No escuro esses vãos viravam preto e a arte manchava.
+ * Aqui entra um halo branco (imagem dilatada) atrás da arte: cada raiz ganha
+ * a borda clara que tinha no kraft, e o vermelho continua por cima.
+ */
+html[data-xi-tema="escuro"] .xi-hero__raizes::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/img/xi-raizes-halo.png") center / contain no-repeat;
+  pointer-events: none;
 }
 
 .xi-raizes-electrico {
