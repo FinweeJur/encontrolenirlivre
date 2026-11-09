@@ -136,8 +136,9 @@ em `public/img/renaju-logo.png`. Se a organização enviar outra versão, basta
 substituir o arquivo e rodar de novo. A largura das colunas foi medida para
 caneta: nome com 6 cm, assinatura com 4,5 cm e linha de 1,05 cm.
 
-A pasta `public/entrega-encontro/` reúne a lista em `.docx` e `.pdf`, os 43
-QR em `qrcodes/` e o PDF único dos cartazes. Para gerar o PDF da lista:
+A pasta `public/entrega-encontro/` reúne a lista em `.docx` e `.pdf`, os 39
+QR em `qrcodes/` e o PDF único dos cartazes. As atividades culturais ficaram
+fora dos cartazes e do resumo. Para gerar o PDF da lista:
 
 ```bash
 python scripts/gerar-listas-presenca.py

@@ -10,6 +10,7 @@ Um cartaz por atividade, ocupando a folha:
 
 Também salva um PNG por atividade, para uso na tela.
 """
+import glob
 import io
 import json
 import os
@@ -186,11 +187,19 @@ def cartaz(sessao: dict, curto: str) -> Image.Image:
 
 def main():
     sessoes = json.load(io.open(SESSOES, encoding="utf-8"))
+    # A lista de presença impressa não inclui a programação cultural; os
+    # cartazes seguem a mesma regra, para ninguém procurar QR de luau.
+    sessoes = [s for s in sessoes if s.get("organizacao") != "Cultural"]
+
     curtos = {}
     if os.path.exists(CURTOS):
         curtos = json.load(io.open(CURTOS, encoding="utf-8"))
 
     os.makedirs(PASTA_QR, exist_ok=True)
+    # Limpa os PNG antigos: se uma atividade sair da lista, o cartaz não fica
+    # para trás na pasta.
+    for antigo in glob.glob(os.path.join(PASTA_QR, "*.png")):
+        os.remove(antigo)
     paginas = []
 
     for i, sessao in enumerate(sessoes, 1):
