@@ -117,6 +117,28 @@ Os `.cmd` em `scripts/` são para o Agendador de Tarefas. Ajuste o grupo do
 WhatsApp em `WHATSAPP_GRUPO` (ou o JID em `WHATSAPP_JID`); sem serviço no ar,
 a mensagem fica na fila por até duas horas.
 
+## Listas de presença impressas
+
+`python scripts/gerar-listas-presenca.py` gera quatro `.docx` em
+`listas-presenca/`, um por dia. Cada folha traz:
+
+- as três organizações e as logos (RENAP, IPDMS e RENAJU);
+- o nome completo do evento e o resumo da programação do dia;
+- 72 linhas com nome, e-mail, rede, manhã, tarde e assinatura;
+- cabeçalho repetido e número de página em cada folha.
+
+A marca da RENAJU veio do PDF oficial de trabalhos aprovados do IPDMS e está
+em `public/img/renaju-logo.png`. Se a organização enviar outra versão, basta
+substituir o arquivo e rodar de novo. A largura das colunas foi medida para
+caneta: nome com 6 cm, assinatura com 4,5 cm e linha de 1,05 cm.
+
+Para gerar também os PDFs de impressão:
+
+```bash
+python scripts/gerar-listas-presenca.py
+soffice --headless --convert-to pdf --outdir listas-presenca listas-presenca/*.docx
+```
+
 ## Grupos de Discussão
 
 A seção “Grupos de Discussão” do seminário (`src/components/seminario/Gds.tsx`)
