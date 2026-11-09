@@ -12,7 +12,13 @@
 export async function copiarTexto(texto: string): Promise<boolean> {
   try {
     if (navigator.clipboard?.writeText) {
-      await navigator.clipboard.writeText(texto);
+      // Alguns WebViews deixam a promessa pendurada; o prazo força o fallback.
+      await Promise.race([
+        navigator.clipboard.writeText(texto),
+        new Promise<void>((_, rejeitar) =>
+          window.setTimeout(() => rejeitar(new Error("tempo")), 1200),
+        ),
+      ]);
       return true;
     }
   } catch {

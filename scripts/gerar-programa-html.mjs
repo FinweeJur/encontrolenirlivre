@@ -335,7 +335,12 @@ const html = `<!doctype html>
   async function copiar(texto) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       try {
-        await navigator.clipboard.writeText(texto);
+        await Promise.race([
+          navigator.clipboard.writeText(texto),
+          new Promise(function (_, rejeitar) {
+            window.setTimeout(function () { rejeitar(new Error("tempo")); }, 1200);
+          }),
+        ]);
         return true;
       } catch (erro) {}
     }
