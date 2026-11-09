@@ -69,33 +69,35 @@ def entregar_fila(estado):
         if agora > expira:
             print(f"fila: expirado {item.get('chave')}")
             continue
-        ok, motivo, _ = comum.whatsapp(item["texto"])
+        alvos = item.get("faltando") or None
+        ok, motivo, falhas = comum.whatsapp_grupos(item["texto"], alvos)
         print(f"fila: {item.get('chave')} {motivo}")
         if not ok:
+            item["faltando"] = falhas
             restantes.append(item)
     estado["fila"] = restantes
 
 
 def disparar(aviso, texto, problemas, marcar=True, com_whatsapp=True):
-    """Revisa, envia e devolve o resultado. Texto reprovado não sai."""
+    """Revisa, envia e devolve (resultado, falhas). Texto reprovado não sai."""
     if problemas:
         print(f"BLOQUEADO {aviso['id']} {aviso['dia']}: revisor achou problema")
         print(revisor.formatar(problemas))
-        return "bloqueado"
+        return "bloqueado", []
 
     env = comum.ler_env()
     ok_t, motivo_t = comum.telegram(texto, env)
     if com_whatsapp:
-        ok_w, motivo_w, _ = comum.whatsapp(texto)
+        ok_w, motivo_w, falhas = comum.whatsapp_grupos(texto)
     else:
-        ok_w, motivo_w = False, "whatsapp desligado no teste"
+        ok_w, motivo_w, falhas = False, "whatsapp desligado no teste", []
     print(f"{aviso['id']} {aviso['dia']}: {motivo_t} | {motivo_w}")
 
     if marcar and (ok_t or ok_w):
-        return "enviado" if not ok_w else "parcial"
+        return ("enviado" if not ok_w else "parcial"), falhas
     if marcar:
-        return "falhou"
-    return "teste"
+        return "falhou", falhas
+    return "teste", falhas
 
 
 def executar():
@@ -119,7 +121,7 @@ def executar():
             continue
 
         problemas = revisor.revisar(texto, fatos)
-        resultado = disparar(aviso, texto, problemas)
+        resultado, falhas = disparar(aviso, texto, problemas)
 
         if resultado in ("enviado", "parcial"):
             estado["enviados"][chave] = {
@@ -136,6 +138,7 @@ def executar():
                             + timedelta(minutes=validade)
                         ).isoformat(),
                         "texto": texto,
+                        "faltando": falhas,
                     }
                 )
         elif resultado == "falhou":
@@ -220,7 +223,7 @@ def forcar(identificador, dia, com_whatsapp=False, marcar=False):
     if problemas:
         return 1
 
-    resultado = disparar(
+    resultado, _ = disparar(
         aviso, texto, problemas, marcar=marcar, com_whatsapp=com_whatsapp
     )
     print(f"resultado do teste: {resultado}")

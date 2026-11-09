@@ -597,6 +597,38 @@ def boa_noite(dia):
     )
 
 
+def culturais():
+    """Mensagem só com a programação cultural, para o WhatsApp."""
+    linhas = ["🎭 Programação cultural", ""]
+    for dia in ("11", "12", "13", "14"):
+        itens = [
+            item
+            for item in por_dia().get(dia, [])
+            if item.get("organizacao") == "Cultural"
+        ]
+        if not itens:
+            continue
+        linhas.append(f"🗓️ {dia}/11")
+        for item in itens:
+            hora = item["hora"]
+            if _minutos(hora) is None:
+                hora = hora[:1].upper() + hora[1:]
+            titulo = item["titulo"]
+            if titulo.startswith("Cultural — "):
+                titulo = titulo[len("Cultural — ") :]
+            linha = f"• {hora} — {titulo}"
+            local = local_curto(item.get("local"))
+            if local:
+                linha += f"\n  📍 {local}"
+            linhas.append(linha)
+        linhas.append("")
+
+    linhas.append("Nos vemos lá! ✊")
+    linhas.append("")
+    linhas.append(f"Programação completa: {PROGRAMA}")
+    return "\n".join(linhas).strip()
+
+
 def fatos_do_dia(dia):
     """O que o revisor pode conferir contra a programação real."""
     itens = por_dia().get(dia, [])

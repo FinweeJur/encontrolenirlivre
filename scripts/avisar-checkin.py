@@ -69,9 +69,11 @@ def entregar_fila(estado):
                     continue
             except ValueError:
                 pass
-        ok, motivo, _ = comum.whatsapp(item["texto"])
+        alvos = item.get("faltando") or None
+        ok, motivo, falhas = comum.whatsapp_grupos(item["texto"], alvos)
         print(f"fila: marco {item.get('marco')} {motivo}")
         if not ok:
+            item["faltando"] = falhas
             restantes.append(item)
     estado["fila"] = restantes
 
@@ -111,7 +113,7 @@ def main():
                 continue
 
             ok_t, motivo_t = comum.telegram(texto, env)
-            ok_w, motivo_w, _ = comum.whatsapp(texto)
+            ok_w, motivo_w, falhas = comum.whatsapp_grupos(texto)
             print(f"{chave} marco {marco}: {motivo_t} | {motivo_w}")
 
             if not ok_w:
@@ -120,6 +122,7 @@ def main():
                         "sessao": chave,
                         "marco": marco,
                         "texto": texto,
+                        "faltando": falhas,
                         "expira": (
                             comum.agora_br().replace(microsecond=0)
                             + timedelta(minutes=VALIDADE_FILA)

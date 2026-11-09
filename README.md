@@ -113,9 +113,11 @@ python scripts/avisar-programa.py --ensaiar
 python scripts/avisar-programa.py --status
 ```
 
-Os `.cmd` em `scripts/` são para o Agendador de Tarefas. Ajuste o grupo do
-WhatsApp em `WHATSAPP_GRUPO` (ou o JID em `WHATSAPP_JID`); sem serviço no ar,
-a mensagem fica na fila por até duas horas.
+Os `.cmd` em `scripts/` são para o Agendador de Tarefas. O destino é o arquivo
+`~/.config/encontrao/whatsapp-grupos.json` (lista de `{nome, jid}`); sem ele,
+cai em `WHATSAPP_GRUPO`/`WHATSAPP_JID`. O envio vai para todos os grupos, um de
+cada vez. Sem serviço no ar, a mensagem fica na fila por até duas horas e
+retoma só os grupos que falharam.
 
 ## Listas de presença impressas
 

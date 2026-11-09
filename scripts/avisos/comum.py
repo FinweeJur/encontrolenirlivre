@@ -13,6 +13,7 @@ Nenhuma função imprime token, chat id ou chave.
 import io
 import json
 import os
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -36,6 +37,12 @@ TOKEN_ARQUIVO = os.path.join(
 
 WHATSAPP_PADRAO = "http://127.0.0.1:8899/enviar"
 GRUPO_PADRAO = "OpenSecretario"
+
+# Grupos que recebem os avisos do encontro. O arquivo fica fora do repositório
+# porque o JID identifica a conversa: não é segredo, mas não precisa ser versionado.
+GRUPOS_ARQUIVO = os.path.join(
+    os.path.expanduser("~"), ".config", "encontrao", "whatsapp-grupos.json"
+)
 
 
 def agora_br():
@@ -152,14 +159,71 @@ def whatsapp(texto, grupo=None, jid=None):
         return False, f"whatsapp fora: {erro}", ""
 
 
+def grupos_configurados():
+    """Lista de {nome, jid} que recebem os avisos.
+
+    Aceita lista simples ou objeto com a chave ``grupos``. Item pode ser só o
+    nome do grupo ou ``{"nome": ..., "jid": ...}``. Arquivo ausente devolve
+    lista vazia; quem chamou decide o padrão.
+    """
+    dados = ler_json(GRUPOS_ARQUIVO, [])
+    if isinstance(dados, dict):
+        dados = dados.get("grupos", [])
+    if not isinstance(dados, list):
+        return []
+    saida = []
+    for item in dados:
+        if isinstance(item, str) and item.strip():
+            saida.append({"nome": item.strip(), "jid": ""})
+        elif isinstance(item, dict):
+            jid = str(item.get("jid") or "").strip()
+            nome = str(item.get("nome") or jid).strip()
+            if jid or nome:
+                saida.append({"nome": nome, "jid": jid})
+    return saida
+
+
+def whatsapp_grupos(texto, alvos=None, intervalo=1.5):
+    """Manda o mesmo texto para todos os grupos configurados.
+
+    Devolve ``(ok, motivos, falhas)``: ``ok`` só é verdadeiro quando todos
+    receberam; ``falhas`` é a lista de alvos que ficaram de fora, para a fila.
+    O intervalo evita rajada no mesmo número.
+    """
+    if alvos is None:
+        alvos = grupos_configurados()
+    if not alvos:
+        ok, motivo, jid = whatsapp(texto)
+        return ok, motivo, ([] if ok else [{"nome": jid or GRUPO_PADRAO, "jid": jid}])
+
+    motivos = []
+    falhas = []
+    for posicao, alvo in enumerate(alvos):
+        if posicao:
+            time.sleep(intervalo)
+        jid = alvo.get("jid") or ""
+        ok, motivo, _ = whatsapp(
+            texto,
+            jid=jid or None,
+            grupo=None if jid else alvo.get("nome") or GRUPO_PADRAO,
+        )
+        motivos.append(f"{alvo.get('nome') or jid}: {motivo}")
+        if not ok:
+            falhas.append({"nome": alvo.get("nome") or jid, "jid": jid})
+
+    return not falhas, " | ".join(motivos), falhas
+
+
 def entregar(texto, env=None, com_whatsapp=True):
     """Dispara nos dois canais. Devolve o resultado de cada um."""
     ok_t, motivo_t = telegram(texto, env)
     if com_whatsapp:
-        ok_w, motivo_w, jid = whatsapp(texto)
+        ok_w, motivo_w, falhas = whatsapp_grupos(texto)
+        jid = ", ".join(a["jid"] for a in grupos_configurados() if a.get("jid"))
     else:
-        ok_w, motivo_w, jid = False, "whatsapp desligado neste teste", ""
+        ok_w, motivo_w, jid, falhas = False, "whatsapp desligado neste teste", "", []
     return {
         "telegram": (ok_t, motivo_t),
         "whatsapp": (ok_w, motivo_w, jid),
+        "whatsapp_falhas": falhas,
     }
