@@ -7,3 +7,7 @@ dist/
 !.env.example
 dist-seminario/
 .wrangler/
+
+.cache/
+__pycache__/
+*.pyc

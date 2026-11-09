@@ -1,3 +1,8 @@
 # O JSON público saiu do ar: era contrato de máquina, não página para ler.
 # Quem tinha o endereço guardado cai no programa completo, em HTML.
 /dados/programacao.json  /programa  301
+
+# Link curto do check-in: /c/11-3 abre a página já apontada para a atividade.
+# O endereço fica na URL (a página lê o último pedaço do caminho), então o QR
+# não precisa de parâmetro.
+/c/*  /checkin  200

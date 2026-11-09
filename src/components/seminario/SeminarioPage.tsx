@@ -412,6 +412,10 @@ export function SeminarioPage() {
               <a href="#gds">Ver os GDs e os trabalhos aprovados</a>{" "}
               ·{" "}
               <a href="/programa.html">Programa para imprimir</a>
+              {" · "}
+              <a href="https://encontrolenirlivre.pages.dev/checkin">
+                Lista de presença
+              </a>
             </p>
 
             {/* Informação da organização que não está na grade de horas. */}

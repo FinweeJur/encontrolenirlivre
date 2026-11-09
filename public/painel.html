@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Painel de presença — Encontrão 2026</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1a1512">
+<link rel="icon" href="/img/favicon.png">
+<style>
+  :root {
+    --papel: #f6f1e7;
+    --papel-2: #efe6d4;
+    --tinta: #2a2521;
+    --tinta-fraca: #6d6153;
+    --linha: #d9ccb2;
+    --vermelho: #bf2a26;
+    --verde: #1e6b4f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--papel); color: var(--tinta);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.45; padding: 1rem 1rem 2rem;
+  }
+  .casca { max-width: 44rem; margin: 0 auto; }
+  .olho {
+    margin: 0 0 .2rem; font-family: ui-monospace, monospace; font-size: .62rem;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--vermelho);
+  }
+  h1 { margin: 0 0 .6rem; font-size: 1.5rem; text-transform: uppercase; letter-spacing: -.02em; }
+
+  /* trava */
+  .trava { display: grid; gap: .6rem; max-width: 22rem; margin: 2rem auto; }
+  .trava label { font-size: .8rem; font-weight: 600; }
+  .trava input {
+    width: 100%; padding: .75rem .8rem; border: 1px solid var(--linha);
+    border-radius: 6px; font: inherit; font-size: 1rem; background: #fff; color: var(--tinta);
+  }
+  .trava button, .atualizar {
+    padding: .75rem 1rem; border: 0; border-radius: 6px; background: var(--vermelho);
+    color: #fdf3de; font: inherit; font-weight: 700; letter-spacing: .04em;
+    text-transform: uppercase; cursor: pointer;
+  }
+  .trava p { margin: 0; font-size: .74rem; color: var(--tinta-fraca); }
+
+  /* painel */
+  .painel { display: none; }
+  .painel.is-aberto { display: block; }
+  .numeros { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: .6rem; margin: 0 0 1rem; }
+  .numero { border: 1px solid var(--linha); border-top: 3px solid var(--vermelho); border-radius: 8px; padding: .7rem .8rem; background: var(--papel-2); }
+  .numero strong { display: block; font-size: 1.9rem; line-height: 1; }
+  .numero small { font-family: ui-monospace, monospace; font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; color: var(--tinta-fraca); }
+
+  .barra { display: flex; gap: .4rem; flex-wrap: wrap; margin: 0 0 .8rem; }
+  .barra button {
+    padding: .35rem .7rem; border: 1px solid var(--linha); border-radius: 100px;
+    background: transparent; color: var(--tinta-fraca); font: inherit; font-size: .78rem; cursor: pointer;
+  }
+  .barra button.is-ativo { background: var(--vermelho); border-color: var(--vermelho); color: #fdf3de; }
+
+  .cartao { border: 1px solid var(--linha); border-left: 3px solid var(--vermelho); border-radius: 6px; padding: .6rem .8rem; margin-bottom: .45rem; background: #fff; }
+  .cartao__topo { display: flex; gap: .6rem; align-items: baseline; justify-content: space-between; }
+  .cartao__titulo { font-size: .88rem; font-weight: 600; }
+  .cartao__conta { font-family: ui-monospace, monospace; font-size: .9rem; font-weight: 700; color: var(--vermelho); }
+  .cartao__meta { font-family: ui-monospace, monospace; font-size: .64rem; color: var(--tinta-fraca); margin-top: .1rem; }
+  .vazio { font-size: .8rem; color: var(--tinta-fraca); }
+
+  .recentes { margin-top: 1.4rem; }
+  .recentes h2 { font-size: .9rem; text-transform: uppercase; letter-spacing: .06em; margin: 0 0 .5rem; }
+  .recentes li { font-size: .8rem; padding: .35rem 0; border-bottom: 1px dotted var(--linha); display: flex; justify-content: space-between; gap: .6rem; }
+  .recentes li span:last-child { font-family: ui-monospace, monospace; font-size: .66rem; color: var(--tinta-fraca); white-space: nowrap; }
+
+  .pe { margin: 1.2rem 0 0; font-size: .7rem; color: var(--tinta-fraca); display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; }
+  .pe .ponto { width: .45rem; height: .45rem; border-radius: 50%; background: var(--verde); }
+  .sair { background: none; border: 0; color: var(--vermelho); font: inherit; font-size: .7rem; cursor: pointer; text-decoration: underline; }
+
+  @media (prefers-color-scheme: dark) {
+    :root { --papel:#1a1512; --papel-2:#221b16; --tinta:#f2e8d2; --tinta-fraca:#a99a83; --linha:#3a3027; --vermelho:#cf4b43; --verde:#6fbf9a; }
+    input { background:#271f19; color: var(--tinta); }
+    .cartao { background:#221b16; }
+  }
+</style>
+</head>
+<body>
+<div class="casca">
+  <p class="olho">30º Encontro da RENAP · XI Seminário do IPDMS · RENAJU</p>
+  <h1>Painel de presença</h1>
+
+  <form class="trava" id="trava">
+    <label for="senha">Senha da comissão</label>
+    <input id="senha" type="password" autocomplete="current-password" placeholder="senha" required>
+    <button type="submit">Entrar</button>
+    <p>Sem a senha, nada aparece. A senha fica só nesta aba do navegador.</p>
+  </form>
+
+  <section class="painel" id="painel" aria-live="polite">
+    <div class="numeros">
+      <div class="numero"><strong id="n-total">0</strong><small>presenças</small></div>
+      <div class="numero"><strong id="n-ativas">0</strong><small>atividades com registro</small></div>
+      <div class="numero"><strong id="n-hoje">—</strong><small>presenças hoje</small></div>
+    </div>
+
+    <div class="barra" id="dias" role="group" aria-label="Filtrar por dia"></div>
+
+    <div id="lista"></div>
+
+    <div class="recentes">
+      <h2>Últimas presenças</h2>
+      <ul id="recentes" style="list-style:none;margin:0;padding:0"></ul>
+    </div>
+
+    <p class="pe">
+      <span class="ponto" aria-hidden="true"></span>
+      <span id="estado">Atualiza sozinho a cada 15 s</span>
+      <button type="button" class="sair" id="sair">Sair</button>
+    </p>
+  </section>
+</div>
+
+<script>
+  const CHAVE = "ecnl-painel-senha";
+  const trava = document.getElementById("trava");
+  const painel = document.getElementById("painel");
+  const lista = document.getElementById("lista");
+  const dias = document.getElementById("dias");
+  const estado = document.getElementById("estado");
+  let senha = "";
+  let filtro = "todos";
+  let relogio = null;
+
+  function guardar() {
+    try { sessionStorage.setItem(CHAVE, senha); } catch (e) {}
+  }
+  function lembrar() {
+    try { return sessionStorage.getItem(CHAVE) || ""; } catch (e) { return ""; }
+  }
+  function esquecer() {
+    try { sessionStorage.removeItem(CHAVE); } catch (e) {}
+  }
+
+  function horaCurta(iso) {
+    if (!iso) return "";
+    const d = new Date(iso.replace(" ", "T") + "Z");
+    return d.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+  }
+
+  function pintarDias(porDia) {
+    const opcoes = Object.entries(porDia).map(([dia, total]) => dia + " · " + total);
+    dias.innerHTML = "";
+    const todos = document.createElement("button");
+    todos.textContent = "Todos · " + porDia.reduce((s, d) => s + d.total, 0);
+    todos.className = filtro === "todos" ? "is-ativo" : "";
+    todos.onclick = () => { filtro = "todos"; carregar(); };
+    dias.appendChild(todos);
+
+    for (const [dia, total] of porDia) {
+      const b = document.createElement("button");
+      b.textContent = dia + "/11 · " + total;
+      b.className = filtro === dia ? "is-ativo" : "";
+      b.onclick = () => { filtro = dia; carregar(); };
+      dias.appendChild(b);
+    }
+  }
+
+  async function carregar() {
+    try {
+      const r = await fetch("/api/resumo?token=" + encodeURIComponent(senha), { cache: "no-store" });
+      if (r.status === 403) { sair(); estado.textContent = "Senha recusada."; return; }
+      if (!r.ok) { estado.textContent = "Falha ao carregar."; return; }
+
+      const d = await r.json();
+      document.getElementById("n-total").textContent = d.total;
+      const ativas = d.atividades.filter((a) => a.total > 0).length;
+      document.getElementById("n-ativas").textContent = ativas;
+
+      const hoje = new Date(Date.now() - 3 * 3600 * 1000).getUTCDate();
+      const doDia = d.porDia.find((x) => Number(x.dia) === hoje);
+      document.getElementById("n-hoje").textContent = doDia ? doDia.total : 0;
+
+      pintarDias(d.porDia);
+
+      const visiveis = d.atividades.filter(
+        (a) => (filtro === "todos" || a.dia === filtro),
+      );
+
+      lista.innerHTML = "";
+      if (!visiveis.length) {
+        lista.innerHTML = '<p class="vazio">Nenhuma atividade neste dia.</p>';
+      }
+
+      for (const a of visiveis) {
+        const cartao = document.createElement("article");
+        cartao.className = "cartao";
+        cartao.innerHTML =
+          '<div class="cartao__topo"><span class="cartao__titulo"></span>' +
+          '<span class="cartao__conta">' + a.total + "</span></div>" +
+          '<div class="cartao__meta"></div>';
+        cartao.querySelector(".cartao__titulo").textContent = a.titulo;
+        cartao.querySelector(".cartao__meta").textContent =
+          a.dia + "/11 · " + a.hora + (a.local ? " · " + a.local : "") +
+          (a.ultima ? " · última " + horaCurta(a.ultima) : "");
+        lista.appendChild(cartao);
+      }
+
+      const ul = document.getElementById("recentes");
+      ul.innerHTML = "";
+      for (const r2 of d.recentes) {
+        const li = document.createElement("li");
+        li.innerHTML = "<span></span><span></span>";
+        li.firstChild.textContent = r2.nome + " — " + r2.atividade;
+        li.lastChild.textContent = horaCurta(r2.quando);
+        ul.appendChild(li);
+      }
+
+      estado.textContent = "Atualizado às " + new Date().toLocaleTimeString("pt-BR");
+    } catch (e) {
+      estado.textContent = "Sem conexão. Tentando de novo…";
+    }
+  }
+
+  function abrir() {
+    trava.style.display = "none";
+    painel.classList.add("is-aberto");
+    guardar();
+    carregar();
+    clearInterval(relogio);
+    relogio = setInterval(carregar, 15000);
+  }
+
+  function sair() {
+    senha = "";
+    esquecer();
+    clearInterval(relogio);
+    painel.classList.remove("is-aberto");
+    trava.style.display = "grid";
+    document.getElementById("senha").value = "";
+  }
+
+  trava.addEventListener("submit", (e) => {
+    e.preventDefault();
+    senha = document.getElementById("senha").value.trim();
+    if (senha) abrir();
+  });
+
+  document.getElementById("sair").addEventListener("click", sair);
+
+  const lembrada = lembrar();
+  if (lembrada) { senha = lembrada; abrir(); }
+</script>
+</body>
+</html>

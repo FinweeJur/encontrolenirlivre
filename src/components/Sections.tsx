@@ -356,6 +356,9 @@ export function Program() {
           <a className="text-link" href="/programa.html">
             Programa para imprimir <Arrow />
           </a>
+          <a className="text-link" href="/checkin">
+            Lista de presença <Arrow />
+          </a>
           <span className="program__note">
             Sujeita a atualização pela organização.{" "}
             <a

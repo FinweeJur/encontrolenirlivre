@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Presença ao vivo — Encontrão 2026</title>
+<meta name="description" content="Contagem de check-ins do 30º Encontro Nacional da RENAP e do XI Seminário do IPDMS, atualizada em tempo real.">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#f6f1e7">
+<link rel="icon" href="/img/favicon.png">
+<style>
+  :root {
+    --papel: #f6f1e7;
+    --papel-2: #efe6d4;
+    --tinta: #2a2521;
+    --tinta-fraca: #6d6153;
+    --linha: #d9ccb2;
+    --vermelho: #bf2a26;
+    --verde: #1e6b4f;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--papel); color: var(--tinta);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.45; padding: 1rem 1rem 2.5rem;
+  }
+  .casca { max-width: 44rem; margin: 0 auto; }
+
+  .olho {
+    margin: 0 0 .25rem; font-family: ui-monospace, monospace; font-size: .68rem;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--vermelho);
+  }
+  h1 {
+    margin: 0 0 .2rem; font-size: 1.55rem; line-height: 1.1;
+    text-transform: uppercase; letter-spacing: -.02em;
+  }
+  .sub { margin: 0 0 1.1rem; font-size: .82rem; color: var(--tinta-fraca); }
+
+  .total {
+    display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap;
+    border: 1px solid var(--linha); border-left: 4px solid var(--vermelho);
+    border-radius: 8px; padding: .8rem 1rem; background: var(--papel-2);
+    margin: 0 0 .8rem;
+  }
+  .total strong { font-size: 2.6rem; line-height: 1; letter-spacing: -.03em; }
+  .total span { font-size: .9rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+  .total small {
+    width: 100%; font-family: ui-monospace, monospace; font-size: .68rem;
+    color: var(--tinta-fraca);
+  }
+  .total .ponto {
+    display: inline-block; width: .5rem; height: .5rem; border-radius: 50%;
+    background: var(--verde); margin-right: .3rem; vertical-align: middle;
+  }
+
+  .dias { display: flex; gap: .4rem; flex-wrap: wrap; margin: 0 0 1rem; }
+  .dias button {
+    min-height: 44px; padding: .4rem .85rem; border: 1px solid var(--linha);
+    border-radius: 100px; background: transparent; color: var(--tinta-fraca);
+    font: inherit; font-size: .82rem; cursor: pointer;
+  }
+  .dias button.is-ativo {
+    background: var(--vermelho); border-color: var(--vermelho); color: #fdf3de;
+    font-weight: 700;
+  }
+
+  .cartao {
+    border: 1px solid var(--linha); border-left: 3px solid var(--vermelho);
+    border-radius: 7px; padding: .65rem .85rem; margin-bottom: .5rem; background: #fff;
+  }
+  .cartao__topo { display: flex; gap: .7rem; align-items: baseline; justify-content: space-between; }
+  .cartao__titulo { font-size: .9rem; font-weight: 600; }
+  .cartao__conta {
+    font-family: ui-monospace, monospace; font-size: 1rem; font-weight: 700;
+    color: var(--vermelho); white-space: nowrap;
+  }
+  .cartao__meta {
+    font-family: ui-monospace, monospace; font-size: .67rem; color: var(--tinta-fraca);
+    margin-top: .15rem;
+  }
+  .barra { height: 4px; background: var(--papel-2); border-radius: 2px; margin-top: .45rem; overflow: hidden; }
+  .barra span { display: block; height: 100%; background: var(--vermelho); border-radius: 2px; }
+
+  .vazio { font-size: .85rem; color: var(--tinta-fraca); padding: .8rem 0; }
+  .pe { margin: 1.4rem 0 0; font-size: .76rem; color: var(--tinta-fraca); }
+  .pe a { color: var(--vermelho); }
+  .pe .links { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: .5rem; }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --papel: #1a1512; --papel-2: #221b16; --tinta: #f2e8d2;
+      --tinta-fraca: #a99a83; --linha: #3a3027; --vermelho: #cf4b43; --verde: #6fbf9a;
+    }
+    .cartao { background: #221b16; }
+    .total { background: #221b16; }
+  }
+</style>
+</head>
+<body>
+<div class="casca">
+  <header>
+    <p class="olho">30º Encontro da RENAP · XI Seminário do IPDMS · RENAJU</p>
+    <h1>Presença ao vivo</h1>
+    <p class="sub">Campus I da UFPB · João Pessoa · 11 a 14 de novembro de 2026</p>
+  </header>
+
+  <section class="total" aria-live="polite">
+    <strong id="total">0</strong>
+    <span>check-ins</span>
+    <small id="estado"><span class="ponto" aria-hidden="true"></span>carregando…</small>
+  </section>
+
+  <nav class="dias" id="dias" aria-label="Filtrar por dia"></nav>
+
+  <main id="lista">
+    <p class="vazio">Carregando as atividades…</p>
+  </main>
+
+  <footer class="pe">
+    <p>
+      O placar mostra só a contagem por atividade. Nenhum nome ou e-mail
+      aparece aqui. Quem se inscreveu numa atividade pode registrar presença
+      pelo <a href="/checkin">check-in</a>.
+    </p>
+    <p class="links">
+      <a href="/programa">Programação completa</a>
+      <a href="/checkin">Fazer check-in</a>
+    </p>
+  </footer>
+</div>
+
+<script>
+  const lista = document.getElementById("lista");
+  const dias = document.getElementById("dias");
+  const estado = document.getElementById("estado");
+  const totalEl = document.getElementById("total");
+
+  let dados = null;
+  let filtro = "todos";
+  let relogio = null;
+  let carregando = false;
+
+  function horaCurta() {
+    return new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+  }
+
+  function pintarDias() {
+    const porDia = new Map(dados.porDia.map((d) => [String(d.dia), d.total]));
+    const soma = dados.total;
+    dias.innerHTML = "";
+
+    const opcoes = [["todos", "Todos", soma]];
+    for (const dia of ["11", "12", "13", "14"]) {
+      opcoes.push([dia, dia + "/11", porDia.get(dia) || 0]);
+    }
+
+    for (const [valor, rotulo, conta] of opcoes) {
+      const botao = document.createElement("button");
+      botao.type = "button";
+      botao.textContent = rotulo + " · " + conta;
+      botao.className = valor === filtro ? "is-ativo" : "";
+      botao.setAttribute("aria-pressed", valor === filtro ? "true" : "false");
+      botao.onclick = () => { filtro = valor; pintarDias(); pintarLista(); };
+      dias.appendChild(botao);
+    }
+  }
+
+  function pintarLista() {
+    const visiveis = dados.atividades.filter(
+      (a) => filtro === "todos" || a.dia === filtro,
+    );
+
+    lista.innerHTML = "";
+    if (!visiveis.length) {
+      lista.innerHTML = '<p class="vazio">Ainda sem check-in neste dia. O placar atualiza sozinho.</p>';
+      return;
+    }
+
+    const maior = Math.max(...visiveis.map((a) => a.total), 1);
+
+    for (const a of visiveis) {
+      const cartao = document.createElement("article");
+      cartao.className = "cartao";
+
+      const topo = document.createElement("div");
+      topo.className = "cartao__topo";
+      const titulo = document.createElement("span");
+      titulo.className = "cartao__titulo";
+      titulo.textContent = a.titulo;
+      const conta = document.createElement("span");
+      conta.className = "cartao__conta";
+      conta.textContent = a.total;
+      topo.append(titulo, conta);
+
+      const meta = document.createElement("p");
+      meta.className = "cartao__meta";
+      meta.textContent =
+        a.dia + "/11 · " + a.hora +
+        (a.local ? " · " + a.local : "") +
+        (a.organizacao ? " · " + a.organizacao : "");
+
+      const barra = document.createElement("div");
+      barra.className = "barra";
+      barra.setAttribute("aria-hidden", "true");
+      const enchimento = document.createElement("span");
+      enchimento.style.width = Math.max(4, Math.round((a.total / maior) * 100)) + "%";
+      barra.appendChild(enchimento);
+
+      cartao.append(topo, meta, barra);
+      lista.appendChild(cartao);
+    }
+  }
+
+  async function carregar() {
+    if (carregando) return;
+    carregando = true;
+    try {
+      const resposta = await fetch("/api/placar", { cache: "no-store" });
+      if (!resposta.ok) throw new Error("falha");
+      dados = await resposta.json();
+
+      totalEl.textContent = dados.total;
+      pintarDias();
+      pintarLista();
+      estado.innerHTML =
+        '<span class="ponto" aria-hidden="true"></span>atualizado às ' + horaCurta() +
+        " · atualiza sozinho";
+    } catch (erro) {
+      estado.textContent = "Sem conexão. Tentando de novo…";
+    } finally {
+      carregando = false;
+    }
+  }
+
+  function ligar() {
+    clearInterval(relogio);
+    relogio = setInterval(carregar, 20000);
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      clearInterval(relogio);
+    } else {
+      carregar();
+      ligar();
+    }
+  });
+
+  carregar();
+  ligar();
+</script>
+</body>
+</html>

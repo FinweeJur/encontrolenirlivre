@@ -52,6 +52,71 @@ npx wrangler pages deploy dist --project-name encontrolenirlivre --branch main
 O `wrangler` precisa de Node 22 no PATH. Deploy é manual: `git push` não
 publica.
 
+## Check-in e presença
+
+O check-in é aberto, sem login, e grava no D1 `encontro-presenca` (binding
+`DB`). A página funciona offline: o registro fica no `localStorage` e sobe
+sozinho quando a rede volta.
+
+| Endereço | Para quê |
+|---|---|
+| `/checkin` | registrar presença, já na atividade da hora corrente |
+| `/c/<chave>` | link curto do QR; abre `/checkin` na atividade |
+| `/painel` | painel com nomes, protegido pela senha `PRESENCA_TOKEN` |
+| `/placar` | contagem pública, sem nome nem e-mail |
+
+O schema está em `db/presencas.sql`. Para criar o banco:
+
+```bash
+npx wrangler d1 execute encontro-presenca --remote --file db/presencas.sql
+npx wrangler pages secret put PRESENCA_TOKEN --project-name encontrolenirlivre
+```
+
+O token local fica fora do repositório, em
+`%USERPROFILE%\.config\encontrao\presenca-token.txt`.
+
+### Dois celulares na sala
+
+Não é preciso Bluetooth: navegador não fala Bluetooth de celular para celular,
+e Wi-Fi Direct também não é exposto à página. O caminho certo é o formulário
+enviar direto para o Pages, com a fila offline como rede de segurança.
+
+1. Um dos aparelhos com dados móveis pode abrir um hotspot para os demais.
+   O hotspot só empresta internet; os registros continuam indo para o D1.
+2. No aparelho da equipe, abra
+   `/checkin?s=11-3&recepcao=1` (troque `11-3` pela atividade).
+   O modo recepção limpa o formulário depois de cada pessoa e mostra quantos
+   registros passaram por ali.
+3. No segundo aparelho, deixe `/painel` aberto (senha da comissão) ou
+   `/placar` para acompanhar o salão.
+4. Ao terminar o turno, toque em **Limpar dados** no modo recepção. Se houver
+   registro ainda na fila, a página avisa antes de apagar.
+
+Em aparelho compartilhado, o nome e o e-mail ficam no navegador até o envio.
+Não deixe o aparelho destravado fora do turno.
+
+### Avisos no Telegram e no WhatsApp
+
+Dois scripts leem o site e disparam pelo serviço local do OpenMausBot
+(`127.0.0.1:8899`, rota `/enviar`). O Telegram usa a API oficial.
+
+- `scripts/avisar-checkin.py`: marcos de 50, 100, 150, 200 e 250 presenças.
+- `scripts/avisar-programa.py`: bom dia (06h30), lembrete de pagamento
+  (09h, dias 11 e 12) e início da tarde (12h50/13h20).
+
+Todo texto passa por `scripts/avisos/revisor.py` antes do envio: concordância,
+crase, hora, sala e GD fora da programação bloqueiam a mensagem. Ensaie sem
+enviar:
+
+```bash
+python scripts/avisar-programa.py --ensaiar
+python scripts/avisar-programa.py --status
+```
+
+Os `.cmd` em `scripts/` são para o Agendador de Tarefas. Ajuste o grupo do
+WhatsApp em `WHATSAPP_GRUPO` (ou o JID em `WHATSAPP_JID`); sem serviço no ar,
+a mensagem fica na fila por até duas horas.
+
 ## Grupos de Discussão
 
 A seção “Grupos de Discussão” do seminário (`src/components/seminario/Gds.tsx`)

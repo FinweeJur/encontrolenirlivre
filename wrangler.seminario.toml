@@ -1,0 +1,6 @@
+name = "seminariovenasabiertas"
+pages_build_output_dir = "dist-seminario"
+compatibility_date = "2026-01-01"
+
+# O check-in vive no projeto da RENAP. Aqui não há banco: a página chama a API
+# por URL absoluta.

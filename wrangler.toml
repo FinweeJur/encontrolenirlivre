@@ -1,0 +1,10 @@
+name = "encontrolenirlivre"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-01-01"
+
+# Banco do check-in do encontro. Só o projeto da RENAP tem a ligação; a página
+# do seminário chama a API por URL absoluta, para não duplicar configuração.
+[[d1_databases]]
+binding = "DB"
+database_name = "encontro-presenca"
+database_id = "ba217f2b-a88b-4307-8639-18bec4518701"
