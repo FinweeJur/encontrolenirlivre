@@ -6,3 +6,8 @@
 # O endereço fica na URL (a página lê o último pedaço do caminho), então o QR
 # não precisa de parâmetro.
 /c/*  /checkin  200
+
+# Os QR e o PDF dos cartazes mudaram para a pasta de entrega. Quem tinha o
+# endereço antigo guardado continua chegando no arquivo certo.
+/qr/*  /entrega-encontro/qrcodes/:splat  301
+/qrcodes-encontrao.pdf  /entrega-encontro/qrcodes-encontrao.pdf  301
