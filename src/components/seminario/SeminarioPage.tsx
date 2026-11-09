@@ -325,14 +325,16 @@ export function SeminarioPage() {
                     /* 0.88: o shader desenha o contorno por fora da forma; em
                        escala 1 o "s" e a segunda linha encostavam na borda. */
                     scale={0.88}
-                    intensity={1.1}
+                    /* No tema escuro o traço fino já brilha sozinho: baixa a
+                       intensidade para não estourar o contraste com o fundo. */
+                    intensity={tema === "escuro" ? 0.55 : 1.1}
                     glow={0}
-                    thickness={0.9}
+                    thickness={tema === "escuro" ? 0.7 : 0.9}
                     strands={1}
                     bend={0.35}
-                    crackle={0.85}
+                    crackle={tema === "escuro" ? 0.5 : 0.85}
                     fill={0}
-                    flicker={0.45}
+                    flicker={tema === "escuro" ? 0.25 : 0.45}
                     speed={0.45}
                   />
                 )}

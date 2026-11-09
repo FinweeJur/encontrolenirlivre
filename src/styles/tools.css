@@ -199,6 +199,18 @@ main section.is-alvo-busca {
   background: color-mix(in srgb, var(--red) 12%, var(--paper));
 }
 
+/*
+ * A folha do Tailwind entra sem preflight nestas páginas. Sem reset, o botão
+ * de cada estação voltava ao cinza padrão do navegador (buttonface) e o texto
+ * claro do tema escuro sumia em cima dele. O hover continua vindo das classes.
+ */
+.radio-painel li > button {
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  border: 0;
+}
+
 /* volume do player de rádio (linha horizontal no rodapé do painel) */
 
 .ecnl-volume {
