@@ -235,13 +235,18 @@ export const faq: ReadonlyArray<{
 
 /**
  * Fotos da grade infinita — duas origens apenas:
- * 1. as fotos enviadas pelo dono no chat (16 registros dos encontros);
+ * 1. as fotos enviadas pelo dono no chat (21 registros dos encontros);
  * 2. as capas das cartas políticas do site renap.org.br (5 encontros).
  * Nada de banco de imagens antigo: o que não veio dessas duas fontes saiu.
  */
 export const galeria = [
   // Fotos enviadas no chat.
   "/img/galeria-renap/grade-grupo-mural.webp",
+  "/img/galeria-renap/grade-mg-3871.webp",
+  "/img/galeria-renap/grade-mg-3943.webp",
+  "/img/galeria-renap/grade-mg-3971.webp",
+  "/img/galeria-renap/grade-mg-3534.webp",
+  "/img/galeria-renap/grade-mg-3564.webp",
   "/img/galeria-renap/grade-chat-01.webp",
   "/img/galeria-renap/grade-chat-02.webp",
   "/img/galeria-renap/grade-chat-03.webp",
