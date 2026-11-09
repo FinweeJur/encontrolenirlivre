@@ -632,7 +632,8 @@ export function Case() {
             </div>
           </div>
 
-          <aside className="demands" aria-label="Exigências da ABRAPO">
+          <div className="case__side">
+            <aside className="demands" aria-label="Exigências da ABRAPO">
             <p className="section-tag">O que exigimos</p>
             <ol>
               <li>Revogação imediata da prisão preventiva e libertação de Lenir.</li>
@@ -657,7 +658,20 @@ export function Case() {
             >
               Entenda o caso <Arrow />
             </a>
-          </aside>
+            </aside>
+
+            <figure className="case__lenir">
+              <img
+                src="/img/lenir-card.webp"
+                alt="Lenir Correia Coelho"
+                width={548}
+                height={396}
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>Lenir Correia Coelho · advogada popular</figcaption>
+            </figure>
+          </div>
         </div>
       </div>
     </section>
