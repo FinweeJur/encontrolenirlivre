@@ -13,11 +13,15 @@ listas-presenca-encontro-2026.pdf
   O mesmo arquivo em PDF, para imprimir sem abrir o Word.
 
 qrcodes/
-  39 cartazes A4 em PNG, um por atividade, com a arte da mão no centro
-  do QR e o link curto embaixo. As atividades culturais ficaram fora.
+  39 QRs em PNG (1000x1000), um por atividade, com a arte da mão no centro.
+  As atividades culturais ficaram fora.
+  checkin-geral.png abre /checkin, que escolhe a atividade da hora.
 
 qrcodes-encontrao.pdf
-  Os 39 cartazes em um PDF único, na ordem da programação.
+  Os 39 cartazes A4 em um PDF único, na ordem da programação.
+
+cartaz-mosaico-checkin.png
+  Cartaz com o mosaico de fotos da logo e o QR geral de /checkin.
 
 Para regerar as listas: python scripts/gerar-listas-presenca.py
 Para regerar os QR:      python scripts/gerar-qrcodes.py
