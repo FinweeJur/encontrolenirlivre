@@ -145,6 +145,21 @@ python scripts/gerar-listas-presenca.py
 soffice --headless --convert-to pdf --outdir public/entrega-encontro public/entrega-encontro/listas-presenca-encontro-2026.docx
 ```
 
+## Espelho no Google Sheets
+
+A planilha **“Presenças — Encontro 2026”** é criada por
+`scripts/criar-planilha.py` e atualizada por `scripts/espelhar-planilha.py`.
+O `scripts/espelhar-planilha.cmd` roda a cada 2 minutos pelo Agendador de
+Tarefas.
+
+- `presencas`: uma linha por check-in, com quando, dia, hora, atividade,
+  sala, rede, nome e e-mail.
+- `resumo`: total e contagem por atividade, calculados pelo próprio script.
+
+O token e o ID da planilha ficam em `%USERPROFILE%\.config\encontrao\`; nada
+disso entra no repositório. O token do Google vale até 15/11/2026; depois
+disso, rode `python scripts/autenticar-google-planilha.py` de novo.
+
 ## Grupos de Discussão
 
 A seção “Grupos de Discussão” do seminário (`src/components/seminario/Gds.tsx`)

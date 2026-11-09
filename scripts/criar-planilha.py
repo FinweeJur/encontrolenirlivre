@@ -146,11 +146,7 @@ def escrever(cred, planilha_id):
                 ["Total de presenças", "=COUNTA(presencas!A2:A)", "", "Atualizado em", "=NOW()"],
                 [],
                 ["Atividade", "Total", "", "Fonte", NOTA],
-                [
-                    "=QUERY(presencas!A2:H, \"select D, count(A) where D is not null "
-                    "group by D label count(A) ''\", 0)",
-                    "",
-                ],
+                ["(sem check-ins ainda)", 0],
             ]
         },
     )

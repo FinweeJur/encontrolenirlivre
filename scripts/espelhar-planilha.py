@@ -149,6 +149,47 @@ def escrever(cred, identificador, dados):
         )
 
 
+def escrever_resumo(cred, identificador, dados):
+    """Contagem por atividade, calculada aqui para não depender de QUERY."""
+    contagem = {}
+    for linha in dados:
+        atividade = linha[3]
+        contagem[atividade] = contagem.get(atividade, 0) + 1
+
+    valores = [
+        [
+            "Total de presenças",
+            len(dados),
+            "",
+            "Atualizado em",
+            datetime.now().strftime("%d/%m/%Y %H:%M"),
+        ],
+        [],
+        [
+            "Atividade",
+            "Total",
+            "",
+            "Fonte",
+            "Fonte: check-in digital — encontrolenirlivre.pages.dev",
+        ],
+    ]
+    if contagem:
+        for atividade, total in sorted(
+            contagem.items(), key=lambda par: (-par[1], par[0])
+        ):
+            valores.append([atividade, total])
+    else:
+        valores.append(["(sem check-ins ainda)", 0])
+
+    base = f"https://sheets.googleapis.com/v4/spreadsheets/{identificador}"
+    pedir(
+        "PUT",
+        f"{base}/values/resumo!A1:E{len(valores)}?valueInputOption=RAW",
+        cred,
+        {"values": valores},
+    )
+
+
 def main():
     dados = linhas()
     if "--seco" in sys.argv:
@@ -160,6 +201,7 @@ def main():
     cred = credenciais()
     identificador = planilha_id()
     escrever(cred, identificador, dados)
+    escrever_resumo(cred, identificador, dados)
     print(f"{len(dados)} linha(s) espelhada(s) na planilha {identificador}")
     return 0
 
