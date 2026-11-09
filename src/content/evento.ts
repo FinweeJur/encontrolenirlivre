@@ -255,7 +255,7 @@ export const galeria = [
   "/img/galeria-renap/grade-chat-05.webp",
   "/img/galeria-renap/grade-chat-06.webp",
   "/img/galeria-renap/grade-chat-07.webp",
-  "/img/galeria-renap/grade-chat-08.webp",
+  "/img/galeria-renap/grade-grupo-arvore.webp",
   "/img/galeria-renap/grade-chat-09.webp",
   "/img/galeria-renap/grade-chat-10.webp",
   "/img/galeria-renap/grade-chat-11.webp",
