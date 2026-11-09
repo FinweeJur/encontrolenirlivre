@@ -50,7 +50,7 @@ export function PhotoDrift({ reducedMotion }: { reducedMotion: boolean }) {
   );
 
   return (
-    <section className="band-dark drift-section" aria-labelledby="fotos-titulo">
+    <section className="band-dark drift-section" id="fotos" aria-labelledby="fotos-titulo">
       <div className="shell drift-head">
         <div>
           <p className="section-tag">A rede em movimento</p>
