@@ -111,6 +111,23 @@
     color: var(--vermelho);
     border-bottom: 1px solid currentColor;
   }
+  .acoes { display: inline-flex; gap: .35rem; margin-top: .3rem; }
+  .copiar, .copiar-link {
+    font: inherit;
+    font-size: .62rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    border: 1px solid var(--linha);
+    background: transparent;
+    color: var(--tinta-fraca);
+    border-radius: 100px;
+    padding: .12rem .5rem;
+    cursor: pointer;
+  }
+  .copiar:hover, .copiar-link:hover {
+    color: var(--vermelho);
+    border-color: var(--vermelho);
+  }
   .tag {
     font-family: ui-monospace, "SFMono-Regular", monospace;
     font-size: .6rem;
@@ -184,6 +201,7 @@
     a { color: inherit; text-decoration: none; }
     /* No papel, "mapa" vira link morto: sai da impressão. */
     .mapa { display: none; }
+    .acoes { display: none; }
   }
 </style>
 </head>
@@ -207,6 +225,10 @@
           <span class="texto">
             <strong>Chegança — equipe de acolhimento recebe as pessoas</strong>
             
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="manhã — Chegança — equipe de acolhimento recebe as pessoas">Copiar</button>
+              
+            </span>
           </span>
           <span class="tag tag--conjunta">Conjunta</span>
         </li>
@@ -215,6 +237,10 @@
           <span class="texto">
             <strong>Credenciamento</strong>
             <span class="local">Pátio do CCJ <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="12h às 13h — Credenciamento — Pátio do CCJ">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--conjunta">Conjunta</span>
         </li>
@@ -223,6 +249,10 @@
           <span class="texto">
             <strong>GD1 — Direito e Marxismo</strong>
             <span class="local">Sala 1 PPGCJ (CCJ, 1º andar) <a class="mapa" href="https://www.openstreetmap.org/search?query=Programa%20de%20P%C3%B3s-Gradua%C3%A7%C3%A3o%20em%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h às 16h30 — GD1 — Direito e Marxismo — Sala 1 PPGCJ (CCJ, 1º andar)">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Programa%20de%20P%C3%B3s-Gradua%C3%A7%C3%A3o%20em%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -231,6 +261,10 @@
           <span class="texto">
             <strong>GD3 — Sistema de justiça e conflitos fundiários</strong>
             <span class="local">Sala H (CCSA) <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h às 16h30 — GD3 — Sistema de justiça e conflitos fundiários — Sala H (CCSA)">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -239,6 +273,10 @@
           <span class="texto">
             <strong>GD6 — Ditaduras e empresas: responsabilização por graves violações de direitos humanos</strong>
             <span class="local">Sala Multimídia (CCJ, 1º andar) <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h às 16h30 — GD6 — Ditaduras e empresas: responsabilização por graves violações de direitos humanos — Sala Multimídia (CCJ, 1º andar)">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -247,6 +285,10 @@
           <span class="texto">
             <strong>GD8 — Direito para resistir + GD11 — Conflitos minerários e estratégias jurídico-políticas</strong>
             <span class="local">Sala 4 CCJ (1º andar) <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h às 16h30 — GD8 — Direito para resistir + GD11 — Conflitos minerários e estratégias jurídico-políticas — Sala 4 CCJ (1º andar)">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -255,6 +297,10 @@
           <span class="texto">
             <strong>GD7 — Gênero, direito e violências interseccionais</strong>
             <span class="local">Sala A CCSA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h às 16h30 — GD7 — Gênero, direito e violências interseccionais — Sala A CCSA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -263,6 +309,10 @@
           <span class="texto">
             <strong>GD9 — Criminologia crítica e movimentos sociais</strong>
             <span class="local">Sala B CCSA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h às 16h30 — GD9 — Criminologia crítica e movimentos sociais — Sala B CCSA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -271,6 +321,10 @@
           <span class="texto">
             <strong>GD13 — Conflitos socioambientais, ilegalismos do poder e resistências territoriais</strong>
             <span class="local">Sala C CCSA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h às 16h30 — GD13 — Conflitos socioambientais, ilegalismos do poder e resistências territoriais — Sala C CCSA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -279,6 +333,10 @@
           <span class="texto">
             <strong>GD14 — AJUPs, assessoria jurídica popular e educação popular</strong>
             <span class="local">Sala D CCSA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h às 16h30 — GD14 — AJUPs, assessoria jurídica popular e educação popular — Sala D CCSA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -287,6 +345,10 @@
           <span class="texto">
             <strong>Oficina — Justiça reprodutiva e racismo: AJUP em casos de violência estatal</strong>
             <span class="local">Sala E CCSA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="14h — Oficina — Justiça reprodutiva e racismo: AJUP em casos de violência estatal — Sala E CCSA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -295,6 +357,10 @@
           <span class="texto">
             <strong>Oficina — AJUP, violações de direitos humanos e agrotóxicos</strong>
             <span class="local">Sala F CCSA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="14h30 — Oficina — AJUP, violações de direitos humanos e agrotóxicos — Sala F CCSA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -303,6 +369,10 @@
           <span class="texto">
             <strong>Oficina — No tempo da maré e da comunidade: protocolo de consulta dos povos das Águas de Acaú-PB</strong>
             <span class="local">Sala G CCSA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="14h — Oficina — No tempo da maré e da comunidade: protocolo de consulta dos povos das Águas de Acaú-PB — Sala G CCSA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -311,6 +381,10 @@
           <span class="texto">
             <strong>Oficina — Direito humano à alimentação e à nutrição adequadas e captura corporativa das políticas de alimentação escolar</strong>
             <span class="local">Sala 2 PPGCJ (CCJ, 1º andar) <a class="mapa" href="https://www.openstreetmap.org/search?query=Programa%20de%20P%C3%B3s-Gradua%C3%A7%C3%A3o%20em%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="14h — Oficina — Direito humano à alimentação e à nutrição adequadas e captura corporativa das políticas de alimentação escolar — Sala 2 PPGCJ (CCJ, 1º andar)">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Programa%20de%20P%C3%B3s-Gradua%C3%A7%C3%A3o%20em%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -319,6 +393,10 @@
           <span class="texto">
             <strong>Abertura do encontro</strong>
             <span class="local">OAB/PB — Av. João Cirilo da Silva, 444, Altiplano <a class="mapa" href="https://www.openstreetmap.org/search?query=OAB%20Para%C3%ADba%2C%20Rua%20Jo%C3%A3o%20Cirilo%20da%20Silva%20444%2C%20Altiplano%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="18h — Abertura do encontro — OAB/PB — Av. João Cirilo da Silva, 444, Altiplano">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=OAB%20Para%C3%ADba%2C%20Rua%20Jo%C3%A3o%20Cirilo%20da%20Silva%20444%2C%20Altiplano%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--conjunta">Conjunta</span>
         </li>
@@ -327,6 +405,10 @@
           <span class="texto">
             <strong>Luau na praia de Tambaú, no Busto de Tamandaré</strong>
             
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="22h — Luau na praia de Tambaú, no Busto de Tamandaré">Copiar</button>
+              
+            </span>
           </span>
           <span class="tag tag--cultural">Cultural</span>
         </li></ol>
@@ -339,6 +421,10 @@
           <span class="texto">
             <strong>RENAP — Análise de conjuntura da advocacia popular no Brasil</strong>
             <span class="local">Auditório do CT <a class="mapa" href="https://www.openstreetmap.org/search?query=Audit%C3%B3rio%20do%20Centro%20de%20Tecnologia%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="8h30 às 12h — RENAP — Análise de conjuntura da advocacia popular no Brasil — Auditório do CT">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Audit%C3%B3rio%20do%20Centro%20de%20Tecnologia%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--renap">RENAP</span>
         </li>
@@ -347,6 +433,10 @@
           <span class="texto">
             <strong>RENAJU — Memórias e dilemas ajupianos</strong>
             <span class="local">Armazém do Campo <a class="mapa" href="https://www.openstreetmap.org/search?query=Armaz%C3%A9m%20do%20Campo%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="8h30 às 12h — RENAJU — Memórias e dilemas ajupianos — Armazém do Campo">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Armaz%C3%A9m%20do%20Campo%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--renaju">RENAJU</span>
         </li>
@@ -355,6 +445,10 @@
           <span class="texto">
             <strong>IPDMS — Avanços e desafios: a reforma do estatuto</strong>
             <span class="local">Sala 2 PPGCJ (CCJ, 1º andar) <a class="mapa" href="https://www.openstreetmap.org/search?query=Programa%20de%20P%C3%B3s-Gradua%C3%A7%C3%A3o%20em%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="8h30 às 12h — IPDMS — Avanços e desafios: a reforma do estatuto — Sala 2 PPGCJ (CCJ, 1º andar)">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Programa%20de%20P%C3%B3s-Gradua%C3%A7%C3%A3o%20em%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -363,6 +457,10 @@
           <span class="texto">
             <strong>GD1 — Direito e Marxismo (2ª e 3ª sessões)</strong>
             <span class="local">Salas 1 e 2 PPGCJ (CCJ, 1º andar) <a class="mapa" href="https://www.openstreetmap.org/search?query=Programa%20de%20P%C3%B3s-Gradua%C3%A7%C3%A3o%20em%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h30 às 16h30 — GD1 — Direito e Marxismo (2ª e 3ª sessões) — Salas 1 e 2 PPGCJ (CCJ, 1º andar)">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Programa%20de%20P%C3%B3s-Gradua%C3%A7%C3%A3o%20em%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -371,6 +469,10 @@
           <span class="texto">
             <strong>GD2 — Lutas por justiça socioambiental + GD10 — Direito à consulta e consentimento</strong>
             <span class="local">Sala 4 CCJ (1º andar) <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h30 às 16h30 — GD2 — Lutas por justiça socioambiental + GD10 — Direito à consulta e consentimento — Sala 4 CCJ (1º andar)">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -379,6 +481,10 @@
           <span class="texto">
             <strong>GD3 — Sistema de justiça e conflitos territoriais</strong>
             <span class="local">Sala H (CCSA) <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h30 às 16h30 — GD3 — Sistema de justiça e conflitos territoriais — Sala H (CCSA)">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -387,6 +493,10 @@
           <span class="texto">
             <strong>GD5 — Movimentos sociais e direito à cidade</strong>
             <span class="local">Sala Multimídia (CCJ, 1º andar) <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h30 às 16h30 — GD5 — Movimentos sociais e direito à cidade — Sala Multimídia (CCJ, 1º andar)">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -395,6 +505,10 @@
           <span class="texto">
             <strong>GD7 — Gênero, direito e violências interseccionais</strong>
             <span class="local">Sala A CCSA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h30 às 16h30 — GD7 — Gênero, direito e violências interseccionais — Sala A CCSA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -403,6 +517,10 @@
           <span class="texto">
             <strong>GD9 — Criminologia crítica e movimentos sociais</strong>
             <span class="local">Sala B CCSA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h30 às 16h30 — GD9 — Criminologia crítica e movimentos sociais — Sala B CCSA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -411,6 +529,10 @@
           <span class="texto">
             <strong>GD12 — Territórios e crise climática</strong>
             <span class="local">Sala 2 CCJ (1º andar) <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h30 às 16h30 — GD12 — Territórios e crise climática — Sala 2 CCJ (1º andar)">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -419,6 +541,10 @@
           <span class="texto">
             <strong>GD13 — Conflitos socioambientais, ilegalismos do poder e resistências territoriais</strong>
             <span class="local">Sala C CCSA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h30 às 16h30 — GD13 — Conflitos socioambientais, ilegalismos do poder e resistências territoriais — Sala C CCSA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -427,6 +553,10 @@
           <span class="texto">
             <strong>GD14 — AJUPs, assessoria jurídica popular e educação popular</strong>
             <span class="local">Sala D CCSA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h30 às 16h30 — GD14 — AJUPs, assessoria jurídica popular e educação popular — Sala D CCSA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Sociais%20Aplicadas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -435,6 +565,10 @@
           <span class="texto">
             <strong>RENAP — Discussões por região: Nordeste, Norte, Sudeste, Centro-Oeste e Sul</strong>
             <span class="local">Salas 2, 5, 6, 8 e 9 do CCJ <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h30 — RENAP — Discussões por região: Nordeste, Norte, Sudeste, Centro-Oeste e Sul — Salas 2, 5, 6, 8 e 9 do CCJ">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--renap">RENAP</span>
         </li>
@@ -443,6 +577,10 @@
           <span class="texto">
             <strong>Lançamento de livros e publicações</strong>
             <span class="local">Armazém do Campo <a class="mapa" href="https://www.openstreetmap.org/search?query=Armaz%C3%A9m%20do%20Campo%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="19h — Lançamento de livros e publicações — Armazém do Campo">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Armaz%C3%A9m%20do%20Campo%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--conjunta">Conjunta</span>
         </li>
@@ -451,6 +589,10 @@
           <span class="texto">
             <strong>Cultural — Samba Ponta Firme</strong>
             <span class="local">Armazém do Campo <a class="mapa" href="https://www.openstreetmap.org/search?query=Armaz%C3%A9m%20do%20Campo%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="19h — Cultural — Samba Ponta Firme — Armazém do Campo">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Armaz%C3%A9m%20do%20Campo%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--cultural">Cultural</span>
         </li></ol>
@@ -463,6 +605,10 @@
           <span class="texto">
             <strong>RENAP — Roda de conversa sobre sustentabilidade na advocacia popular</strong>
             <span class="local">Auditório 411 CCHLA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Humanas%20Letras%20e%20Artes%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="8h30 às 12h — RENAP — Roda de conversa sobre sustentabilidade na advocacia popular — Auditório 411 CCHLA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Humanas%20Letras%20e%20Artes%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--renap">RENAP</span>
         </li>
@@ -471,6 +617,10 @@
           <span class="texto">
             <strong>RENAJU — Experiências contemporâneas de AJUP e próximos passos da RENAJU</strong>
             <span class="local">Auditório 412 CCHLA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Humanas%20Letras%20e%20Artes%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="8h30 às 12h — RENAJU — Experiências contemporâneas de AJUP e próximos passos da RENAJU — Auditório 412 CCHLA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Humanas%20Letras%20e%20Artes%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--renaju">RENAJU</span>
         </li>
@@ -479,6 +629,10 @@
           <span class="texto">
             <strong>Oficina — Inteligência artificial, ética e direitos humanos: teatro do oprimido</strong>
             <span class="local">Auditório do CT <a class="mapa" href="https://www.openstreetmap.org/search?query=Audit%C3%B3rio%20do%20Centro%20de%20Tecnologia%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="8h30 às 12h — Oficina — Inteligência artificial, ética e direitos humanos: teatro do oprimido — Auditório do CT">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Audit%C3%B3rio%20do%20Centro%20de%20Tecnologia%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -487,6 +641,10 @@
           <span class="texto">
             <strong>Oficina — Violências e discriminações nas universidades: ferramentas de enfrentamento</strong>
             <span class="local">Sala 1 PPGCJ (CCJ, 1º andar) <a class="mapa" href="https://www.openstreetmap.org/search?query=Programa%20de%20P%C3%B3s-Gradua%C3%A7%C3%A3o%20em%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="8h30 às 12h — Oficina — Violências e discriminações nas universidades: ferramentas de enfrentamento — Sala 1 PPGCJ (CCJ, 1º andar)">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Programa%20de%20P%C3%B3s-Gradua%C3%A7%C3%A3o%20em%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -495,6 +653,10 @@
           <span class="texto">
             <strong>Oficina — O direito achado na rua e a luta pela terra: sujeito coletivo e conflitos fundiários</strong>
             <span class="local">Sala 2 PPGCJ (CCJ, 1º andar) <a class="mapa" href="https://www.openstreetmap.org/search?query=Programa%20de%20P%C3%B3s-Gradua%C3%A7%C3%A3o%20em%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="8h30 às 12h — Oficina — O direito achado na rua e a luta pela terra: sujeito coletivo e conflitos fundiários — Sala 2 PPGCJ (CCJ, 1º andar)">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Programa%20de%20P%C3%B3s-Gradua%C3%A7%C3%A3o%20em%20Ci%C3%AAncias%20Jur%C3%ADdicas%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -503,6 +665,10 @@
           <span class="texto">
             <strong>Plenária do IPDMS</strong>
             <span class="local">Auditório 411 CCHLA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Humanas%20Letras%20e%20Artes%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h30 às 16h — Plenária do IPDMS — Auditório 411 CCHLA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Humanas%20Letras%20e%20Artes%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--ipdms">IPDMS</span>
         </li>
@@ -511,6 +677,10 @@
           <span class="texto">
             <strong>RENAJU — Teorias críticas da assessoria jurídica popular</strong>
             <span class="local">Auditório 412 CCHLA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Humanas%20Letras%20e%20Artes%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="13h30 às 16h — RENAJU — Teorias críticas da assessoria jurídica popular — Auditório 412 CCHLA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Humanas%20Letras%20e%20Artes%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--renaju">RENAJU</span>
         </li>
@@ -519,6 +689,10 @@
           <span class="texto">
             <strong>Mesa de encerramento do encontro conjunto</strong>
             <span class="local">Auditório 412 CCHLA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Humanas%20Letras%20e%20Artes%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="17h — Mesa de encerramento do encontro conjunto — Auditório 412 CCHLA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Humanas%20Letras%20e%20Artes%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--conjunta">Conjunta</span>
         </li>
@@ -527,6 +701,10 @@
           <span class="texto">
             <strong>Cultural — Centro Cultural Caravela</strong>
             <span class="local">Centro da cidade — Av. General Osório <a class="mapa" href="https://www.openstreetmap.org/search?query=Avenida%20General%20Os%C3%B3rio%2C%20Centro%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="depois da mesa — Cultural — Centro Cultural Caravela — Centro da cidade — Av. General Osório">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Avenida%20General%20Os%C3%B3rio%2C%20Centro%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--cultural">Cultural</span>
         </li></ol>
@@ -539,6 +717,10 @@
           <span class="texto">
             <strong>Plenária da RENAP</strong>
             <span class="local">Auditório 412 CCHLA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Humanas%20Letras%20e%20Artes%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="8h30 às 12h — Plenária da RENAP — Auditório 412 CCHLA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Humanas%20Letras%20e%20Artes%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--renap">RENAP</span>
         </li>
@@ -547,6 +729,10 @@
           <span class="texto">
             <strong>Plenária da RENAJU</strong>
             <span class="local">Auditório 411 CCHLA <a class="mapa" href="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Humanas%20Letras%20e%20Artes%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa" target="_blank" rel="noopener noreferrer">mapa</a></span>
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="8h30 às 12h — Plenária da RENAJU — Auditório 411 CCHLA">Copiar</button>
+              <button class="copiar-link" type="button" data-link="https://www.openstreetmap.org/search?query=Centro%20de%20Ci%C3%AAncias%20Humanas%20Letras%20e%20Artes%2C%20UFPB%2C%20Jo%C3%A3o%20Pessoa">Link</button>
+            </span>
           </span>
           <span class="tag tag--renaju">RENAJU</span>
         </li>
@@ -555,6 +741,10 @@
           <span class="texto">
             <strong>Cultural — Sabadinho Bom, Beco da Cachaçaria e Bar da Cléa</strong>
             
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="depois das plenárias — Cultural — Sabadinho Bom, Beco da Cachaçaria e Bar da Cléa">Copiar</button>
+              
+            </span>
           </span>
           <span class="tag tag--cultural">Cultural</span>
         </li></ol>
@@ -566,5 +756,37 @@
     <p>Site do encontro: <a href="https://encontrolenirlivre.pages.dev">encontrolenirlivre.pages.dev</a> · Seminário: <a href="https://seminariovenasabiertas.pages.dev">seminariovenasabiertas.pages.dev</a></p>
   </footer>
 </div>
+<script>
+  function copiarLegado(texto) {
+    const area = document.createElement("textarea");
+    area.value = texto;
+    area.style.position = "fixed";
+    area.style.left = "-9999px";
+    document.body.appendChild(area);
+    area.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch (erro) {}
+    document.body.removeChild(area);
+    return ok;
+  }
+  async function copiar(texto) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      try {
+        await navigator.clipboard.writeText(texto);
+        return true;
+      } catch (erro) {}
+    }
+    return copiarLegado(texto);
+  }
+  document.querySelectorAll("[data-copia], [data-link]").forEach(function (botao) {
+    botao.addEventListener("click", async function () {
+      const texto = botao.dataset.copia || botao.dataset.link || "";
+      const ok = await copiar(texto);
+      const original = botao.textContent;
+      botao.textContent = ok ? "Copiado" : "Não deu";
+      window.setTimeout(function () { botao.textContent = original; }, 1600);
+    });
+  });
+</script>
 </body>
 </html>

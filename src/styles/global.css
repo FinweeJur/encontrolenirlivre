@@ -1743,6 +1743,33 @@ html[data-theme="light"] .encounter__anel {
   letter-spacing: 0;
 }
 
+/* Botão pequeno de copiar: horário, endereço ou link. */
+.copiar-mini {
+  border: 1px solid currentColor;
+  background: transparent;
+  color: var(--ink-mute);
+  border-radius: 100px;
+  padding: 0.28rem 0.6rem;
+  font: inherit;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  min-height: 32px;
+  white-space: nowrap;
+}
+.copiar-mini:hover { color: var(--red); border-color: var(--red); }
+.copiar-mini.is-copiado { color: var(--red); border-color: var(--red); }
+.copiar-mini.is-falhou { color: var(--red-deep); border-color: var(--red-deep); }
+
+.program__acoes {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .tag {
   font-size: 0.6rem;
   letter-spacing: 0.14em;
@@ -2692,6 +2719,12 @@ html[data-theme="light"] .encounter__anel {
   .program__item .tag {
     grid-column: 2;
     justify-self: start;
+  }
+
+  .program__acoes {
+    grid-column: 2;
+    justify-self: start;
+    justify-content: flex-start;
   }
 
   .program__time {

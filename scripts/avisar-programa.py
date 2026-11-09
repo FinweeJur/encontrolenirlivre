@@ -39,11 +39,14 @@ def montar(aviso):
     tipo = aviso["tipo"]
     dia = aviso["dia"]
     if tipo == "bom-dia":
+        if dia in ("9", "10"):
+            return textos.bom_dia_antes(dia), None
         return textos.resumo_dia(dia), textos.fatos_do_dia(dia)
-    if tipo == "pagamento":
-        return textos.pagamento(), None
-    if tipo == "comeco":
-        return textos.comeco(dia), textos.fatos_do_dia(dia)
+    if tipo == "boa-noite":
+        fatos = None
+        if dia in ("11", "12", "13"):
+            fatos = textos.fatos_do_dia(str(int(dia) + 1))
+        return textos.boa_noite(dia), fatos
     raise ValueError(f"tipo de aviso desconhecido: {tipo}")
 
 
@@ -143,7 +146,7 @@ def executar():
 
 
 def ensaiar(dia=None):
-    dias = [dia] if dia else ["11", "12", "13", "14"]
+    dias = [dia] if dia else ["9", "10", "11", "12", "13", "14"]
     itens = []
 
     for d in dias:
@@ -200,7 +203,7 @@ def ensaiar(dia=None):
     return 0 if total == 0 else 1
 
 
-def forcar(identificador, dia, com_whatsapp=False):
+def forcar(identificador, dia, com_whatsapp=False, marcar=False):
     aviso = next(
         (a for a in agenda.avisos_do_dia(dia) if a["id"] == identificador),
         None,
@@ -217,8 +220,17 @@ def forcar(identificador, dia, com_whatsapp=False):
     if problemas:
         return 1
 
-    resultado = disparar(aviso, texto, problemas, marcar=False, com_whatsapp=com_whatsapp)
+    resultado = disparar(
+        aviso, texto, problemas, marcar=marcar, com_whatsapp=com_whatsapp
+    )
     print(f"resultado do teste: {resultado}")
+    if marcar and resultado in ("enviado", "parcial"):
+        estado = carregar_estado()
+        estado["enviados"][agenda.chave(dia, identificador)] = {
+            "quando": comum.agora_br().isoformat(timespec="seconds"),
+            "resultado": resultado,
+        }
+        comum.salvar_json(ESTADO, estado)
     return 0
 
 
@@ -241,9 +253,10 @@ def status():
 def main():
     parser = argparse.ArgumentParser(description="Avisos da programação do encontro.")
     parser.add_argument("--ensaiar", action="store_true", help="mostra tudo, sem enviar")
-    parser.add_argument("--dia", help="dia do encontro (11, 12, 13 ou 14)")
+    parser.add_argument("--dia", help="dia do encontro (9 a 14)")
     parser.add_argument("--forcar", help="id do aviso para testar")
     parser.add_argument("--com-whatsapp", action="store_true", help="teste também no WhatsApp")
+    parser.add_argument("--marcar", action="store_true", help="marca o aviso forçado como enviado")
     parser.add_argument("--status", action="store_true", help="mostra o estado")
     args = parser.parse_args()
 
@@ -251,7 +264,7 @@ def main():
         return ensaiar(args.dia)
     if args.forcar:
         dia = args.dia or str(comum.agora_br().day)
-        return forcar(args.forcar, dia, args.com_whatsapp)
+        return forcar(args.forcar, dia, args.com_whatsapp, args.marcar)
     if args.status:
         return status()
     return executar()

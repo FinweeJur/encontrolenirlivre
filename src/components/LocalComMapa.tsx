@@ -6,6 +6,7 @@
  * quem estiver com o mouse parado saber para onde vai antes de clicar.
  */
 import { acharLocal, linkGoogleMaps, linkOpenStreetMap } from "../content/locais";
+import { BotaoCopiar } from "./BotaoCopiar";
 import "../styles/local-mapa.css";
 
 export function LocalComMapa({ texto }: { texto: string }) {
@@ -49,6 +50,8 @@ export function LocalComMapa({ texto }: { texto: string }) {
       >
         G
       </a>
+
+      <BotaoCopiar texto={linkOpenStreetMap(local)} rotulo="Link" />
     </span>
   );
 }

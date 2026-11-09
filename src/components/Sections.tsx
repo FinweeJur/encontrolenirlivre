@@ -9,6 +9,7 @@ import { ContagemInscricoes } from "./Contagem";
 import { TrabalhosAcademicos } from "./TrabalhosAcademicos";
 import { LocalComMapa } from "./LocalComMapa";
 import { copiarTexto } from "../lib/copiar";
+import { BotaoCopiar } from "./BotaoCopiar";
 import {
   FiltroOrgs,
   contarPorOrgao,
@@ -343,7 +344,15 @@ export function Program() {
                     </p>
                   ) : null}
                 </div>
-                <span className={`tag tag--${item.tag.toLowerCase()}`}>{item.tag}</span>
+                <div className="program__acoes">
+                  <span className={`tag tag--${item.tag.toLowerCase()}`}>{item.tag}</span>
+                  <BotaoCopiar
+                    texto={[item.hora, item.titulo, item.local]
+                      .filter(Boolean)
+                      .join(" — ")}
+                    rotulo="Copiar"
+                  />
+                </div>
               </article>
             ))
           )}

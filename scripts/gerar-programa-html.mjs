@@ -64,6 +64,8 @@ const blocos = dias
         const mapa = lugar
           ? ` <a class="mapa" href="${escapar(locaisMod.linkOpenStreetMap(lugar))}" target="_blank" rel="noopener noreferrer">mapa</a>`
           : "";
+        const textoCopia = `${item.hora} — ${item.titulo}${item.local ? ` — ${item.local}` : ""}`;
+        const linkMapa = lugar ? locaisMod.linkOpenStreetMap(lugar) : "";
 
         return `
         <li>
@@ -71,6 +73,10 @@ const blocos = dias
           <span class="texto">
             <strong>${escapar(item.titulo)}</strong>
             ${item.local ? `<span class="local">${escapar(item.local)}${mapa}</span>` : ""}
+            <span class="acoes">
+              <button class="copiar" type="button" data-copia="${escapar(textoCopia)}">Copiar</button>
+              ${lugar ? `<button class="copiar-link" type="button" data-link="${escapar(linkMapa)}">Link</button>` : ""}
+            </span>
           </span>
           <span class="tag tag--${escapar(item.tag.toLowerCase())}">${escapar(item.tag)}</span>
         </li>`;
@@ -198,6 +204,23 @@ const html = `<!doctype html>
     color: var(--vermelho);
     border-bottom: 1px solid currentColor;
   }
+  .acoes { display: inline-flex; gap: .35rem; margin-top: .3rem; }
+  .copiar, .copiar-link {
+    font: inherit;
+    font-size: .62rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    border: 1px solid var(--linha);
+    background: transparent;
+    color: var(--tinta-fraca);
+    border-radius: 100px;
+    padding: .12rem .5rem;
+    cursor: pointer;
+  }
+  .copiar:hover, .copiar-link:hover {
+    color: var(--vermelho);
+    border-color: var(--vermelho);
+  }
   .tag {
     font-family: ui-monospace, "SFMono-Regular", monospace;
     font-size: .6rem;
@@ -271,6 +294,7 @@ const html = `<!doctype html>
     a { color: inherit; text-decoration: none; }
     /* No papel, "mapa" vira link morto: sai da impressão. */
     .mapa { display: none; }
+    .acoes { display: none; }
   }
 </style>
 </head>
@@ -295,6 +319,38 @@ const html = `<!doctype html>
     <p>Site do encontro: <a href="https://encontrolenirlivre.pages.dev">encontrolenirlivre.pages.dev</a> · Seminário: <a href="https://seminariovenasabiertas.pages.dev">seminariovenasabiertas.pages.dev</a></p>
   </footer>
 </div>
+<script>
+  function copiarLegado(texto) {
+    const area = document.createElement("textarea");
+    area.value = texto;
+    area.style.position = "fixed";
+    area.style.left = "-9999px";
+    document.body.appendChild(area);
+    area.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch (erro) {}
+    document.body.removeChild(area);
+    return ok;
+  }
+  async function copiar(texto) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      try {
+        await navigator.clipboard.writeText(texto);
+        return true;
+      } catch (erro) {}
+    }
+    return copiarLegado(texto);
+  }
+  document.querySelectorAll("[data-copia], [data-link]").forEach(function (botao) {
+    botao.addEventListener("click", async function () {
+      const texto = botao.dataset.copia || botao.dataset.link || "";
+      const ok = await copiar(texto);
+      const original = botao.textContent;
+      botao.textContent = ok ? "Copiado" : "Não deu";
+      window.setTimeout(function () { botao.textContent = original; }, 1600);
+    });
+  });
+</script>
 </body>
 </html>`;
 

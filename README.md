@@ -101,8 +101,8 @@ Dois scripts leem o site e disparam pelo serviço local do OpenMausBot
 (`127.0.0.1:8899`, rota `/enviar`). O Telegram usa a API oficial.
 
 - `scripts/avisar-checkin.py`: marcos de 50, 100, 150, 200 e 250 presenças.
-- `scripts/avisar-programa.py`: bom dia (06h30), lembrete de pagamento
-  (09h, dias 11 e 12) e início da tarde (12h50/13h20).
+- `scripts/avisar-programa.py`: dois avisos por dia, às 07h e às 20h, de 9 a
+  14/11. O da manhã traz o resumo do dia; o da noite, o que vem amanhã.
 
 Todo texto passa por `scripts/avisos/revisor.py` antes do envio: concordância,
 crase, hora, sala e GD fora da programação bloqueiam a mensagem. Ensaie sem

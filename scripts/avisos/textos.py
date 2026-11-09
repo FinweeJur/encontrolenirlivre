@@ -480,6 +480,123 @@ def comeco(dia):
     return "\n".join(linhas)
 
 
+def resumo_curto(dia, limite=6):
+    """Resumo compacto do dia, para a mensagem da noite."""
+    itens = por_dia().get(dia, [])
+    ordem = []
+    grupos = {}
+    for item in itens:
+        if item["hora"] not in grupos:
+            ordem.append(item["hora"])
+            grupos[item["hora"]] = []
+        grupos[item["hora"]].append(item)
+
+    linhas = []
+    for hora in ordem:
+        grupo = grupos[hora]
+        if len(grupo) > 1 and all(i["titulo"].startswith("GD") for i in grupo):
+            numeros = sorted({n for i in grupo for n in numeros_gd(i["titulo"])})
+            atividade = "GDs " + juntar([str(n) for n in numeros])
+        elif len(grupo) > 1 and all(i["titulo"].startswith("Oficina") for i in grupo):
+            atividade = f"Oficinas ({len(grupo)} opções)"
+        elif len(grupo) >= 3:
+            redes = [
+                rede
+                for rede in ("RENAP", "RENAJU", "IPDMS")
+                if any(i["titulo"].startswith(rede) for i in grupo)
+            ]
+            oficinas = sum(1 for i in grupo if i["titulo"].startswith("Oficina"))
+            partes = redes[:]
+            if oficinas:
+                partes.append(f"{oficinas} oficinas")
+            atividade = juntar(partes) or f"{len(grupo)} atividades"
+        elif len(grupo) == 1:
+            atividade = titulo_limpo(grupo[0]["titulo"])
+        else:
+            atividade = " / ".join(
+                titulo_limpo(i["titulo"]).split(":")[0] for i in grupo
+            )
+
+        local = (
+            _resumo_salas(grupo)
+            if len(grupo) > 1
+            else local_curto(grupo[0].get("local"))
+        )
+        linha = f"• {hora} — {atividade}"
+        if local:
+            linha += f" · {local}"
+        linhas.append(linha)
+
+    return "\n".join(linhas[:limite])
+
+
+def bom_dia_antes(dia):
+    """Mensagem da manhã nos dois dias antes do encontro."""
+    if dia == "9":
+        return (
+            "☀️ Bom dia! Faltam 2 dias para o encontro.\n\n"
+            "O 30º Encontro da RENAP, o XI Seminário do IPDMS e o 20º "
+            "Encontro da RENAJU começam na quarta, 11/11, em João Pessoa.\n\n"
+            "📌 O que conferir hoje\n"
+            "• Sua inscrição no SIGEventos da UFPB.\n"
+            "• O pagamento da taxa e o comprovante.\n"
+            "• A programação e a sala de cada atividade.\n\n"
+            "💳 PIX e comprovante: ipdmscorreio@gmail.com\n"
+            f"🗓️ Programação: {PROGRAMA}\n\n"
+            "Até quarta! ✊"
+        )
+
+    return (
+        "☀️ Bom dia! Falta 1 dia para o encontro.\n\n"
+        "Amanhã o encontro começa em João Pessoa.\n\n"
+        "📌 Amanhã, 11/11\n"
+        "• 12h às 13h — Credenciamento, no Pátio do CCJ.\n"
+        "• 13h às 16h30 — GDs e oficinas.\n"
+        "• 18h — Abertura do encontro, na OAB/PB.\n\n"
+        "💳 Se ainda não pagou, faça o PIX e envie o comprovante.\n"
+        f"🗓️ Programação: {PROGRAMA}\n\n"
+        "Até amanhã! ✊"
+    )
+
+
+def boa_noite(dia):
+    """Segunda mensagem do dia: véspera, próximo dia ou encerramento."""
+    if dia == "9":
+        return (
+            "🌙 Boa noite! Faltam 2 dias.\n\n"
+            "Amanhã é dia de conferir os últimos detalhes:\n"
+            "• inscrição e pagamento;\n"
+            "• comprovante;\n"
+            "• documento e hospedagem;\n"
+            "• programação no site.\n\n"
+            f"🗓️ {PROGRAMA}"
+        )
+    if dia == "10":
+        return (
+            "🌙 Boa noite! O encontro começa amanhã.\n\n"
+            "📌 Primeiro dia, 11/11\n"
+            "• 12h — Credenciamento, no Pátio do CCJ.\n"
+            "• 13h — GDs e oficinas.\n"
+            "• 18h — Abertura, na OAB/PB.\n\n"
+            "Até amanhã! ✊"
+        )
+    if dia == "14":
+        return (
+            "🌙 Boa noite! O encontro terminou.\n\n"
+            "Obrigado a quem veio, ajudou e lutou. ✊\n"
+            "A organização envia em breve as informações dos certificados.\n\n"
+            "Até o próximo encontro."
+        )
+
+    proximo = str(int(dia) + 1)
+    return (
+        "🌙 Boa noite! Amanhã é dia de encontro.\n\n"
+        "📌 O que vem amanhã\n"
+        f"{resumo_curto(proximo)}\n\n"
+        f"🗓️ Programação: {PROGRAMA}"
+    )
+
+
 def fatos_do_dia(dia):
     """O que o revisor pode conferir contra a programação real."""
     itens = por_dia().get(dia, [])
