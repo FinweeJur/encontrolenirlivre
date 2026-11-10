@@ -57,7 +57,7 @@ export const gdSessoes: SessaoGd[] = [
     titulo: "Sistemas de justiça e conflitos fundiários",
     subtitulo: "",
     coordenacao: "Mariana Trotta Dallanna Quintans, Taiana de Castro Sobrinho, Eloísa Dias Gonçalves, Erika Macedo Moreira e Anna Cecília Faro Bonan",
-    sala: "Sala H (CCSA)",
+    sala: "Sala 203 (CCSA)",
     trabalhos: [
       "O Direito Sem-Teto: Análise sobre a aplicação da gramática jurídica na defesa judicial de uma ocupação do MTST",
       "O coletivo como condição para o reconhecimento de usucapião em Jataí/GO: o caso do Setor Nova Esperança",
@@ -112,7 +112,7 @@ export const gdSessoes: SessaoGd[] = [
     titulo: "Gênero, Direito e Violências Interseccionais",
     subtitulo: "",
     coordenacao: "Diana Melo Pereira, Gilmara Joane Macêdo de Medeiros, Urânia Flores da Cruz Freitas e Clarissa Cecília Ferreira Alves",
-    sala: "Sala A CCSA",
+    sala: "Sala 205 (CCSA)",
     trabalhos: [
       "A confluência perversa e a disputa sobre a hegemonia moral: o enfrentamento aos fundamentalismos e a defesa da laicidade na 5ª CNPM",
       "Da igualdade formal à desigualdade concreta: violência política de gênero e raça contra vereadoras negras em Mato Grosso",
@@ -137,7 +137,7 @@ export const gdSessoes: SessaoGd[] = [
     titulo: "Conflitos socioambientais, ilegalismos do poder e resistências territoriais na América Latina",
     subtitulo: "",
     coordenacao: "Gabriela Consolaro, Hugo Belarmino Morais, Marília de Nardin Budó e Naiara Coelho",
-    sala: "Sala C CCSA",
+    sala: "Sala 220 (CCSA)",
     trabalhos: [
       "Ecocídio e conduta temerária: o Protocolo de Consulta e a participação dos povos indígenas do Oiapoque no licenciamento do Bloco FZA-M-59",
       "Neoextrativismo, colonialidade e racismo ambiental: análises prévias do Projeto Serrote da Pedra Preta no Sertão pernambucano",
@@ -157,7 +157,7 @@ export const gdSessoes: SessaoGd[] = [
     titulo: "AJUPs, assessoria jurídica popular e educação popular",
     subtitulo: "",
     coordenacao: "Luna Catarina Michilini Muniz de Carvalho, Thamires Azeredo Chaves, Francisco Trope da Silva Porto, Cecília Café, Giovanni Bosco Bonder e Elma de Oliveira Araujo",
-    sala: "Sala D CCSA",
+    sala: "Sala 221 (CCSA)",
     trabalhos: [
       "Práticas de Assessoria Jurídica Universitária Popular em Direitos Humanos junto às comunidades tradicionais da Congada e dos Povos de Terreiro em Ituiutaba/MG (2026)",
       "Extensão popular e direito: relatos de experiência no Quilombo Cedro (Mineiros-GO)",
@@ -257,7 +257,7 @@ export const gdSessoes: SessaoGd[] = [
     titulo: "Criminologia crítica e movimentos sociais",
     subtitulo: "",
     coordenacao: "Marco Alexandre Souza Serra e Nayara Rodrigues Medrado",
-    sala: "Sala B CCSA",
+    sala: "Sala 219 (CCSA)",
     trabalhos: [
       "O Massacre de Pau D'Arco: Sob Enfoque da Criminologia Crítica e do Marxismo",
       "GENOCÍDIO DA JUVENTUDE NEGRA E POLÍTICAS DE SEGURANÇA PÚBLICA: uma análise crítica da militarização e da omissão estatal",
@@ -279,7 +279,7 @@ export const gdSessoes: SessaoGd[] = [
     titulo: "Sistemas de justiça e conflitos fundiários",
     subtitulo: "",
     coordenacao: "Mariana Trotta Dallanna Quintans, Taiana de Castro Sobrinho, Eloísa Dias Gonçalves, Erika Macedo Moreira e Anna Cecília Faro Bonan",
-    sala: "Sala H (CCSA)",
+    sala: "Sala 203 (CCSA)",
     trabalhos: [
       "Uma etapa prévia sem consequência: o desenho urbano das comissões de soluções fundiárias e a lacuna processual nos conflitos coletivos no campo",
       "A Atividade do Centro de Mediação e Conciliação (CMC) do Supremo Tribunal Federal (STF) na Tentativa de Construção de uma Solução sobre a Lei n. 14.701/2023 – Lei do Marco Temporal",
@@ -318,7 +318,7 @@ export const gdSessoes: SessaoGd[] = [
     titulo: "Gênero, Direito e Violências Interseccionais",
     subtitulo: "",
     coordenacao: "Diana Melo Pereira, Gilmara Joane Macêdo de Medeiros, Urânia Flores da Cruz Freitas e Clarissa Cecília Ferreira Alves",
-    sala: "Sala A CCSA",
+    sala: "Sala 205 (CCSA)",
     trabalhos: [
       "Indicadores bibliométricos da ANPED – GT 23 (gênero, sexualidade e educação), buscando a interseccionalidade sobre violência de gênero, racismo, e a Lei Maria da Penha: mapeamento dos anos (2017 a 2025)",
       "Nuances da Violência Doméstica e suas Esferas de Vitimização: Reflexões que chegam em Experiência Extensionista no Diálogos Feministas",
@@ -368,7 +368,7 @@ export const gdSessoes: SessaoGd[] = [
     titulo: "Conflitos socioambientais, ilegalismos do poder e resistências territoriais na América Latina",
     subtitulo: "",
     coordenacao: "Gabriela Consolaro, Hugo Belarmino Morais, Marília de Nardin Budó e Naiara Coelho",
-    sala: "Sala C CCSA",
+    sala: "Sala 220 (CCSA)",
     trabalhos: [
       "Subcriminalização em danos e crimes socioambientais em relação à mineração no estado de Goiás",
       "Cartografia colaborativa, memória e resistência territorial: a experiência da Comunidade Tradicional Canaã em Santa Rita/PB",
@@ -389,7 +389,7 @@ export const gdSessoes: SessaoGd[] = [
     titulo: "AJUPs, assessoria jurídica popular e educação popular",
     subtitulo: "",
     coordenacao: "Luna Catarina Michilini Muniz de Carvalho, Thamires Azeredo Chaves, Francisco Trope da Silva Porto, Cecília Café, Giovanni Bosco Bonder e Elma de Oliveira Araujo",
-    sala: "Sala D CCSA",
+    sala: "Sala 221 (CCSA)",
     trabalhos: [
       "Cidadania, dignidade humana e assessoria jurídica popular: o impacto da AJESIR na regularização migratória no município de Ituiutaba – MG",
       "Retratos de Territórios em Disputa: a práxis extensionista do Núcleo de Assessoria Jurídica Popular Josiane Evangelista no Sudoeste Goiano",
