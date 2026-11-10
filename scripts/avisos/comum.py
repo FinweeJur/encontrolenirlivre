@@ -30,19 +30,24 @@ PROGRAMA = SITE + "/programa"
 PLACAR = SITE + "/placar"
 PAINEL = SITE + "/painel"
 
-ENV_TELEGRAM = r"X:\DevCoder\controle-popular\scripts\.env"
-TOKEN_ARQUIVO = os.path.join(
-    os.path.expanduser("~"), ".config", "encontrao", "presenca-token.txt"
+ENV_TELEGRAM = os.environ.get("ENCONTRAO_ENV", "").strip() or r"X:\DevCoder\controle-popular\scripts\.env"
+# O mesmo código roda no desktop e no home-pc, com caminhos diferentes.
+if not os.path.exists(ENV_TELEGRAM):
+    ENV_TELEGRAM = r"C:\DevCoder\controle-popular\scripts\.env"
+
+# Configuração local (grupos do WhatsApp e senha do painel). Fora do repo e
+# fora do perfil do usuário quando ENCONTRAO_BASE aponta para uma pasta fixa.
+CONFIG = os.environ.get("ENCONTRAO_BASE", "").strip() or os.path.join(
+    os.path.expanduser("~"), ".config", "encontrao"
 )
+TOKEN_ARQUIVO = os.path.join(CONFIG, "presenca-token.txt")
 
 WHATSAPP_PADRAO = "http://127.0.0.1:8899/enviar"
 GRUPO_PADRAO = "OpenSecretario"
 
 # Grupos que recebem os avisos do encontro. O arquivo fica fora do repositório
 # porque o JID identifica a conversa: não é segredo, mas não precisa ser versionado.
-GRUPOS_ARQUIVO = os.path.join(
-    os.path.expanduser("~"), ".config", "encontrao", "whatsapp-grupos.json"
-)
+GRUPOS_ARQUIVO = os.path.join(CONFIG, "whatsapp-grupos.json")
 
 
 def agora_br():
