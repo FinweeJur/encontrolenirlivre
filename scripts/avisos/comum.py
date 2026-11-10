@@ -30,6 +30,10 @@ PROGRAMA = SITE + "/programa"
 PLACAR = SITE + "/placar"
 PAINEL = SITE + "/painel"
 
+# O encontro conjunto tem dois sites. Todo aviso leva os dois.
+SEMINARIO = "https://seminariovenasabiertas.pages.dev"
+PROGRAMA_SEMINARIO = SEMINARIO + "/programa"
+
 ENV_TELEGRAM = os.environ.get("ENCONTRAO_ENV", "").strip() or r"X:\DevCoder\controle-popular\scripts\.env"
 # O mesmo código roda no desktop e no home-pc, com caminhos diferentes.
 if not os.path.exists(ENV_TELEGRAM):

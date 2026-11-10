@@ -15,7 +15,15 @@ import re
 import subprocess
 import unicodedata
 
-from .comum import CACHE, PLACAR, PROGRAMA, RAIZ, SITE
+from .comum import (
+    CACHE,
+    PLACAR,
+    PROGRAMA,
+    PROGRAMA_SEMINARIO,
+    RAIZ,
+    SEMINARIO,
+    SITE,
+)
 
 DIAS_SEMANA = {
     "quarta": "quarta-feira",
@@ -26,6 +34,9 @@ DIAS_SEMANA = {
 
 ARQUIVO_SESSOES = os.path.join(CACHE, "sessoes.json")
 FONTE_PROGRAMA = os.path.join(RAIZ, "src", "content", "programacaoDetalhada.ts")
+
+# Rodapé único: todo aviso leva os dois sites, encontro e seminário.
+LINKS = f"🗓️ Encontro: {PROGRAMA}\n🗓️ Seminário: {PROGRAMA_SEMINARIO}"
 
 
 def _sem_acento(texto):
@@ -396,7 +407,7 @@ def resumo_dia(dia):
         linhas.append("")
 
     linhas.append("🗓️ Programação completa, com salas e horários:")
-    linhas.append(PROGRAMA)
+    linhas.append(LINKS)
     return "\n".join(linhas).strip()
 
 
@@ -421,7 +432,8 @@ def texto_marco(marco, titulo, hora):
         abertura = f"🎯 Já temos {marco} check-ins"
     return (
         f"{abertura} {periodo_do_dia(hora)} na atividade {titulo_limpo(titulo)}.\n"
-        f"Placar do check-in: {PLACAR}"
+        f"Placar do check-in: {PLACAR}\n\n"
+        f"{LINKS}"
     )
 
 
@@ -434,7 +446,8 @@ def pagamento():
         "PIX, comprovante e dúvidas: ipdmscorreio@gmail.com\n\n"
         "Valores: R$ 100 para profissionais, pós-graduação e advogadas/os; "
         "R$ 50 para estudantes de graduação.\n\n"
-        f"Site do encontro: {SITE}"
+        f"Site do encontro: {SITE}\n"
+        f"Site do seminário: {SEMINARIO}"
     )
 
 
@@ -476,7 +489,7 @@ def comeco(dia):
     linhas = ["⏰ Começando agora", "", f"• {hora} — {manchete}"]
     if sala:
         linhas.append(f"  📍 {sala}")
-    linhas.extend(["", "Programação completa:", PROGRAMA])
+    linhas.extend(["", "Programação completa:", LINKS])
     return "\n".join(linhas)
 
 
@@ -542,7 +555,7 @@ def bom_dia_antes(dia):
             "• O pagamento da taxa e o comprovante.\n"
             "• A programação e a sala de cada atividade.\n\n"
             "💳 PIX e comprovante: ipdmscorreio@gmail.com\n"
-            f"🗓️ Programação: {PROGRAMA}\n\n"
+            f"{LINKS}\n\n"
             "Até quarta! ✊"
         )
 
@@ -554,7 +567,7 @@ def bom_dia_antes(dia):
         "• 13h às 16h30 — GDs e oficinas.\n"
         "• 18h — Abertura do encontro, na OAB/PB.\n\n"
         "💳 Se ainda não pagou, faça o PIX e envie o comprovante.\n"
-        f"🗓️ Programação: {PROGRAMA}\n\n"
+        f"{LINKS}\n\n"
         "Até amanhã! ✊"
     )
 
@@ -569,7 +582,7 @@ def boa_noite(dia):
             "• comprovante;\n"
             "• documento e hospedagem;\n"
             "• programação no site.\n\n"
-            f"🗓️ {PROGRAMA}"
+            f"{LINKS}"
         )
     if dia == "10":
         return (
@@ -578,6 +591,7 @@ def boa_noite(dia):
             "• 12h — Credenciamento, no Pátio do CCJ.\n"
             "• 13h — GDs e oficinas.\n"
             "• 18h — Abertura, na OAB/PB.\n\n"
+            f"{LINKS}\n\n"
             "Até amanhã! ✊"
         )
     if dia == "14":
@@ -585,7 +599,8 @@ def boa_noite(dia):
             "🌙 Boa noite! O encontro terminou.\n\n"
             "Obrigado a quem veio, ajudou e lutou. ✊\n"
             "A organização envia em breve as informações dos certificados.\n\n"
-            "Até o próximo encontro."
+            "Até o próximo encontro.\n\n"
+            f"{LINKS}"
         )
 
     proximo = str(int(dia) + 1)
@@ -593,7 +608,7 @@ def boa_noite(dia):
         "🌙 Boa noite! Amanhã é dia de encontro.\n\n"
         "📌 O que vem amanhã\n"
         f"{resumo_curto(proximo)}\n\n"
-        f"🗓️ Programação: {PROGRAMA}"
+        f"{LINKS}"
     )
 
 
@@ -625,7 +640,8 @@ def culturais():
 
     linhas.append("Nos vemos lá! ✊")
     linhas.append("")
-    linhas.append(f"Programação completa: {PROGRAMA}")
+    linhas.append("Programação completa:")
+    linhas.append(LINKS)
     return "\n".join(linhas).strip()
 
 
