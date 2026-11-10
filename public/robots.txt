@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://encontrolenirlivre.pages.dev/sitemap.xml

@@ -26,4 +26,9 @@ rmSync(join(destino, "index.html"), { force: true });
 copyFileSync(join(dist, "seminario.html"), join(destino, "index.html"));
 rmSync(join(destino, "seminario.html"), { force: true });
 
+// O sitemap e o robots do seminário apontam para o domínio dele, não para o
+// da RENAP. Os arquivos vivem em `public/` com o sufixo `-seminario`.
+copyFileSync(join(dist, "sitemap-seminario.xml"), join(destino, "sitemap.xml"));
+copyFileSync(join(dist, "robots-seminario.txt"), join(destino, "robots.txt"));
+
 console.log("dist-seminario pronto (seminário como raiz)");
