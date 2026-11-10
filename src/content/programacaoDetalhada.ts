@@ -128,14 +128,6 @@ export const programaDetalhado: DiaPrograma[] = [
         periodo: "tarde",
       },
       {
-        hora: "14h",
-        titulo:
-          "Oficina — Direito humano à alimentação e à nutrição adequadas e captura corporativa das políticas de alimentação escolar",
-        local: "Sala 2 PPGCJ (CCJ, 1º andar)",
-        tag: "IPDMS",
-        periodo: "tarde",
-      },
-      {
         hora: "18h",
         titulo: "Abertura do encontro",
         local: "OAB/PB — Av. João Cirilo da Silva, 444, Altiplano",
@@ -178,7 +170,7 @@ export const programaDetalhado: DiaPrograma[] = [
       {
         hora: "13h30 às 16h30",
         titulo: "GD1 — Direito e Marxismo (2ª e 3ª sessões)",
-        local: "Salas 1 e 2 PPGCJ (CCJ, 1º andar)",
+        local: "Sala 1 PPGCJ (CCJ, 1º andar)",
         tag: "IPDMS",
         periodo: "tarde",
       },
@@ -192,7 +184,7 @@ export const programaDetalhado: DiaPrograma[] = [
       },
       {
         hora: "13h30 às 16h30",
-        titulo: "GD3 — Sistema de justiça e conflitos territoriais",
+        titulo: "GD3 — Sistema de justiça e conflitos fundiários",
         local: "Sala 203 (CCSA)",
         tag: "IPDMS",
         periodo: "tarde",
@@ -303,6 +295,14 @@ export const programaDetalhado: DiaPrograma[] = [
         titulo:
           "Oficina — O direito achado na rua e a luta pela terra: sujeito coletivo e conflitos fundiários",
         local: "Sala 2 PPGCJ (CCJ, 1º andar)",
+        tag: "IPDMS",
+        periodo: "manhã",
+      },
+      {
+        hora: "8h30 às 12h",
+        titulo:
+          "Oficina — Direito humano à alimentação e à nutrição adequadas e conflitos de interesses e captura corporativa das políticas de alimentação escolar",
+        local: "Sala 10 do CCJ",
         tag: "IPDMS",
         periodo: "manhã",
       },
