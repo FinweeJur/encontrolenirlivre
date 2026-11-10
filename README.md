@@ -119,6 +119,36 @@ cai em `WHATSAPP_GRUPO`/`WHATSAPP_JID`. O envio vai para todos os grupos, um de
 cada vez. Sem serviço no ar, a mensagem fica na fila por até duas horas e
 retoma só os grupos que falharam.
 
+### Operação no home-pc
+
+Os avisos rodam no home-pc (`100.91.10.1`), que fica ligado 24 h. O desktop
+desliga à noite; por isso 19h e 07h falhavam.
+
+| O quê | Onde |
+|---|---|
+| Código e dados | `C:\DevCoder\encontrao` |
+| Python 3.12 | `C:\opt\python312\python.exe` |
+| Config e segredos | `C:\DevCoder\encontrao\config` |
+| WhatsApp do encontro | `127.0.0.1:8898` (instância só envio) |
+| Log do WhatsApp | `C:\DevCoder\encontrao\logs\whatsapp.log` |
+| Log dos avisos | `C:\DevCoder\encontrao\.cache\avisos-*.log` |
+
+Tarefas do Windows (rodam como SYSTEM, sem sessão aberta):
+
+- `Encontro - WhatsApp`: sobe a instância 8898 no boot.
+- `Encontro - avisos programa`: a cada 5 minutos.
+- `Encontro - avisos checkin`: a cada minuto.
+
+Conferir de fora:
+
+```powershell
+ssh -i C:\Users\teste\.ssh\id_ed25519_rag user@100.91.10.1 powershell -NoProfile -Command "Invoke-RestMethod http://127.0.0.1:8898/status"
+```
+
+Para atualizar o código, copie `scripts/` e `src/content/programacaoDetalhada.ts`
+para `C:\DevCoder\encontrao`, e `servidor-baileys.js` para
+`servidor-encontro.js` dentro de `C:\DevCoder\openwa-bot-teste`.
+
 ## Listas de presença impressas
 
 `python scripts/gerar-listas-presenca.py` gera **um único** `.docx` em
