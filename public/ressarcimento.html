@@ -90,7 +90,7 @@
       Cada caso será dialogado com a articulação nacional e com o representante
       do estado. O reembolso depende de disponibilidade e de decisão coletiva.
       <ul>
-        <li>Preencha todos os campos e anexe de <strong>2 a 5 comprovantes</strong>.</li>
+        <li>Preencha todos os campos. Os comprovantes são opcionais: pode anexar agora ou depois, na pasta aberta.</li>
         <li>Vale foto legível ou PDF. Cada arquivo até 8 MB.</li>
         <li>Se não conseguir anexar tudo agora, envie o resto na pasta aberta.</li>
       </ul>
@@ -140,7 +140,7 @@
       </label>
 
       <div class="arquivos">
-        <label class="campo" style="margin:0"><span>Comprovantes (2 a 5)</span>
+        <label class="campo" style="margin:0"><span>Comprovantes (opcional)</span>
           <input type="file" id="arquivos" name="comprovantes" multiple
             accept="image/*,application/pdf">
         </label>
@@ -188,7 +188,7 @@
       Envie os comprovantes direto na pasta aberta do Google Drive.<br>
       <a href="https://drive.google.com/drive/folders/1Tlrm5LaLb4EOX9lK33v80Iv-pLBLmcuv?usp=sharing"
         target="_blank" rel="noopener">Abrir a pasta de comprovantes</a><br>
-      Depois, mande o protocolo para <strong>ipdmscorreio@gmail.com</strong>.
+      Depois, mande o protocolo para <strong>renadvspopulares@gmail.com</strong>.
     </div>
   </main>
 
@@ -212,7 +212,7 @@
   const pasta = "https://drive.google.com/drive/folders/1Tlrm5LaLb4EOX9lK33v80Iv-pLBLmcuv?usp=sharing";
   document.getElementById("okPasta").href = pasta;
 
-  const MAX = 5, MIN = 2, MAX_BYTES = 8 * 1024 * 1024, MAX_TOTAL = 20 * 1024 * 1024;
+  const MAX_BYTES = 8 * 1024 * 1024, MAX_TOTAL = 20 * 1024 * 1024;
 
   function arquivos() { return Array.from(campoArquivos.files || []); }
 
@@ -243,11 +243,6 @@
 
   campoArquivos.addEventListener("change", () => {
     limparErro();
-    const itens = arquivos();
-    if (itens.length > MAX) {
-      campoArquivos.value = "";
-      mostrarErro("Escolha no máximo 5 comprovantes.");
-    }
     atualizarLista();
   });
 
@@ -263,15 +258,6 @@
     if (!form.reportValidity()) return;
 
     const itens = arquivos();
-    const depois = enviarDepois.checked;
-    if (!depois && (itens.length < MIN || itens.length > MAX)) {
-      mostrarErro("Anexe de 2 a 5 comprovantes ou marque que vai enviar depois.");
-      return;
-    }
-    if (itens.length > MAX) {
-      mostrarErro("Escolha no máximo 5 comprovantes.");
-      return;
-    }
     for (const f of itens) {
       if (f.size > MAX_BYTES) {
         mostrarErro("O arquivo " + f.name + " passa de 8 MB.");

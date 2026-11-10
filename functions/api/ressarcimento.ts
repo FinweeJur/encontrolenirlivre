@@ -2,7 +2,7 @@
  * POST /api/ressarcimento — pedido de reembolso de Uber e deslocamento.
  *
  * O formulário é aberto, sem login. Cada pedido:
- *  - valida os campos e o limite de 2 a 5 comprovantes (ou 0 se a pessoa
+ *  - valida os campos e a quantidade de comprovantes (ou 0 se a pessoa
  *    marcar que vai enviar depois na pasta aberta);
  *  - sobe cada comprovante para a pasta do Google Drive do encontro;
  *  - grava uma linha na aba `ressarcimentos` da planilha.
@@ -32,7 +32,6 @@ const ENCONTROS: Record<string, string> = {
   RENAJU: "20º Encontro da RENAJU",
 };
 
-const MAX_ARQUIVOS = 5;
 const MAX_BYTES = 8 * 1024 * 1024;
 const MAX_TOTAL = 20 * 1024 * 1024;
 const EXT_OK = new Set(["jpg", "jpeg", "png", "webp", "heic", "heif", "pdf"]);
@@ -256,16 +255,6 @@ export const onRequestPost = async (contexto: {
   const arquivos = dados
     .getAll("comprovantes")
     .filter((item): item is File => item instanceof File && item.size > 0);
-
-  if (arquivos.length > MAX_ARQUIVOS) {
-    return json({ erro: `Envie no máximo ${MAX_ARQUIVOS} comprovantes.` }, 400);
-  }
-  if (!enviarDepois && arquivos.length < 2) {
-    return json(
-      { erro: "Anexe de 2 a 5 comprovantes ou marque que vai enviar depois." },
-      400,
-    );
-  }
 
   let total = 0;
   for (const arquivo of arquivos) {
