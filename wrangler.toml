@@ -8,3 +8,9 @@ compatibility_date = "2026-01-01"
 binding = "DB"
 database_name = "encontro-presenca"
 database_id = "ba217f2b-a88b-4307-8639-18bec4518701"
+
+# Formulário de ressarcimento: pasta do Drive e aba da planilha.
+[vars]
+DRIVE_FOLDER_ID = "1Tlrm5LaLb4EOX9lK33v80Iv-pLBLmcuv"
+PLANILHA_ID = "1geio-jVF60eFrWM-9KPoo2P-2kctg91dKFTugeKrya8"
+PLANILHA_ABA = "ressarcimentos"
