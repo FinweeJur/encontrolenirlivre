@@ -254,6 +254,10 @@ export function AcontecendoAgora() {
   const faixa = situacao.tipo === "encerrado" ? null : situacao.faixa;
   const prefixo = prefixoDe(situacao);
   const vivo = situacao.tipo === "acontecendo";
+  // Quantas outras atividades correm junto: define se a barra inteira é
+  // clicável para abrir a lista.
+  const outras = situacao.tipo === "acontecendo" ? situacao.outras : 0;
+  const abrivel = outras > 0;
   const emCurso =
     situacao.tipo === "acontecendo"
       ? DIAS[indice].faixas.filter(
@@ -263,9 +267,10 @@ export function AcontecendoAgora() {
 
   return (
     <div
-      className={`acontecendo${vivo ? " acontecendo--vivo" : ""}`}
+      className={`acontecendo${vivo ? " acontecendo--vivo" : ""}${abrivel ? " acontecendo--clicavel" : ""}`}
       role="status"
       aria-live="polite"
+      data-aberto={abrivel && aberto ? "true" : undefined}
     >
       <span className="acontecendo__rotulo" aria-hidden="true">
         <span className="acontecendo__ponto" aria-hidden="true" />
@@ -301,30 +306,36 @@ export function AcontecendoAgora() {
         </span>
       ) : null}
 
-      {situacao.tipo === "acontecendo" && situacao.outras > 0 ? (
+      {abrivel ? (
         <span className="acontecendo__mais" aria-hidden="true">
-          +{situacao.outras}
+          +{outras}
         </span>
       ) : null}
 
-      {situacao.tipo === "acontecendo" && situacao.outras > 0 ? (
+      {abrivel ? (
         <>
+          {/* Seta decorativa: o clique é da barra inteira, não só dela. */}
+          <span className="acontecendo__seta" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </span>
+
+          {/* Botão transparente cobrindo a faixa toda: qualquer ponto abre e
+              fecha a lista. Fica no fluxo de camadas acima do texto e abaixo
+              do painel, para o painel continuar clicável. */}
           <button
-            className="acontecendo__seta"
+            className="acontecendo__acao"
             type="button"
             aria-expanded={aberto}
             aria-controls="acontecendo-outras"
             aria-label={
               aberto
                 ? "Esconder outras atividades"
-                : `Mostrar ${situacao.outras} outras atividades`
+                : `Mostrar ${outras} outras atividades`
             }
             onClick={() => setAberto((valor) => !valor)}
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m6 9 6 6 6-6" />
-            </svg>
-          </button>
+          />
 
           {aberto ? (
             <div
@@ -338,7 +349,7 @@ export function AcontecendoAgora() {
               </p>
               <ul>
                 {emCurso
-                  .filter((f) => f !== situacao.faixa)
+                  .filter((f) => f !== faixa)
                   .map((f) => (
                     <li key={`${f.inicio}-${f.item.titulo}`}>
                       <span className="acontecendo__outras-hora">

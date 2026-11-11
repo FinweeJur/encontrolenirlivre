@@ -20,6 +20,24 @@
   line-height: 1.35;
 }
 
+/* Com outras atividades em curso, a barra inteira vira o gatilho. */
+.acontecendo--clicavel {
+  cursor: pointer;
+}
+
+.acontecendo--clicavel:hover {
+  background: color-mix(in srgb, var(--red) 72%, var(--ink));
+}
+
+/* O texto e as etiquetas só decoram: quem recebe o clique é o botão vazio
+   que cobre a faixa (`.acontecendo__acao`). */
+.acontecendo__rotulo,
+.acontecendo__texto,
+.acontecendo__tag,
+.acontecendo__mais {
+  pointer-events: none;
+}
+
 /* ---------- rótulo ---------- */
 
 .acontecendo__rotulo {
@@ -103,7 +121,7 @@
   white-space: nowrap;
 }
 
-/* Seta pequena: abre a lista das outras atividades do mesmo horário. */
+/* A seta é só o desenho de "abre": o alvo do clique é a faixa inteira. */
 .acontecendo__seta {
   flex: 0 0 auto;
   display: grid;
@@ -115,17 +133,32 @@
   border-radius: 50%;
   background: transparent;
   color: inherit;
-  cursor: pointer;
+  pointer-events: none;
   transition: background 0.15s ease;
 }
 
-.acontecendo__seta:hover {
+.acontecendo--clicavel:hover .acontecendo__seta {
   background: color-mix(in srgb, var(--paper) 14%, transparent);
 }
 
-.acontecendo__seta:focus-visible {
+/* Botão invisível que ocupa a faixa toda: qualquer ponto abre a lista.
+   Fica acima do texto (z 3) e abaixo do painel (z 60). */
+.acontecendo__acao {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+}
+
+.acontecendo__acao:focus-visible {
   outline: 2px solid var(--paper);
-  outline-offset: 2px;
+  outline-offset: -3px;
 }
 
 .acontecendo__seta svg {
@@ -139,7 +172,7 @@
   transition: transform 0.18s ease;
 }
 
-.acontecendo__seta[aria-expanded="true"] svg {
+.acontecendo[data-aberto="true"] .acontecendo__seta svg {
   transform: rotate(180deg);
 }
 

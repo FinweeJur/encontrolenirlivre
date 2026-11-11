@@ -357,10 +357,13 @@ a:hover {
     var(--xi-papel);
 }
 
-/* Faixa "acontecendo agora" no topo do hero do seminário. */
+/* Faixa "acontecendo agora" no topo do hero do seminário.
+   z-index 48: acima do texto do hero e dos botões flutuantes (44–46), abaixo
+   da barra fixa `.xi-topo` (50) e da busca. Com a lista aberta, o painel pinta
+   por cima do título sem cobrir o menu. */
 .xi-hero__faixa {
   position: relative;
-  z-index: 2;
+  z-index: 48;
   margin-bottom: clamp(0.8rem, 2vw, 1.4rem);
 }
 

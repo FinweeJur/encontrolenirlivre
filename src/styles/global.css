@@ -713,10 +713,14 @@ html[data-theme="light"] .brand__logo--light {
     var(--paper);
 }
 
-/* Faixa do "acontecendo agora": encosta no topo do hero, abaixo da barra. */
+/* Faixa do "acontecendo agora": encosta no topo do hero, abaixo da barra.
+   z-index 50: fica acima do texto do hero (`.hero__copy` usa 2) e também dos
+   botões flutuantes (assistente 46, ferramentas 45, rádio 44), mas abaixo do
+   cabeçalho fixo (60) e da busca (60). Com a lista aberta, o painel pinta por
+   cima do título, sem ficar semitapado por um botão flutuante. */
 .hero__faixa {
   position: relative;
-  z-index: 2;
+  z-index: 50;
   margin-bottom: clamp(0.6rem, 1.6vw, 1.1rem);
 }
 
