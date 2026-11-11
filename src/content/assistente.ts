@@ -14,6 +14,7 @@
 import { editais } from "./editais";
 import { evento, faq } from "./evento";
 import { eixosGd, gdSessoes } from "./gdSessoes";
+import lancamentos from "./lancamentos.json";
 import { oficinaResumo, oficinas } from "./oficinas";
 import { programaDetalhado } from "./programacaoDetalhada";
 
@@ -73,6 +74,14 @@ const FAQ_TEXTO = faq
   )
   .join("\n\n");
 
+/** As 8 obras do lançamento de 12/11, sem telefones. */
+const LANCAMENTOS_TEXTO = lancamentos
+  .map(
+    (livro, indice) =>
+      `${indice + 1}. ${livro.titulo} — ${livro.autores} (${livro.vinculo})`,
+  )
+  .join("\n");
+
 export const BASE_CONHECIMENTO = `ENCONTRO
 ${evento.nome}, com o tema "${evento.tema}".
 Datas: ${evento.dataLonga} (${evento.dataCurta}).
@@ -97,9 +106,12 @@ O alojamento é oferecido pela organização a quem responde o formulário: ${ev
 A vaga é organizada a partir das respostas (nome, contato, chegada e permanência).
 
 LANÇAMENTO DE LIVROS
-Acontece na quinta-feira à noite, 12 de novembro, dentro da programação.
+12/11, às 19h, no Armazém do Campo.
+São 8 obras. A lista completa, com autorias e sinopses, está em https://encontrolenirlivre.pages.dev/lancamentos
 Precisa que ao menos uma pessoa autora ou organizadora esteja presente.
 A chamada para inscrever obras encerrou em 30 de outubro de 2026.
+Obras:
+${LANCAMENTOS_TEXTO}
 
 PROGRAMAÇÃO (sujeita a atualização pela organização)
 ${PROGRAMACAO_TEXTO}
@@ -107,6 +119,8 @@ ${PROGRAMACAO_TEXTO}
 GRUPOS DE DISCUSSÃO (${TOTAL_GDS} GDs, ${TOTAL_TRABALHOS_GD} trabalhos, com sala e horário)
 ${GDS_TEXTO}
 As sessões acontecem em 11/11 (quarta, 13h) e 12/11 (quinta, 13h30), no Campus I.
+Em 12/11 ficam os GDs 1, 2, 3, 5, 7, 9, 12, 13 e 14; o GD10 acontece junto com o GD2.
+O GD11 foi em 11/11, junto com o GD8.
 A organização não abriu GDs 4 e 6 neste encontro.
 
 OFICINAS E MINICURSOS (${oficinaResumo.total} oficinas, ${oficinaResumo.vagas} vagas cada, inscrição separada da inscrição geral)
@@ -129,6 +143,8 @@ Nota pública da RENAP sobre a Operação Engodo: ${evento.links.notaRenap}
 Reportagem sobre Lenir Correia (A Nova Democracia): ${evento.links.materia}
 Página do seminário: https://seminariovenasabiertas.pages.dev/
 Página do 30º Encontro da RENAP: https://encontrolenirlivre.pages.dev/
+Lançamentos de livros: https://encontrolenirlivre.pages.dev/lancamentos
+Ressarcimento de Uber e deslocamento: https://encontrolenirlivre.pages.dev/ressarcimento
 
 OBSERVAÇÕES
 - Lenir Correia é advogada popular e liderança da luta pela terra; o encontro leva o nome dela como homenagem e pelo lema "Lenir Correia Livre".
@@ -256,7 +272,12 @@ export const RESPOSTAS_LOCAIS: ReadonlyArray<RespostaCurada> = [
   {
     id: "livros",
     termos: ["lancamento", "lançamento", "livro", "obra"],
-    resposta: "O lançamento de livros acontece em 12 de novembro, quinta-feira à noite, dentro da programação. Precisa que ao menos uma pessoa autora ou organizadora esteja presente. A chamada para inscrever obras encerrou em 30 de outubro.",
+    resposta: "O lançamento de livros é em 12/11, às 19h, no Armazém do Campo. São 8 obras; a lista completa, com autorias e sinopses, está em https://encontrolenirlivre.pages.dev/lancamentos",
+  },
+  {
+    id: "ressarcimento",
+    termos: ["ressarcimento", "reembolso", "uber", "deslocamento", "comprovante de uber"],
+    resposta: "O pedido de ressarcimento de Uber e deslocamento é feito em https://encontrolenirlivre.pages.dev/ressarcimento. Informe estado, organização, encontro, chave PIX e valor; os comprovantes são opcionais. O pedido não é confirmação: será dialogado com a articulação nacional e o representante do estado.",
   },
   {
     id: "lenir",
@@ -348,6 +369,7 @@ export const TOPICOS: Topico[] = [
   { id: "local", rotulo: "Local", pergunta: "Onde fica e como chego?" },
   { id: "presenca", rotulo: "Presença", pergunta: "Como funciona a presença?" },
   { id: "livros", rotulo: "Livros", pergunta: "Como funciona o lançamento de livros?" },
+  { id: "ressarcimento", rotulo: "Reembolso", pergunta: "Como peço ressarcimento de Uber?" },
   { id: "contato", rotulo: "Contato", pergunta: "Com quem falo?" },
 ];
 
