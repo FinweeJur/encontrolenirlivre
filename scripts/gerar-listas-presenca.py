@@ -187,19 +187,19 @@ def _linhas_resumo(celula, dia, usar_primeiro=False):
 
 
 def _bloco_qr(celula):
-    """QR da abertura, no canto do resumo do dia 11."""
+    """QR geral do check-in, no canto do resumo do dia 11."""
     p = celula.paragraphs[0]
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_before = Pt(1)
     p.paragraph_format.space_after = Pt(0)
     run = p.add_run()
-    run.add_picture(qr_com_arte(BASE_QR + "11-14"), width=Cm(2.4))
+    run.add_picture(qr_com_arte("https://encontrolenirlivre.pages.dev/checkin"), width=Cm(2.4))
 
     p = celula.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_before = Pt(1)
     p.paragraph_format.space_after = Pt(0)
-    run = p.add_run("Check-in da abertura")
+    run = p.add_run("Check-in do encontro")
     run.bold = True
     run.font.size = Pt(6.4)
     run.font.color.rgb = TINTA

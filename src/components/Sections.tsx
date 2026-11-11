@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { cartas, evento, faq, organizacoes } from "../content/evento";
 import { programaDetalhado, indiceDoDiaAtual } from "../content/programacaoDetalhada";
+import lancamentos from "../content/lancamentos.json";
+import "../styles/lancamentos.css";
 
 /** Site proprio do seminario do IPDMS (projeto Cloudflare Pages separado). */
 const URL_XI = "https://seminariovenasabiertas.pages.dev/";
@@ -422,6 +424,24 @@ export function Lancamentos() {
           No Armazém do Campo, advogadas e advogados populares, pesquisadoras e
           movimentos sociais lançam livros e publicações.
         </p>
+        <div className="lancamentos-home__lista">
+          {lancamentos.map((livro, indice) => (
+            <details className="lancamentos-home__item" key={livro.titulo}>
+              <summary>
+                <span className="lancamentos-home__num">
+                  {String(indice + 1).padStart(2, "0")}
+                </span>
+                <strong>{livro.titulo}</strong>
+              </summary>
+              <p className="lancamentos-home__autoria">{livro.autores}</p>
+              <p className="lancamentos-home__resumo">
+                {livro.descricao.length > 260
+                  ? `${livro.descricao.slice(0, 260).trim()}…`
+                  : livro.descricao}
+              </p>
+            </details>
+          ))}
+        </div>
         <a className="text-link" href="/lancamentos">
           Ver títulos, autorias e sinopses <Arrow />
         </a>

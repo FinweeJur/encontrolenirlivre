@@ -96,15 +96,18 @@ export const onRequestGet = async (contexto: { request: Request }): Promise<Resp
   const chave = url.searchParams.get("s") ?? "";
 
   if (chave === "lista") {
+    const semCultura = sessoes.filter((s) => s.organizacao !== "Cultural");
     return json(
-      { total: sessoes.length, sessoes },
+      { total: semCultura.length, sessoes: semCultura },
       200,
       cors(contexto.request),
     );
   }
 
   const sessao = acharSessao(chave);
-  if (!sessao) return json({ erro: "Atividade não encontrada." }, 404, cors(contexto.request));
+  if (!sessao || sessao.organizacao === "Cultural") {
+    return json({ erro: "Atividade não encontrada." }, 404, cors(contexto.request));
+  }
 
   return json({ sessao }, 200, cors(contexto.request));
 };
@@ -141,6 +144,13 @@ export const onRequestPost = async (contexto: {
   const sessao = acharSessao(chave);
   if (!sessao) {
     return json({ erro: "QR inválido. Peça ajuda na recepção." }, 400, cabecalhos);
+  }
+  if (sessao.organizacao === "Cultural") {
+    return json(
+      { erro: "Atividade cultural não tem check-in. Use a página geral." },
+      400,
+      cabecalhos,
+    );
   }
 
   const nome = limparNome(corpo.nome);

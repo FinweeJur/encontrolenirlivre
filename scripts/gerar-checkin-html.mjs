@@ -37,8 +37,15 @@ const carregar = async (caminho) => {
 };
 
 const mod = await carregar("src/content/sessoes.ts");
-const sessoes = mod.sessoes;
-const porDia = mod.sessoesPorDia();
+// Cultural não tem check-in: fica fora da lista e dos QRs.
+const culturais = mod.sessoes
+  .filter((s) => s.organizacao === "Cultural")
+  .map((s) => s.chave);
+const sessoes = mod.sessoes.filter((s) => s.organizacao !== "Cultural");
+const porDia = mod.sessoesPorDia().map((dia) => ({
+  ...dia,
+  itens: dia.itens.filter((s) => s.organizacao !== "Cultural"),
+}));
 
 const escapar = (texto) =>
   String(texto ?? "")
@@ -72,6 +79,12 @@ const html = `<!doctype html>
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#1a1512">
 <link rel="icon" href="/img/favicon.png">
+<script>
+  try {
+    var temaSalvo = localStorage.getItem("ecnl-theme");
+    document.documentElement.dataset.theme = temaSalvo === "light" ? "light" : "dark";
+  } catch (e) {}
+</script>
 <style>
   :root {
     --papel: #f6f1e7;
@@ -306,11 +319,85 @@ const html = `<!doctype html>
     input, select { background: #271f19; color: var(--tinta); }
     .recepcao { background: #2a2410; color: #e8d48a; border-color: #6b5a20; }
   }
+
+  /* ---------- identidade do site ---------- */
+  @font-face {
+    font-family: "Clash Display";
+    src: url("/fonts/ClashDisplay-Semibold.woff2") format("woff2");
+    font-weight: 600;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "General Sans";
+    src: url("/fonts/GeneralSans-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "General Sans";
+    src: url("/fonts/GeneralSans-Semibold.woff2") format("woff2");
+    font-weight: 600;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Tabular";
+    src: url("/fonts/Tabular-Semibold.woff2") format("woff2");
+    font-weight: 600;
+    font-display: swap;
+  }
+
+  html[data-theme="dark"] {
+    --papel: #14110d; --papel-2: #1b1712; --tinta: #f2e8d2;
+    --tinta-fraca: #9a8d78; --linha: #3a322a; --vermelho: #d63b32; --verde: #6fbf9a;
+  }
+  html[data-theme="light"] {
+    --papel: #e9dfc6; --papel-2: #f4ead6; --tinta: #2a2521;
+    --tinta-fraca: #6d6153; --linha: #c2b193; --vermelho: #bf2a26; --verde: #1e6b4f;
+  }
+  html[data-theme="light"] input,
+  html[data-theme="light"] select,
+  html[data-theme="dark"] input,
+  html[data-theme="dark"] select {
+    background: var(--papel-2);
+    color: var(--tinta);
+  }
+  html[data-theme="light"] .recepcao {
+    background: #fbf3d9;
+    color: #5b4a12;
+    border-color: #c9a227;
+  }
+
+  body { font-family: "General Sans", system-ui, -apple-system, "Segoe UI", sans-serif; }
+  h1, .cartao__titulo { font-family: "Clash Display", "Arial Narrow", system-ui, sans-serif; }
+  .olho, .cartao__hora, .cartao__org { font-family: "Tabular", ui-monospace, "SFMono-Regular", monospace; }
+
+  .topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .tema {
+    flex: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 1px solid var(--linha);
+    background: var(--papel-2);
+    color: var(--tinta);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .tema:hover { border-color: var(--vermelho); color: var(--vermelho); }
 </style>
 </head>
 <body>
 <div class="casca">
-  <p class="olho" id="olho">30º Encontro da RENAP · XI Seminário do IPDMS · 20º Encontro da RENAJU</p>
+  <div class="topo">
+    <p class="olho" id="olho">30º Encontro da RENAP · XI Seminário do IPDMS · 20º Encontro da RENAJU</p>
+    <button class="tema" id="tema" type="button" aria-label="Mudar para tema claro">☀</button>
+  </div>
   <h1>Presença no Evento</h1>
   <p class="sub">Marque sua presença nesta atividade. Leva 15 segundos.</p>
 
@@ -334,7 +421,7 @@ const html = `<!doctype html>
     <p class="cartao__local" id="sessao-local"></p>
     <span class="cartao__org" id="sessao-org"></span>
     <br>
-    <button type="button" class="trocar" id="trocar">Não é esta? Trocar atividade</button>
+    <button type="button" class="trocar" id="trocar">Quer marcar presença em outra atividade? Trocar clicando aqui</button>
   </div>
 
   <div class="escolha" id="escolha">
@@ -368,12 +455,13 @@ const html = `<!doctype html>
 
   <div id="recado" class="recado" role="status" aria-live="polite"></div>
 
-  <p class="pe">Usamos seu nome e e-mail só para registrar presença e emitir certificado. Não compartilhamos com terceiros. Dúvidas: <a href="mailto:ipdmscorreio@gmail.com">ipdmscorreio@gmail.com</a>.</p>
+  <p class="pe">Usamos seu nome e e-mail só para registrar a presença, emitir o certificado e prestar contas do projeto. Não compartilhamos com terceiros. Dúvidas: <a href="mailto:ipdmscorreio@gmail.com">ipdmscorreio@gmail.com</a>.</p>
 </div>
 
 <script>
   const API = ${JSON.stringify(API)};
   const SESSOES = ${JSON.stringify(sessoes)};
+const CULTURAIS = ${JSON.stringify(culturais)};
   const FILA = "ecnl-checkin-fila";
   const CONTADOR = "ecnl-recepcao-contador";
   const RECEPCAO = new URLSearchParams(location.search).get("recepcao") === "1";
@@ -520,11 +608,15 @@ const html = `<!doctype html>
     if (porQuery) return porQuery;
     const partes = location.pathname.split("/").filter(Boolean);
     const ultima = partes[partes.length - 1] || "";
+    if (CULTURAIS.includes(ultima)) return "__cultural__";
     return porChave.has(ultima) ? ultima : "";
   }
 
   const chave = chaveDaUrl();
-  if (chave) {
+  if (chave === "__cultural__") {
+    escolha.classList.add("is-aberta");
+    document.getElementById("sessao-titulo").textContent = "Escolha a atividade";
+  } else if (chave) {
     pintar(porChave.get(chave));
   } else {
     const doMomento = sessaoDoMomento();
@@ -535,6 +627,26 @@ const html = `<!doctype html>
       document.getElementById("sessao-titulo").textContent = "Escolha a atividade";
     }
   }
+
+  const temaBotao = document.getElementById("tema");
+  function pintarTema() {
+    const escuro = document.documentElement.dataset.theme !== "light";
+    temaBotao.textContent = escuro ? "☀" : "☾";
+    temaBotao.setAttribute(
+      "aria-label",
+      escuro ? "Mudar para tema claro" : "Mudar para tema escuro",
+    );
+  }
+  temaBotao.addEventListener("click", () => {
+    const novo =
+      document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = novo;
+    try {
+      localStorage.setItem("ecnl-theme", novo);
+    } catch (e) {}
+    pintarTema();
+  });
+  pintarTema();
 
   document.getElementById("trocar").addEventListener("click", () => {
     escolha.classList.toggle("is-aberta");

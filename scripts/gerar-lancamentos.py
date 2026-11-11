@@ -73,12 +73,18 @@ pagina = f"""<!doctype html>
 <meta name="description" content="Oito livros e publicações lançados em 12/11, às 19h, no Armazém do Campo, durante o 30º Encontro Nacional da RENAP, o XI Seminário do IPDMS e o 20º Encontro da RENAJU.">
 <style>
   :root {{ --fundo:#0f0d0b; --papel:#f5ecda; --papel2:#efe3cc; --tinta:#171410; --tinta2:#5b5242; --linha:#d9cbb1; --vermelho:#b3261e; --amarelo:#f2c94c; }}
+  html[data-theme="light"] {{ --fundo:#e9dfc6; --papel:#fffdf7; --papel2:#f4ead6; --tinta:#2a2521; --tinta2:#4a423a; --linha:#c2b193; --vermelho:#bf2a26; --amarelo:#d98f2a; }}
+  @font-face {{ font-family:"Clash Display"; src:url("/fonts/ClashDisplay-Semibold.woff2") format("woff2"); font-weight:600; font-display:swap; }}
+  @font-face {{ font-family:"General Sans"; src:url("/fonts/GeneralSans-Regular.woff2") format("woff2"); font-weight:400; font-display:swap; }}
   * {{ box-sizing:border-box; }}
-  body {{ margin:0; background:radial-gradient(circle at 12% 0%,#2a2118 0,transparent 42%),var(--fundo); color:var(--tinta); font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; line-height:1.5; padding:18px 14px 46px; }}
+  body {{ margin:0; background:radial-gradient(circle at 12% 0%,#2a2118 0,transparent 42%),var(--fundo); color:var(--tinta); font-family:"General Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; line-height:1.5; padding:18px 14px 46px; }}
+  html[data-theme="light"] body {{ background:var(--fundo); }}
   .folha {{ max-width:900px; margin:0 auto; background:var(--papel); border-radius:20px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,.45); }}
-  header {{ background:linear-gradient(135deg,#1d1a14,#2b251c); color:#f7efdd; padding:28px 22px 24px; }}
+  header {{ background:linear-gradient(135deg,#1d1a14,#2b251c); color:#f7efdd; padding:28px 22px 24px; position:relative; }}
+  .tema {{ position:absolute; top:14px; right:14px; width:2rem; height:2rem; border-radius:50%; border:1px solid #5a4d3c; background:#2b251c; color:#f7efdd; font-size:1rem; line-height:1; cursor:pointer; }}
+  .tema:hover {{ border-color:var(--amarelo); color:var(--amarelo); }}
   .olho {{ font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color:#d9cdb7; margin:0 0 .6rem; }}
-  h1 {{ font-size:clamp(1.5rem,5vw,2.2rem); line-height:1.1; margin:0 0 .5rem; }}
+  h1 {{ font-size:clamp(1.5rem,5vw,2.2rem); line-height:1.1; margin:0 0 .5rem; font-family:"Clash Display","Arial Narrow",system-ui,sans-serif; }}
   header p {{ margin:.2rem 0; color:#e6dbc6; }}
   .voltar {{ display:inline-block; margin-top:1rem; color:#1a150e; background:var(--amarelo); padding:.55rem .8rem; border-radius:999px; font-weight:800; text-decoration:none; font-size:.85rem; }}
   .zap {{ display:inline-flex; align-items:center; gap:.35rem; margin-top:1rem; margin-left:.45rem; padding:.55rem .8rem; border-radius:999px; background:#25d366; color:#073b1b; font-weight:800; text-decoration:none; font-size:.85rem; }}
@@ -88,7 +94,7 @@ pagina = f"""<!doctype html>
   .livro-topo {{ display:flex; justify-content:space-between; align-items:center; gap:.6rem; margin-bottom:.5rem; }}
   .numero {{ font-family:ui-monospace,Consolas,monospace; font-size:.78rem; color:var(--vermelho); font-weight:800; }}
   .tag {{ font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; background:#fff6dd; border:1px solid #e6cf8f; color:#5a4712; padding:.2rem .5rem; border-radius:999px; font-weight:800; }}
-  h2 {{ font-size:1.08rem; line-height:1.22; margin:0 0 .35rem; }}
+  h2 {{ font-size:1.08rem; line-height:1.22; margin:0 0 .35rem; font-family:"Clash Display","Arial Narrow",system-ui,sans-serif; }}
   .autoria {{ font-size:.86rem; color:var(--tinta2); margin:0 0 .35rem; }}
   .ficha {{ font-size:.76rem; color:var(--tinta2); margin:0 0 .55rem; }}
   .resumo {{ font-size:.9rem; margin:0 0 .4rem; }}
@@ -102,6 +108,7 @@ pagina = f"""<!doctype html>
 <body>
 <div class="folha">
   <header>
+    <button class="tema" id="tema" type="button" aria-label="Mudar para tema claro">☀</button>
     <p class="olho">30º Encontro Nacional da RENAP · XI Seminário do IPDMS · 20º Encontro da RENAJU</p>
     <h1>Lançamentos de livros</h1>
     <p><strong>12/11, às 19h · Armazém do Campo · João Pessoa</strong></p>
@@ -123,6 +130,31 @@ pagina = f"""<!doctype html>
 </body>
 </html>
 """
+
+SCRIPT_TEMA = """<script>
+  (function () {
+    var b = document.getElementById("tema");
+    if (!b) return;
+    function p() {
+      var escuro = document.documentElement.dataset.theme !== "light";
+      b.textContent = escuro ? "☀" : "☾";
+      b.setAttribute("aria-label", escuro ? "Mudar para tema claro" : "Mudar para tema escuro");
+    }
+    b.addEventListener("click", function () {
+      var novo = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = novo;
+      try { localStorage.setItem("ecnl-theme", novo); } catch (e) {}
+      p();
+    });
+    p();
+  })();
+</script>"""
+CABECA_TEMA = (
+    '<script>try{var t=localStorage.getItem("ecnl-theme");'
+    'document.documentElement.dataset.theme=t==="light"?"light":"dark";}catch(e){}</script>'
+)
+pagina = pagina.replace("<head>", "<head>" + CABECA_TEMA, 1)
+pagina = pagina.replace("</body>", SCRIPT_TEMA + "\n</body>", 1)
 
 with io.open(SAIDA, "w", encoding="utf-8") as arquivo:
     arquivo.write(pagina)
