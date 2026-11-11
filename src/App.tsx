@@ -7,6 +7,7 @@ import {
   Encounter,
   Footer,
   Homage,
+  Lancamentos,
   LocalFaq,
   Opening,
   Organizations,
@@ -79,6 +80,7 @@ export function App() {
         <Vozes />
         <PhotoDrift reducedMotion={reducedMotion} />
         <Program />
+        <Lancamentos />
         <Registration />
         <Case />
         <Organizations />

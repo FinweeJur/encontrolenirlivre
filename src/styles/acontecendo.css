@@ -103,6 +103,112 @@
   white-space: nowrap;
 }
 
+/* Seta pequena: abre a lista das outras atividades do mesmo horário. */
+.acontecendo__seta {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--paper) 45%, transparent);
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.acontecendo__seta:hover {
+  background: color-mix(in srgb, var(--paper) 14%, transparent);
+}
+
+.acontecendo__seta:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: 2px;
+}
+
+.acontecendo__seta svg {
+  width: 0.82rem;
+  height: 0.82rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.18s ease;
+}
+
+.acontecendo__seta[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+.acontecendo__outras {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  padding: 0.85rem var(--gutter, clamp(1.1rem, 4vw, 3rem)) 1rem;
+  background: color-mix(in srgb, var(--red) 76%, var(--ink));
+  color: var(--paper);
+  border-bottom: 1px solid color-mix(in srgb, var(--paper) 24%, transparent);
+  box-shadow: 0 18px 30px -20px rgba(0, 0, 0, 0.72);
+}
+
+.acontecendo__outras-titulo {
+  margin: 0 0 0.55rem;
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.acontecendo__outras ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.acontecendo__outras li {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.5rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid color-mix(in srgb, var(--paper) 16%, transparent);
+  font-size: 0.82rem;
+}
+
+.acontecendo__outras li:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.acontecendo__outras-hora {
+  font-family: var(--data, ui-monospace, monospace);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.acontecendo__outras-local {
+  opacity: 0.82;
+}
+
+.acontecendo__outras-tag {
+  margin-left: auto;
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
 /* ---------- leitura em voz alta ---------- */
 
 .acontecendo__leitura {
@@ -133,6 +239,10 @@
   }
 
   .acontecendo__mais {
+    order: 2;
+  }
+
+  .acontecendo__seta {
     order: 2;
   }
 

@@ -308,6 +308,10 @@ const html = `<!doctype html>
       hoje.toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" }),
     )}.</p>
     <button class="imprimir" type="button" onclick="window.print()">Imprimir</button>
+    <a class="imprimir" href="/lancamentos" style="text-decoration:none;display:inline-block">Lançamentos de livros</a>
+    <a class="imprimir" href="https://wa.me/?text=${encodeURIComponent(
+      "Programação completa do 30º Encontro Nacional da RENAP, XI Seminário do IPDMS e 20º Encontro da RENAJU — João Pessoa, 11 a 14 de novembro de 2026.\n\nhttps://encontrolenirlivre.pages.dev/programa",
+    )}" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block">WhatsApp</a>
     <p class="meta" style="margin-top:.5rem">Presença por atividade: <a href="/checkin">check-in</a> · Cartazes com QR para imprimir: <a href="/entrega-encontro/qrcodes-encontrao.pdf">PDF com 39 cartazes (sem a cultural)</a>.</p>
   </header>
 

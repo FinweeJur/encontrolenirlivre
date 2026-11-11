@@ -23,6 +23,7 @@ import { Magnet } from "./Magnet";
 import { Programa } from "./Programa";
 import { Oficinas } from "./Oficinas";
 import { Gds } from "./Gds";
+import { BotaoWhatsApp } from "../BotaoWhatsApp";
 import { BotaoPix } from "../BotaoPix";
 import { AcontecendoAgora } from "../AcontecendoAgora";
 import { ContagemInscricoes, FaltamDias } from "../Contagem";
@@ -420,14 +421,22 @@ export function SeminarioPage() {
 
             {/* Informação da organização que não está na grade de horas. */}
             <aside className="xi-aviso" aria-label="Lançamento de livros">
-              <p className="xi-aviso__rotulo">Lançamento de livros</p>
+              <p className="xi-aviso__rotulo">Lançamento de livros · 12/11, 19h</p>
               <p>
-                O lançamento acontece na <strong>quinta-feira à noite, 12 de
-                novembro</strong>, dentro da programação. Precisa que ao menos
-                uma pessoa autora ou organizadora esteja presente. A chamada
-                para inscrição de obras está encerrada desde 30 de outubro.
+                No <strong>Armazém do Campo</strong>, oito obras de advogadas,
+                advogados, pesquisadoras e movimentos sociais. Precisa que ao
+                menos uma pessoa autora ou organizadora esteja presente.
+              </p>
+              <p>
+                <a href="/lancamentos">Ver os 8 títulos, autorias e sinopses</a>
               </p>
             </aside>
+            <div className="compartilhar">
+              <BotaoWhatsApp
+                texto="Programação do XI Seminário do IPDMS — Venas Abiertas, em João Pessoa, de 11 a 14 de novembro."
+                url="https://seminariovenasabiertas.pages.dev/#programacao"
+              />
+            </div>
           </div>
         </section>
 
@@ -444,6 +453,12 @@ export function SeminarioPage() {
                 <br />
                 se inscrever.
               </h2>
+              <div className="compartilhar">
+                <BotaoWhatsApp
+                  texto="Inscrições para o XI Seminário do IPDMS — Venas Abiertas, em João Pessoa."
+                  url="https://seminariovenasabiertas.pages.dev/#inscricoes"
+                />
+              </div>
               <table className="xi-valores">
                 <caption>Valores</caption>
                 <tbody>

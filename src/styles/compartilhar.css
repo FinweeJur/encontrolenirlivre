@@ -1,0 +1,46 @@
+/* Botão de compartilhar no WhatsApp: ícone pequeno, sem texto. */
+
+.compartilhar {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 0.9rem;
+}
+
+.botao-zap {
+  display: inline-grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  background: #25d366;
+  color: #073b1b;
+  border: 1px solid color-mix(in srgb, #25d366 55%, #073b1b);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.2);
+  flex: none;
+  transition:
+    transform 0.12s ease,
+    filter 0.12s ease;
+}
+
+.botao-zap:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.botao-zap:focus-visible {
+  outline: 3px solid color-mix(in srgb, #25d366 45%, transparent);
+  outline-offset: 2px;
+}
+
+.botao-zap svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .botao-zap {
+    transition: none;
+  }
+}

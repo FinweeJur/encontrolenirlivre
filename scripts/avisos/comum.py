@@ -29,6 +29,7 @@ SITE = "https://encontrolenirlivre.pages.dev"
 PROGRAMA = SITE + "/programa"
 PLACAR = SITE + "/placar"
 PAINEL = SITE + "/painel"
+LANCAMENTOS = SITE + "/lancamentos"
 
 # O encontro conjunto tem dois sites. Todo aviso leva os dois.
 SEMINARIO = "https://seminariovenasabiertas.pages.dev"

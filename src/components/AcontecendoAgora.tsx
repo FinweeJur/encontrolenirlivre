@@ -234,6 +234,8 @@ function fraseDe(situacao: Situacao): string {
 export function AcontecendoAgora() {
   // Estado inicial já com o relógio; o intervalo só mantém a faixa em dia.
   const [agora, setAgora] = useState(() => Date.now());
+  // Seta para abrir a lista das outras atividades do mesmo horário.
+  const [aberto, setAberto] = useState(false);
 
   useEffect(() => {
     const relogio = window.setInterval(() => setAgora(Date.now()), 60_000);
@@ -252,6 +254,12 @@ export function AcontecendoAgora() {
   const faixa = situacao.tipo === "encerrado" ? null : situacao.faixa;
   const prefixo = prefixoDe(situacao);
   const vivo = situacao.tipo === "acontecendo";
+  const emCurso =
+    situacao.tipo === "acontecendo"
+      ? DIAS[indice].faixas.filter(
+          (f) => f.inicio <= relogio.minuto && relogio.minuto < f.fim,
+        )
+      : [];
 
   return (
     <div
@@ -297,6 +305,60 @@ export function AcontecendoAgora() {
         <span className="acontecendo__mais" aria-hidden="true">
           +{situacao.outras}
         </span>
+      ) : null}
+
+      {situacao.tipo === "acontecendo" && situacao.outras > 0 ? (
+        <>
+          <button
+            className="acontecendo__seta"
+            type="button"
+            aria-expanded={aberto}
+            aria-controls="acontecendo-outras"
+            aria-label={
+              aberto
+                ? "Esconder outras atividades"
+                : `Mostrar ${situacao.outras} outras atividades`
+            }
+            onClick={() => setAberto((valor) => !valor)}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </button>
+
+          {aberto ? (
+            <div
+              className="acontecendo__outras"
+              id="acontecendo-outras"
+              role="region"
+              aria-label="Outras atividades acontecendo agora"
+            >
+              <p className="acontecendo__outras-titulo">
+                Também acontecendo agora
+              </p>
+              <ul>
+                {emCurso
+                  .filter((f) => f !== situacao.faixa)
+                  .map((f) => (
+                    <li key={`${f.inicio}-${f.item.titulo}`}>
+                      <span className="acontecendo__outras-hora">
+                        {formatarHora(f.inicio)}
+                      </span>
+                      <strong>{f.item.titulo}</strong>
+                      {f.item.local ? (
+                        <span className="acontecendo__outras-local">
+                          {f.item.local}
+                        </span>
+                      ) : null}
+                      <span className="acontecendo__outras-tag">
+                        {f.item.tag}
+                      </span>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          ) : null}
+        </>
       ) : null}
 
       <span className="acontecendo__leitura">{fraseDe(situacao)}</span>

@@ -17,6 +17,7 @@ import unicodedata
 
 from .comum import (
     CACHE,
+    LANCAMENTOS,
     PLACAR,
     PROGRAMA,
     PROGRAMA_SEMINARIO,
@@ -387,6 +388,15 @@ def resumo_dia(dia):
 
     linhas = [abertura, "", "📋 O que acontece hoje", ""]
 
+    if dia == "12":
+        linhas.extend(
+            [
+                "📌 GDs de hoje: 1, 2, 3, 5, 7, 9, 12, 13 e 14.",
+                "O GD10 acontece junto com o GD2.",
+                "",
+            ]
+        )
+
     # Agrupa por horário no dia inteiro, não só quando os itens são vizinhos:
     # a programação lista 14h, 14h30 e 14h de novo, e isso abria dois blocos.
     ordem = []
@@ -404,6 +414,11 @@ def resumo_dia(dia):
     duracoes = _linha_duracoes(itens)
     if duracoes:
         linhas.append(duracoes)
+        linhas.append("")
+
+    if dia == "12":
+        linhas.append("📚 O lançamento das 19h reúne 8 obras. Títulos e autorias:")
+        linhas.append(LANCAMENTOS)
         linhas.append("")
 
     linhas.append("🗓️ Programação completa, com salas e horários:")
@@ -604,11 +619,17 @@ def boa_noite(dia):
         )
 
     proximo = str(int(dia) + 1)
+    extra = ""
+    if dia == "11":
+        extra = (
+            "\n\n📚 Amanhã, 8 obras no lançamento de livros. Lista completa:\n"
+            f"{LANCAMENTOS}"
+        )
     return (
         "🌙 Boa noite! Amanhã é dia de encontro.\n\n"
         "📌 O que vem amanhã\n"
         f"{resumo_curto(proximo)}\n\n"
-        f"{LINKS}"
+        f"{LINKS}{extra}"
     )
 
 

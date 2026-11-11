@@ -5,6 +5,7 @@ import { programaDetalhado, indiceDoDiaAtual } from "../content/programacaoDetal
 /** Site proprio do seminario do IPDMS (projeto Cloudflare Pages separado). */
 const URL_XI = "https://seminariovenasabiertas.pages.dev/";
 import { Arrow, Spark } from "./Motifs";
+import { BotaoWhatsApp } from "./BotaoWhatsApp";
 import { ContagemInscricoes } from "./Contagem";
 import { TrabalhosAcademicos } from "./TrabalhosAcademicos";
 import { LocalComMapa } from "./LocalComMapa";
@@ -116,6 +117,13 @@ export function Homage() {
           </ElectroBorder>
         </div>
 
+        <div className="compartilhar">
+          <BotaoWhatsApp
+            texto="Lenir Correia Livre: conheça a história da advogada popular que dá nome ao 30º Encontro da RENAP."
+            url="https://encontrolenirlivre.pages.dev/#lenir"
+          />
+        </div>
+
         <div className="homage__text">
           <p className="lead">
             Lenir Correia Coelho é advogada popular em Rondônia. Há anos defende
@@ -187,6 +195,13 @@ export function Encounter() {
             articulação descentralizada de advogadas, advogados e estudantes
             comprometidos com as lutas populares.
           </p>
+        </div>
+
+        <div className="compartilhar">
+          <BotaoWhatsApp
+            texto="O 30º Encontro Nacional da RENAP — Lenir Correia Livre acontece de 11 a 14 de novembro de 2026, em João Pessoa."
+            url="https://encontrolenirlivre.pages.dev/#o-encontro"
+          />
         </div>
 
         <div
@@ -300,6 +315,13 @@ export function Program() {
           </p>
         </div>
 
+        <div className="compartilhar">
+          <BotaoWhatsApp
+            texto={`Programação de ${atual.dia}/11 — ${atual.itens.length} atividades do 30º Encontro Nacional da RENAP, em João Pessoa.`}
+            url="https://encontrolenirlivre.pages.dev/programa"
+          />
+        </div>
+
         <div className="program__tabs" role="tablist" aria-label="Dias do encontro">
           {programaDetalhado.map((d, i) => (
             <button
@@ -388,6 +410,32 @@ export function Program() {
   );
 }
 
+export function Lancamentos() {
+  return (
+    <section className="section" id="lancamentos" aria-labelledby="lancamentos-titulo">
+      <div className="shell">
+        <p className="section-tag">Lançamentos de livros · 12/11, 19h</p>
+        <h2 id="lancamentos-titulo" className="h2">
+          Oito obras, <span className="red">uma mesma luta.</span>
+        </h2>
+        <p className="lead">
+          No Armazém do Campo, advogadas e advogados populares, pesquisadoras e
+          movimentos sociais lançam livros e publicações.
+        </p>
+        <a className="text-link" href="/lancamentos">
+          Ver títulos, autorias e sinopses <Arrow />
+        </a>
+        <div className="compartilhar">
+          <BotaoWhatsApp
+            texto="Oito livros e publicações serão lançados em 12/11, às 19h, no Armazém do Campo, durante o encontro."
+            url="https://encontrolenirlivre.pages.dev/lancamentos"
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function Registration() {
   const [copied, setCopied] = useState<"parado" | "copiado" | "falhou">("parado");
 
@@ -401,6 +449,12 @@ export function Registration() {
     <section className="section registration" id="inscricoes" aria-labelledby="inscricoes-titulo">
       <div className="shell">
         <SectionHead index="05" label="Inscrições" />
+        <div className="compartilhar">
+          <BotaoWhatsApp
+            texto="Inscrições e informações para o 30º Encontro Nacional da RENAP, em João Pessoa, de 11 a 14 de novembro."
+            url="https://encontrolenirlivre.pages.dev/#inscricoes"
+          />
+        </div>
         <div className="registration__grid">
           <div className="registration__copy">
             <p className="deadline">
