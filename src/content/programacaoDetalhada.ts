@@ -129,8 +129,8 @@ export const programaDetalhado: DiaPrograma[] = [
       },
       {
         hora: "18h",
-        titulo: "Abertura do encontro",
-        local: "OAB/PB — Av. João Cirilo da Silva, 444, Altiplano",
+        titulo: "Abertura do encontro — nova sede da OAB/PB (Altiplano)",
+        local: "NOVA SEDE da OAB/PB — Av. João Cirilo da Silva, 444, Altiplano, João Pessoa. NÃO é na sede antiga.",
         tag: "Conjunta",
         periodo: "noite",
       },

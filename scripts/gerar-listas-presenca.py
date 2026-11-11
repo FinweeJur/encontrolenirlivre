@@ -90,7 +90,7 @@ def _predio(local):
     if "Armazém" in texto:
         return "Armazém do Campo"
     if "OAB" in texto:
-        return "OAB/PB"
+        return "Nova sede da OAB/PB (Altiplano)"
     if "Centro da cidade" in texto:
         return "Centro"
     return textos.local_curto(texto)

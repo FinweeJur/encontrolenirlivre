@@ -60,7 +60,7 @@ const LOCAIS: Local[] = [
   {
     chave: "OAB",
     busca: "OAB Paraíba, Rua João Cirilo da Silva 444, Altiplano, João Pessoa",
-    rotulo: "OAB/PB",
+    rotulo: "Nova sede da OAB/PB (Altiplano)",
     tipo: "predio",
   },
   {
