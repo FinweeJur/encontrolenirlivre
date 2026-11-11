@@ -580,7 +580,7 @@ def bom_dia_antes(dia):
         "📌 Amanhã, 11/11\n"
         "• 12h às 13h — Credenciamento, no Pátio do CCJ.\n"
         "• 13h às 16h30 — GDs e oficinas.\n"
-        "• 18h — Abertura do encontro, na NOVA sede da OAB/PB, no Altiplano (não é na sede antiga).\n\n"
+        "• 18h — Abertura do encontro, na Nova sede da OAB/PB, no Altiplano (não é na sede antiga).\n\n"
         "💳 Se ainda não pagou, faça o PIX e envie o comprovante.\n"
         f"{LINKS}\n\n"
         "Até amanhã! ✊"
@@ -605,7 +605,7 @@ def boa_noite(dia):
             "📌 Primeiro dia, 11/11\n"
             "• 12h — Credenciamento, no Pátio do CCJ.\n"
             "• 13h — GDs e oficinas.\n"
-            "• 18h — Abertura, na NOVA sede da OAB/PB, no Altiplano (não é na sede antiga).\n\n"
+            "• 18h — Abertura, na Nova sede da OAB/PB, no Altiplano (não é na sede antiga).\n\n"
             f"{LINKS}\n\n"
             "Até amanhã! ✊"
         )

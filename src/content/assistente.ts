@@ -226,7 +226,7 @@ export const RESPOSTAS_LOCAIS: ReadonlyArray<RespostaCurada> = [
       "onde fica a abertura",
       "local da abertura",
     ],
-    resposta: "A abertura é em 11/11, às 18h, na NOVA sede da OAB/PB, na Av. João Cirilo da Silva, 444, no Altiplano, em João Pessoa. Não é na sede antiga.",
+    resposta: "A abertura é em 11/11, às 18h, na Nova sede da OAB/PB, na Av. João Cirilo da Silva, 444, no Altiplano, em João Pessoa. Não é na sede antiga.",
   },
   {
     id: "programacao",
@@ -244,7 +244,7 @@ export const RESPOSTAS_LOCAIS: ReadonlyArray<RespostaCurada> = [
       "abertura",
       "credenciamento",
     ],
-    resposta: `A programação vai de 11 a 14 de novembro, com sala em cada atividade. O credenciamento é em 11/11, das 12h às 13h, no pátio do CCJ; os GDs começam às 13h. A abertura é às 18h na NOVA sede da OAB/PB, na Av. João Cirilo da Silva, 444, no Altiplano — não é na sede antiga. Em 12/11 o lançamento de livros e o samba são no Armazém do Campo. A grade completa, com filtro por organização, está na seção “Programação” da página.`,
+    resposta: `A programação vai de 11 a 14 de novembro, com sala em cada atividade. O credenciamento é em 11/11, das 12h às 13h, no pátio do CCJ; os GDs começam às 13h. A abertura é às 18h na Nova sede da OAB/PB, na Av. João Cirilo da Silva, 444, no Altiplano — não é na sede antiga. Em 12/11 o lançamento de livros e o samba são no Armazém do Campo. A grade completa, com filtro por organização, está na seção “Programação” da página.`,
   },
   {
     id: "editais",
