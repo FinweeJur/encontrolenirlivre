@@ -163,7 +163,7 @@ export const programaDetalhado: DiaPrograma[] = [
       {
         hora: "8h30 às 12h",
         titulo: "IPDMS — Avanços e desafios: a reforma do estatuto",
-        local: "Sala 2 PPGCJ (CCJ, 1º andar)",
+        local: "SINTEP-PB — R. Prof. José Coelho, 61, Centro (fora da UFPB)",
         tag: "IPDMS",
         periodo: "manhã",
       },

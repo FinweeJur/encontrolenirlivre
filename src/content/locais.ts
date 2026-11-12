@@ -58,6 +58,14 @@ const LOCAIS: Local[] = [
     tipo: "cultural",
   },
   {
+    // A manhã do IPDMS em 12/11 saiu da UFPB: é no sindicato, no Centro.
+    // Endereço conferido no link enviado pela organização (maps.app.goo.gl).
+    chave: "SINTEP",
+    busca: "SINTEP Paraíba, Rua Professor José Coelho 61, Centro, João Pessoa",
+    rotulo: "SINTEP-PB, Centro",
+    tipo: "predio",
+  },
+  {
     chave: "OAB",
     busca: "OAB Paraíba, Rua João Cirilo da Silva 444, Altiplano, João Pessoa",
     rotulo: "Nova sede da OAB/PB (Altiplano)",

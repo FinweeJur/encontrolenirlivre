@@ -229,6 +229,20 @@ export const RESPOSTAS_LOCAIS: ReadonlyArray<RespostaCurada> = [
     resposta: "A abertura é em 11/11, às 18h, na Nova sede da OAB/PB, na Av. João Cirilo da Silva, 444, no Altiplano, em João Pessoa. Não é na sede antiga.",
   },
   {
+    id: "manha-12",
+    termos: [
+      "sintep",
+      "sindicato",
+      "manhã do ipdms",
+      "manha do ipdms",
+      "ipdms de manhã",
+      "onde é o ipdms",
+      "reforma do estatuto",
+      "manhã de quinta",
+    ],
+    resposta: "Na manhã de 12/11 os três encontros ficam em lugares diferentes: a RENAP no Auditório do CT, na UFPB; a RENAJU no Armazém do Campo; e o IPDMS no SINTEP-PB, na R. Prof. José Coelho, 61, Centro, em João Pessoa — fora da UFPB.\n\nhttps://maps.app.goo.gl/ZzK8orUeUqNgBujS8",
+  },
+  {
     id: "programacao",
     termos: [
       "programa",
