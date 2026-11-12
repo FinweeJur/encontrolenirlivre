@@ -28,7 +28,7 @@ from datetime import datetime, timedelta
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from avisos import agenda, comum, revisor, textos  # noqa: E402
+from avisos import agenda, comum, enderecos, grupo, revisor, textos  # noqa: E402
 
 ESTADO = os.path.join(comum.CACHE, "avisos-programa.json")
 PREVIEW = os.path.join(comum.CACHE, "avisos-preview.json")
@@ -85,6 +85,22 @@ def disparar(aviso, texto, problemas, marcar=True, com_whatsapp=True):
         print(revisor.formatar(problemas))
         return "bloqueado", []
 
+    # O que a organização combinou no grupo manda mais que o documento antigo.
+    # Divergência forte trava uma vez: a mensagem fica marcada como vista.
+    bloqueios = grupo.bloqueios(aviso["dia"])
+    if bloqueios:
+        print(f"BLOQUEADO {aviso['id']} {aviso['dia']}: grupo com mudança fora da programação")
+        print(grupo.formatar(bloqueios))
+        return "bloqueado", []
+
+    # Endereço: só avisa no log. Sem OSM não se bloqueia aviso urgente.
+    endereco_problemas = [
+        item for item in enderecos.conferir_texto(texto) if item["status"] == "falhou"
+    ]
+    if endereco_problemas:
+        print("endereço a conferir:")
+        print(enderecos.formatar(endereco_problemas))
+
     env = comum.ler_env()
     ok_t, motivo_t = comum.telegram(texto, env)
     if com_whatsapp:
@@ -92,6 +108,12 @@ def disparar(aviso, texto, problemas, marcar=True, com_whatsapp=True):
     else:
         ok_w, motivo_w, falhas = False, "whatsapp desligado no teste", []
     print(f"{aviso['id']} {aviso['dia']}: {motivo_t} | {motivo_w}")
+
+    # Depois de escrito: relê o grupo e registra o que apareceu de novo.
+    revisao = grupo.alertas(aviso["dia"], horas=1)
+    if revisao:
+        print("revisão pós-envio:")
+        print(grupo.formatar(revisao))
 
     if marcar and (ok_t or ok_w):
         return ("enviado" if not ok_w else "parcial"), falhas

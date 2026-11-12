@@ -20,7 +20,9 @@ export type Local = {
   tipo: "predio" | "auditorio" | "cultural" | "rua";
 };
 
-const LOCAIS: Local[] = [
+/** Tabela de lugares e o nome que vai na busca do mapa. Exportada para o
+ * `dump-sessoes.mjs` poder conferir endereços sem repetir a lista. */
+export const LOCAIS: Local[] = [
   {
     chave: "PPGCJ",
     busca: "Programa de Pós-Graduação em Ciências Jurídicas, UFPB, João Pessoa",
