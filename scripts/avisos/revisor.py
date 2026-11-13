@@ -158,8 +158,31 @@ def revisar(texto, fatos=None):
     return unicos
 
 
+NEGACOES_ANTES_DA_HORA = (
+    "não às",
+    "nao as",
+    "não é às",
+    "nao e as",
+    "não será às",
+    "nao sera as",
+    "em vez de",
+    "em vez das",
+    "em vez da",
+)
+
+
+def _hora_negada(linha, inicio):
+    """Verdadeiro quando a hora vem depois de uma negação.
+
+    Aviso de correção escreve a hora errada de propósito (“é às 16h, não às
+    15h”). Sem esta exceção, o revisor reprovaria a própria correção.
+    """
+    antes = linha[:inicio].casefold()
+    trecho = antes[-40:]
+    return any(negacao in trecho for negacao in NEGACOES_ANTES_DA_HORA)
+
+
 def _conferir_fatos(texto, fatos):
-    """Confere data, horas, salas e GDs contra a programação do dia."""
     problemas = []
 
     dia = fatos.get("dia")
@@ -178,6 +201,9 @@ def _conferir_fatos(texto, fatos):
             if linha.strip().startswith("⏱️ Durações estimadas"):
                 continue
             for achado in re.finditer(r"\b(\d{1,2}h\d{0,2})\b", linha):
+                # "não às 15h" é correção, não programação: não confere.
+                if _hora_negada(linha, achado.start()):
+                    continue
                 chave = _hora_curta(achado.group(1))
                 if chave and chave not in horas:
                     problemas.append(

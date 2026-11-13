@@ -239,7 +239,7 @@ export const programaDetalhado: DiaPrograma[] = [
         periodo: "tarde",
       },
       {
-        hora: "15h",
+        hora: "16h às 18h",
         titulo:
           "RENAP — Discussões por região: Nordeste, Norte, Sudeste, Centro-Oeste e Sul",
         local: "NE: Sala 2 PPGCJ · N: Sala 5 CCJ · SE: Sala 6 CCJ · CO: Sala 8 CCJ · S: Sala 9 CCJ",

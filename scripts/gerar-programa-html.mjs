@@ -512,7 +512,7 @@ const html = `<!doctype html>
 
   <footer>
     <p>Programação sujeita a alteração pela organização. Salas e horários conferidos com o documento de 8 de novembro de 2026.</p>
-    <p>Presença por atividade: <a href="/checkin">check-in</a> · Cartazes com QR para imprimir: <a href="/entrega-encontro/qrcodes-encontrao.pdf">PDF com 39 cartazes (sem a cultural)</a>.</p>
+    <p>Presença por atividade: <a href="/checkin">check-in</a> · Cartazes com QR para imprimir: <a href="/entrega-encontro/qrcodes-encontrao.pdf">PDF com 40 cartazes (sem a cultural)</a>.</p>
     <p>Site do encontro: <a href="https://encontrolenirlivre.pages.dev">encontrolenirlivre.pages.dev</a> · Seminário: <a href="https://seminariovenasabertas.pages.dev">seminariovenasabertas.pages.dev</a></p>
   </footer>
 </div>
