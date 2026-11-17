@@ -333,11 +333,21 @@ export const onRequestPost = async (contexto: {
 
     return json({ ok: true, protocolo, arquivos: links.length });
   } catch (erro) {
-    console.log("RESSARCIMENTO_FALHOU: " + String(erro));
+    const detalhe = String(erro);
+    console.log("RESSARCIMENTO_FALHOU: " + detalhe);
+
+    // Autorização do Google vencida é o caso mais comum: o formulário fica
+    // mudo e a pessoa não sabe o que fazer. Melhor dizer o que aconteceu e
+    // mandar para a pasta, que é o caminho que funciona.
+    const credencial =
+      detalhe.includes("Token Google") || detalhe.includes("Google não configurado");
+
     return json(
       {
-        erro:
-          "Não foi possível enviar agora. Tente de novo ou use a pasta aberta.",
+        erro: credencial
+          ? "O registro automático está fora do ar: a autorização do Google venceu. " +
+            "Envie os comprovantes pela pasta aberta e avise a comissão no grupo."
+          : "Não foi possível enviar agora. Tente de novo ou use a pasta aberta.",
       },
       502,
     );

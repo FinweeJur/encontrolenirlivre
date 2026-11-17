@@ -287,7 +287,11 @@
     botao.disabled = true;
     botao.textContent = "Enviando…";
     try {
-      const resposta = await fetch("/api/ressarcimento", {
+      // Endereço absoluto de propósito: a mesma página é publicada nos dois
+      // sites, e só o projeto do encontro tem a autorização do Google. Sem
+      // isso, quem abre /ressarcimento pelo site do seminário recebia
+      // "Não foi possível enviar agora" e caía na pasta aberta.
+      const resposta = await fetch("https://encontrolenirlivre.pages.dev/api/ressarcimento", {
         method: "POST",
         body: new FormData(form),
       });

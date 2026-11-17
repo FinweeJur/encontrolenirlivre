@@ -26,6 +26,7 @@ CABECALHO = [
     "valor",
     "comprovantes",
     "links",
+    "enviar_depois",
     "observacoes",
 ]
 
