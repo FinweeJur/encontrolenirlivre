@@ -31,6 +31,7 @@ import { LayoutGrid } from "../effects/Extras";
 import { InfinityGrid } from "../InfinityGrid";
 import { RolagemHash } from "../RolagemHash";
 import { fotosEncontro } from "../../content/fotosEncontro";
+import { DriftFotos } from "../DriftFotos";
 
 const LINKS = {
   inscricao: "https://sigeventos.ufpb.br/eventos/public/evento/SNIPDMS",
@@ -47,6 +48,17 @@ const LINKS = {
 };
 
 const PIX = "ipdmscorreio@gmail.com";
+
+/**
+ * Fotos do encontro + as duas logos do encontro no fim da grade.
+ * A logo entra como cartão quadrado (public/img/encontro-2026/logo-*.webp),
+ * porque o ladrilho recorta em quadrado e cortaria a logo larga.
+ */
+const fotosComLogos = [
+  ...fotosEncontro,
+  "/img/encontro-2026/logo-ipdms.webp",
+  "/img/encontro-2026/logo-renaju.webp",
+];
 const EMAIL = "ipdmscorreio@gmail.com";
 
 /** Vermelho da paleta (igual ao tema claro da página da RENAP). */
@@ -467,13 +479,7 @@ export function SeminarioPage() {
               organização.
             </p>
           </div>
-          <InfinityGrid
-            imagens={fotosEncontro}
-            faixas={3}
-            altura={210}
-            velocidade={24}
-            alt="Foto do encontro em João Pessoa"
-          />
+          <DriftFotos imagens={fotosComLogos} altura="clamp(24rem, 54vw, 40rem)" />
         </section>
 
         <section className="xi-secao" id="inscricoes" aria-labelledby="xi-insc-titulo">

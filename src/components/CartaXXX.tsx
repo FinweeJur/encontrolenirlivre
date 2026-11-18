@@ -14,7 +14,7 @@ import { cartaXXX, cartaXXXUrl } from "../content/cartaXXX";
 import type { TrechoCarta } from "../content/cartaXXX";
 import { fotosEncontro } from "../content/fotosEncontro";
 import { BotaoWhatsApp } from "./BotaoWhatsApp";
-import { InfinityGrid } from "./InfinityGrid";
+import { DriftFotos } from "./DriftFotos";
 import "../styles/carta-xxx.css";
 
 const ESSENCIAL = [
@@ -147,13 +147,7 @@ export function CartaXXX() {
             da organização.
           </p>
         </div>
-        <InfinityGrid
-          imagens={fotosEncontro}
-          faixas={3}
-          altura={210}
-          velocidade={24}
-          alt="Foto do XXX Encontro"
-        />
+        <DriftFotos imagens={fotosEncontro} altura="clamp(26rem, 58vw, 44rem)" />
       </div>
     </section>
   );

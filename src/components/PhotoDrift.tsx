@@ -1,13 +1,12 @@
 /**
- * Faixa infinita de fotos do acervo (edições anteriores).
+ * Faixa de fotos antigas — edições anteriores do encontro.
  *
- * Antes usava o canvas Infinite Drift 2: ele repetia a mesma foto para
- * preencher a tela e, com a curva do componente, uma foto caía em cima da
- * outra. Agora é `InfinityGrid` — CSS puro, cada faixa com fotos próprias,
- * sem repetição dentro da faixa. O texto e o crédito continuam os mesmos.
+ * Usa o Infinite Drift 2 (grade em domo, arrastável, com lente de aumento).
+ * As fotos novas do XXX Encontro têm seção própria, com outra instância do
+ * mesmo componente.
  */
 import { galeria } from "../content/evento";
-import { InfinityGrid } from "./InfinityGrid";
+import { DriftFotos } from "./DriftFotos";
 
 export function PhotoDrift({ reducedMotion }: { reducedMotion: boolean }) {
   return (
@@ -23,17 +22,15 @@ export function PhotoDrift({ reducedMotion }: { reducedMotion: boolean }) {
         <div className="drift-side">
           <p>
             Encontros estaduais, plenárias, atos e a mística da advocacia
-            popular. As fotos correm sozinhas; pare o mouse para olhar com calma.
+            popular. Arraste com o mouse e passe o ponteiro para ampliar.
           </p>
         </div>
       </div>
 
-      <InfinityGrid
+      <DriftFotos
         imagens={galeria}
-        faixas={3}
-        altura={240}
-        velocidade={reducedMotion ? 0 : 22}
-        alt="Encontro da RENAP"
+        curva={reducedMotion ? 0.06 : 0.16}
+        altura="clamp(26rem, 58vw, 44rem)"
       />
 
       <p className="drift-credit shell">Fotos: acervo RENAP · edições anteriores</p>

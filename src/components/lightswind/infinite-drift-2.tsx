@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, {
   useRef,
@@ -111,6 +111,7 @@ const FS_SOURCE = `
   uniform float uVignette;
   uniform sampler2D uAtlas;
   uniform vec2 uAtlasGrid;
+  uniform float uCount;
 
   // Signed distance function for rounded rectangle
   float sdRoundedBox(vec2 p, vec2 b, float r) {
@@ -158,6 +159,12 @@ const FS_SOURCE = `
     
     // Invert row index to match Canvas 2D top-down vs WebGL bottom-up
     float atlasRow = uAtlasGrid.y - 1.0 - atlasCell.y;
+
+    // Celulas sem foto ficam vazias: evita repetir imagem para preencher.
+    float indiceAtlas = atlasRow * uAtlasGrid.x + atlasCell.x;
+    if (indiceAtlas >= uCount) {
+      discard;
+    }
     vec2 uv = (vec2(atlasCell.x, atlasRow) + tileUv) / uAtlasGrid;
 
     vec4 texColor = texture2D(uAtlas, uv);
@@ -322,14 +329,14 @@ export const InfiniteDrift2 = forwardRef<
       gl.enableVertexAttribArray(aPos);
       gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
 
-      // Build the texture atlas. O componente oficial fixa 3×3 (só 9 fotos em
-      // uso, repetindo a cada 3 quadros); aqui o atlas cresce com a lista —
-      // com 24 fotos vira 5×5 e o padrão demora mais para repetir.
+      // Build the texture atlas. O componente oficial fixa 3Ã—3 (sÃ³ 9 fotos em
+      // uso, repetindo a cada 3 quadros); aqui o atlas cresce com a lista â€”
+      // com 24 fotos vira 5Ã—5 e o padrÃ£o demora mais para repetir.
       const atlasCanvas = document.createElement("canvas");
-      const atlasDim = 1536;
+      const atlasDim = 2048;
       const imageList = images && images.length > 0 ? images : DEFAULT_IMAGES;
-      // Mínimo 4: com poucas fotos o padrão 3×3 repetia a cada três quadros.
-      const gridCount = Math.min(6, Math.max(4, Math.ceil(Math.sqrt(imageList.length))));
+      // MÃ­nimo 4: com poucas fotos o padrÃ£o 3Ã—3 repetia a cada trÃªs quadros.
+      const gridCount = Math.min(9, Math.max(4, Math.ceil(Math.sqrt(imageList.length))));
       const cellDim = atlasDim / gridCount;
       atlasCanvas.width = atlasDim;
       atlasCanvas.height = atlasDim;
@@ -420,8 +427,8 @@ export const InfiniteDrift2 = forwardRef<
       );
 
       // Asynchronously load real images into the atlas. Percorre TODAS as
-      // células (não só as nove primeiras) para a última linha não nascer
-      // vazia; quando a lista é menor que o atlas, a imagem se repete.
+      // cÃ©lulas (nÃ£o sÃ³ as nove primeiras) para a Ãºltima linha nÃ£o nascer
+      // vazia; quando a lista Ã© menor que o atlas, a imagem se repete.
       const imageListLoad = images && images.length > 0 ? images : DEFAULT_IMAGES;
       const celulas = gridCount * gridCount;
       for (let i = 0; i < celulas; i += 1) {
@@ -479,6 +486,7 @@ export const InfiniteDrift2 = forwardRef<
       const uVig = gl.getUniformLocation(program, "uVignette");
       const uAtlas = gl.getUniformLocation(program, "uAtlas");
       const uAtlasGrid = gl.getUniformLocation(program, "uAtlasGrid");
+      const uCount = gl.getUniformLocation(program, "uCount");
 
       gl.enable(gl.BLEND);
       gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
@@ -535,6 +543,7 @@ export const InfiniteDrift2 = forwardRef<
         gl.uniform1f(uGray, p.grayscale);
         gl.uniform1f(uVig, p.vignette);
         gl.uniform2f(uAtlasGrid, gridCount, gridCount);
+        gl.uniform1f(uCount, Math.min(gridCount * gridCount, imageList.length));
 
         gl.drawArrays(gl.TRIANGLES, 0, 6);
         animId = requestAnimationFrame(render);
