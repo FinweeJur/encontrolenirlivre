@@ -166,6 +166,7 @@ export function SeminarioPage() {
             <a href="#editais">Editais</a>
             <a href="#programacao">Programação</a>
             <a href="#gds">GDs</a>
+            <a href="#fotos-encontro">Fotos</a>
             <a href="#inscricoes">Inscrições</a>
             <a href="#tres">Os três encontros</a>
           </nav>
@@ -248,6 +249,7 @@ export function SeminarioPage() {
           <a href="#programacao" onClick={() => setMenuAberto(false)}>Programação</a>
           <a href="#oficinas" onClick={() => setMenuAberto(false)}>Oficinas e minicursos</a>
           <a href="#gds" onClick={() => setMenuAberto(false)}>Grupos de Discussão</a>
+          <a href="#fotos-encontro" onClick={() => setMenuAberto(false)}>Fotos</a>
           <a href="#inscricoes" onClick={() => setMenuAberto(false)}>Inscrições</a>
           <a href="#tres" onClick={() => setMenuAberto(false)}>Os três encontros</a>
           <a href="#local" onClick={() => setMenuAberto(false)}>Onde e como</a>

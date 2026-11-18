@@ -52,6 +52,7 @@ export function Header({
           <a href="#editais">Editais</a>
           <a href="#lenir">Lenir</a>
           <a href="#fotos">Fotos</a>
+          <a href="#carta-politica">Carta Política</a>
           <a href="#programacao">Programação</a>
           <a href="#inscricoes">Inscrições</a>
         </nav>
