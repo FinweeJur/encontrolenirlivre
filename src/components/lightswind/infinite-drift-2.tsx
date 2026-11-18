@@ -339,11 +339,36 @@ export const InfiniteDrift2 = forwardRef<
       const atlasCanvas = document.createElement("canvas");
       const atlasDim = 2048;
       const imageList = images && images.length > 0 ? images : DEFAULT_IMAGES;
-      // MÃ­nimo 4: com poucas fotos o padrÃ£o 3Ã—3 repetia a cada trÃªs quadros.
-      const gridCount = Math.min(9, Math.max(4, Math.ceil(Math.sqrt(imageList.length))));
-      const cellDim = atlasDim / gridCount;
-      atlasCanvas.width = atlasDim;
-      atlasCanvas.height = atlasDim;
+
+      // Grade retangular: precisa cobrir a tela nos dois eixos, senao o atlas
+      // repete dentro da area visivel (era o caso das duas faixas iguais).
+      const passoX = tileWidth + gap;
+      const passoY = tileHeight + gap;
+      const larguraVisivel = canvas.clientWidth || 1400;
+      const alturaVisivel = canvas.clientHeight || 700;
+      const minColunas = Math.max(3, Math.ceil(larguraVisivel / passoX) + 1);
+      const minLinhas = Math.max(3, Math.ceil(alturaVisivel / passoY) + 1);
+
+      let colunas = minColunas;
+      let linhas = Math.max(minLinhas, Math.ceil(imageList.length / colunas));
+      let sobra = colunas * linhas - imageList.length;
+
+      // Procura a grade que cobre a tela com o menor numero de celulas vazias.
+      for (let c = minColunas; c <= Math.max(minColunas, imageList.length); c += 1) {
+        const l = Math.max(minLinhas, Math.ceil(imageList.length / c));
+        const sobrando = c * l - imageList.length;
+        if (sobrando < sobra || (sobrando === sobra && c * l < colunas * linhas)) {
+          colunas = c;
+          linhas = l;
+          sobra = sobrando;
+        }
+      }
+
+      // Celula 4:3, igual ao ladrilho: sem isso a foto estica.
+      const cellDim = Math.floor(atlasDim / colunas);
+      const cellAltura = Math.floor((cellDim * 3) / 4);
+      atlasCanvas.width = cellDim * colunas;
+      atlasCanvas.height = Math.min(4096, cellAltura * linhas);
       const ctx = atlasCanvas.getContext("2d", { willReadFrequently: true });
 
       // Initialize with sleek, rich procedural gradient artwork as instant fallback
@@ -366,28 +391,28 @@ export const InfiniteDrift2 = forwardRef<
         ];
 
         for (let i = 0; i < 9; i++) {
-          const gx = i % gridCount;
-          const gy = Math.floor(i / gridCount);
+          const gx = i % colunas;
+          const gy = Math.floor(i / colunas);
           const x = gx * cellDim;
-          const y = gy * cellDim;
+          const y = gy * cellAltura;
 
-          const grad = ctx.createLinearGradient(x, y, x + cellDim, y + cellDim);
+          const grad = ctx.createLinearGradient(x, y, x + cellDim, y + cellAltura);
           const [c1, c2] = palette[i % palette.length];
           grad.addColorStop(0, c1);
           grad.addColorStop(1, c2);
           ctx.fillStyle = grad;
-          ctx.fillRect(x, y, cellDim, cellDim);
+          ctx.fillRect(x, y, cellDim, cellAltura);
 
           // Subtle inner vignette
           const radGrad = ctx.createRadialGradient(
-            x + cellDim / 2, y + cellDim / 2, cellDim * 0.1,
-            x + cellDim / 2, y + cellDim / 2, cellDim * 0.7
+            x + cellDim / 2, y + cellAltura / 2, cellDim * 0.1,
+            x + cellDim / 2, y + cellAltura / 2, cellDim * 0.7
           );
           radGrad.addColorStop(0, "rgba(255,255,255,0.2)");
           radGrad.addColorStop(0.7, "rgba(0,0,0,0.15)");
           radGrad.addColorStop(1, "rgba(0,0,0,0.5)");
           ctx.fillStyle = radGrad;
-          ctx.fillRect(x, y, cellDim, cellDim);
+          ctx.fillRect(x, y, cellDim, cellAltura);
 
           // Grid line pattern
           ctx.strokeStyle = "rgba(255,255,255,0.12)";
@@ -395,7 +420,7 @@ export const InfiniteDrift2 = forwardRef<
           for (let step = 64; step < cellDim; step += 64) {
             ctx.beginPath();
             ctx.moveTo(x + step, y);
-            ctx.lineTo(x + step, y + cellDim);
+            ctx.lineTo(x + step, y + cellAltura);
             ctx.stroke();
             ctx.beginPath();
             ctx.moveTo(x, y + step);
@@ -408,7 +433,7 @@ export const InfiniteDrift2 = forwardRef<
           ctx.font = "bold 44px sans-serif";
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
-          ctx.fillText(titles[i], x + cellDim / 2, y + cellDim / 2);
+          ctx.fillText(titles[i], x + cellDim / 2, y + cellAltura / 2);
         }
       }
 
@@ -434,30 +459,34 @@ export const InfiniteDrift2 = forwardRef<
       // cÃ©lulas (nÃ£o sÃ³ as nove primeiras) para a Ãºltima linha nÃ£o nascer
       // vazia; quando a lista Ã© menor que o atlas, a imagem se repete.
       const imageListLoad = images && images.length > 0 ? images : DEFAULT_IMAGES;
-      const celulas = gridCount * gridCount;
+      const celulas = colunas * linhas;
       for (let i = 0; i < celulas; i += 1) {
         const url = imageListLoad[i % imageListLoad.length];
         const img = new Image();
         img.crossOrigin = "anonymous";
         img.onload = () => {
           if (!isMounted || !ctx || !gl) return;
-          const gx = i % gridCount;
-          const gy = Math.floor(i / gridCount);
+          const gx = i % colunas;
+          const gy = Math.floor(i / colunas);
           const x = gx * cellDim;
-          const y = gy * cellDim;
+          const y = gy * cellAltura;
 
-          // Cover crop
+          // Cover crop na proporcao da celula (4:3)
+          const alvo = cellDim / cellAltura;
           const imgAspect = img.naturalWidth / (img.naturalHeight || 1);
-          let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight;
-          if (imgAspect > 1) {
-            sw = sh;
-            sx = (img.naturalWidth - sw) / 2;
+          let sx = 0;
+          let sy = 0;
+          let sw = img.naturalWidth;
+          let sh = img.naturalHeight;
+          if (imgAspect > alvo) {
+            sw = Math.round(sh * alvo);
+            sx = Math.round((img.naturalWidth - sw) / 2);
           } else {
-            sh = sw;
-            sy = (img.naturalHeight - sh) / 2;
+            sh = Math.round(sw / alvo);
+            sy = Math.round((img.naturalHeight - sh) / 2);
           }
 
-          ctx.drawImage(img, sx, sy, sw, sh, x, y, cellDim, cellDim);
+          ctx.drawImage(img, sx, sy, sw, sh, x, y, cellDim, cellAltura);
           try {
             gl.bindTexture(gl.TEXTURE_2D, texture);
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
@@ -546,8 +575,8 @@ export const InfiniteDrift2 = forwardRef<
         gl.uniform1f(uRot, p.tileRotation);
         gl.uniform1f(uGray, p.grayscale);
         gl.uniform1f(uVig, p.vignette);
-        gl.uniform2f(uAtlasGrid, gridCount, gridCount);
-        gl.uniform1f(uCount, gridCount * gridCount);
+        gl.uniform2f(uAtlasGrid, colunas, linhas);
+        gl.uniform1f(uCount, colunas * linhas);
 
         gl.drawArrays(gl.TRIANGLES, 0, 6);
         animId = requestAnimationFrame(render);

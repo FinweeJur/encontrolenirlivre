@@ -9,12 +9,13 @@
  * curta, citação e assinatura. No fim, a grade infinita com as fotos do
  * encontro.
  */
-import { Fragment } from "react";
+import { Fragment, useRef } from "react";
 import { cartaXXX, cartaXXXUrl } from "../content/cartaXXX";
 import type { TrechoCarta } from "../content/cartaXXX";
 import { fotosEncontro } from "../content/fotosEncontro";
 import { BotaoWhatsApp } from "./BotaoWhatsApp";
 import { DriftFotos } from "./DriftFotos";
+import { useGrifoScroll } from "./GrifoScroll";
 import "../styles/carta-xxx.css";
 
 const ESSENCIAL = [
@@ -51,6 +52,8 @@ function Trechos({ runs }: { runs: TrechoCarta[] }) {
 
 export function CartaXXX() {
   const [abertura, ...resto] = cartaXXX;
+  const textoRef = useRef<HTMLDivElement>(null);
+  useGrifoScroll(textoRef);
 
   return (
     <section className="carta" id="carta-politica" aria-labelledby="carta-titulo">
@@ -81,7 +84,7 @@ export function CartaXXX() {
             </p>
           </aside>
 
-          <div className="carta__texto">
+          <div className="carta__texto" ref={textoRef}>
             {abertura && abertura.tipo !== "imagem" ? (
               <p className="carta__abertura">
                 <Trechos runs={abertura.runs} />

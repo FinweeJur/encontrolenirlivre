@@ -148,11 +148,21 @@
 }
 
 .carta__texto mark {
+  /* A largura do fundo vem do GrifoScroll (0% a 100% conforme a rolagem).
+     Sem JS, ou com movimento reduzido, começa cheio. */
+  --grifo: 100%;
   padding: 0 0.12em;
   border-radius: 2px;
   /* Texto escuro sobre o grifo: no tema escuro o texto do site é claro e
      ficava ilegível em cima do amarelo. */
-  background: color-mix(in srgb, var(--yellow) 82%, transparent);
+  background-image: linear-gradient(
+    color-mix(in srgb, var(--yellow) 82%, transparent),
+    color-mix(in srgb, var(--yellow) 82%, transparent)
+  );
+  background-repeat: no-repeat;
+  /* Faixa fina na base do texto, como caneta marca-texto. */
+  background-position: left 86%;
+  background-size: var(--grifo) 58%;
   color: #17130f;
   /* O marca-texto precisa atravessar a quebra de linha. */
   -webkit-box-decoration-break: clone;
