@@ -150,11 +150,19 @@
 .carta__texto mark {
   padding: 0 0.12em;
   border-radius: 2px;
-  background: color-mix(in srgb, var(--yellow) 52%, transparent);
-  color: inherit;
+  /* Texto escuro sobre o grifo: no tema escuro o texto do site é claro e
+     ficava ilegível em cima do amarelo. */
+  background: color-mix(in srgb, var(--yellow) 82%, transparent);
+  color: #17130f;
   /* O marca-texto precisa atravessar a quebra de linha. */
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
+}
+
+/* Link dentro do grifo continua legível. */
+.carta__texto mark a {
+  color: #17130f;
+  text-decoration-color: #17130f;
 }
 
 .carta__texto a {
