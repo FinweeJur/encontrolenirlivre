@@ -1,13 +1,20 @@
 /**
  * Prepara as fotos do XXX Encontro (João Pessoa, 2026) para o site.
  *
- * Fontes: as 43 fotos que já estão na pasta do encontro + uma amostra do ZIP.
- * Saída em `public/img/encontro-2026`, WebP com 900 px de largura.
+ * Fontes: as fotos da pasta do encontro (raiz, sem a subpasta de logos) e uma
+ * amostra do ZIP. Saída em `public/img/encontro-2026`, WebP 900x675.
+ *
+ * Regras:
+ * - fotos repetidas (mesmo tamanho e mesmo começo de arquivo) entram uma vez;
+ * - a subpasta `LOGOS RENAP` fica de fora: aquilo é marca, não foto;
+ * - o corte 4:3 usa a área de maior atenção da imagem, para rostos e grupos
+ *   ficarem centrados no ladrilho.
  *
  * Rodar: node scripts/preparar-fotos-encontro.mjs
  */
 import sharp from "sharp";
-import { mkdir, readdir, stat } from "node:fs/promises";
+import { mkdir, open, readdir, stat } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import path from "node:path";
 
 const PASTA_PC = "C:/Users/teste/Downloads/LOGOS RENAP";
@@ -30,7 +37,17 @@ async function listar(pasta) {
   return arquivos;
 }
 
-const doPc = (await listar(PASTA_PC)).filter((c) => !c.includes(path.sep + "comprimidos"));
+/** Só as fotos: fora a subpasta de logos e a pasta dos vídeos comprimidos. */
+function soFotos(arquivos, raiz) {
+  const base = path.resolve(raiz);
+  return arquivos.filter((caminho) => {
+    const partes = path.relative(base, path.resolve(caminho)).split(path.sep);
+    const subpasta = partes.slice(0, -1);
+    return !subpasta.includes("comprimidos") && !subpasta.includes("LOGOS RENAP");
+  });
+}
+
+const doPc = soFotos(await listar(PASTA_PC), PASTA_PC);
 const doZip = await listar(ZIP);
 
 // Amostra espalhada do ZIP: pega de N em N para não ficar tudo do mesmo momento.
@@ -40,22 +57,53 @@ const amostra = doZip.filter((_, i) => i % passo === 0).slice(0, LIMITE_ZIP);
 const todas = [...doPc, ...amostra];
 await mkdir(OUT, { recursive: true });
 
+/**
+ * Impressão digital do arquivo: tamanho + hash dos primeiros 64 KB.
+ * Serve para não repetir a mesma foto duas vezes (a pasta tinha pares
+ * "IMG_1234.jpg" e "IMG_1234 (1).jpg").
+ */
+async function digital(caminho) {
+  const info = await stat(caminho);
+  const arquivo = await open(caminho, "r");
+  const pedaco = Buffer.alloc(65536);
+  try {
+    await arquivo.read(pedaco, 0, pedaco.length, 0);
+  } finally {
+    await arquivo.close();
+  }
+  return `${info.size}:${createHash("sha1").update(pedaco).digest("hex")}`;
+}
+
+const vistos = new Set();
 let total = 0;
 let indice = 0;
+let repetidas = 0;
+
 for (const origem of todas) {
+  const chave = await digital(origem);
+  if (vistos.has(chave)) {
+    repetidas += 1;
+    continue;
+  }
+  vistos.add(chave);
+
   indice += 1;
   const nome = `encontro-${String(indice).padStart(2, "0")}.webp`;
   const destino = path.join(OUT, nome);
   await sharp(origem)
     .rotate()
-    // Corte 4:3 na área de maior "atenção" da imagem (rostos e gente, quase
-    // sempre), para a foto já sair centrada no assunto em vez de no meio
-    // geométrico do arquivo.
-    .resize({ width: LARGURA, height: ALTURA, fit: "cover", position: sharp.strategy.attention })
+    .resize({
+      width: LARGURA,
+      height: ALTURA,
+      fit: "cover",
+      position: sharp.strategy.attention,
+    })
     .webp({ quality: 78 })
     .toFile(destino);
-  const info = await stat(destino);
-  total += info.size;
+  total += (await stat(destino)).size;
 }
 
-console.log(`fotos: ${todas.length} · ${(total / 1024 / 1024).toFixed(1)} MB · média ${Math.round(total / todas.length / 1024)} KB`);
+console.log(
+  `fotos: ${vistos.size} (${repetidas} repetidas descartadas) · ` +
+    `${(total / 1024 / 1024).toFixed(1)} MB · média ${Math.round(total / vistos.size / 1024)} KB`,
+);

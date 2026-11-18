@@ -1,14 +1,14 @@
-/**
- * Página do XI Seminário Nacional Direitos, Pesquisa e Movimentos Sociais —
- * "Venas abiertas: pesquisas e insurgências na América Latina".
+﻿/**
+ * PÃ¡gina do XI SeminÃ¡rio Nacional Direitos, Pesquisa e Movimentos Sociais â€”
+ * "Venas abiertas: pesquisas e insurgÃªncias na AmÃ©rica Latina".
  *
- * Mesma estrutura e as mesmas opções da página do 30º Encontro da RENAP:
- * barra fixa com busca e tema, menu móvel, bandeja de ferramentas (busca,
- * rádio, texto maior, rolagem), player de rádio com Brasil de Fato como
- * padrão e rodapé completo. O que muda é a identidade: papel kraft com a arte
- * oficial do seminário — o punho saindo das raízes, sobre o sol.
+ * Mesma estrutura e as mesmas opÃ§Ãµes da pÃ¡gina do 30Âº Encontro da RENAP:
+ * barra fixa com busca e tema, menu mÃ³vel, bandeja de ferramentas (busca,
+ * rÃ¡dio, texto maior, rolagem), player de rÃ¡dio com Brasil de Fato como
+ * padrÃ£o e rodapÃ© completo. O que muda Ã© a identidade: papel kraft com a arte
+ * oficial do seminÃ¡rio â€” o punho saindo das raÃ­zes, sobre o sol.
  *
- * Fontes (Fontshare): Zodiak nos títulos e Satoshi no texto, como pedido.
+ * Fontes (Fontshare): Zodiak nos tÃ­tulos e Satoshi no texto, como pedido.
  */
 import { useEffect, useState } from "react";
 import "../../styles/seminario.css";
@@ -28,7 +28,6 @@ import { BotaoPix } from "../BotaoPix";
 import { AcontecendoAgora } from "../AcontecendoAgora";
 import { ContagemInscricoes, FaltamDias } from "../Contagem";
 import { LayoutGrid } from "../effects/Extras";
-import { InfinityGrid } from "../InfinityGrid";
 import { RolagemHash } from "../RolagemHash";
 import { fotosEncontro } from "../../content/fotosEncontro";
 import { DriftFotos } from "../DriftFotos";
@@ -42,7 +41,7 @@ const LINKS = {
     "https://ipdms.org.br/wp-content/uploads/2026/07/Trabalhos-Aprovados-1.pdf",
   ipdms: "https://ipdms.org.br/",
   renaju: "https://www.instagram.com/ajupsbrasil/",
-  // Formulário da organização para pedir alojamento (o mesmo da página da RENAP).
+  // FormulÃ¡rio da organizaÃ§Ã£o para pedir alojamento (o mesmo da pÃ¡gina da RENAP).
   alojamento: "https://forms.gle/LoSeGv5YGtpNZVaJ6",
   mapa: "https://www.google.com/maps/search/?api=1&query=Universidade+Federal+da+Para%C3%ADba+Campus+I",
 };
@@ -51,7 +50,7 @@ const PIX = "ipdmscorreio@gmail.com";
 
 /**
  * Fotos do encontro + as duas logos do encontro no fim da grade.
- * A logo entra como cartão quadrado (public/img/encontro-2026/logo-*.webp),
+ * A logo entra como cartÃ£o quadrado (public/img/encontro-2026/logo-*.webp),
  * porque o ladrilho recorta em quadrado e cortaria a logo larga.
  */
 const fotosComLogos = [
@@ -61,13 +60,13 @@ const fotosComLogos = [
 ];
 const EMAIL = "ipdmscorreio@gmail.com";
 
-/** Vermelho da paleta (igual ao tema claro da página da RENAP). */
+/** Vermelho da paleta (igual ao tema claro da pÃ¡gina da RENAP). */
 const VERMELHO = "#bf2a26";
 
 /**
- * Em tela pequena o ElectricLogo sai de cena e entra a logo estática.
- * Motivo duplo: abaixo de ~900 px o canvas do shader pintava um retângulo
- * branco com ícone de imagem quebrada, e em aparelho sem WebGL ele nem pinta.
+ * Em tela pequena o ElectricLogo sai de cena e entra a logo estÃ¡tica.
+ * Motivo duplo: abaixo de ~900 px o canvas do shader pintava um retÃ¢ngulo
+ * branco com Ã­cone de imagem quebrada, e em aparelho sem WebGL ele nem pinta.
  */
 function useTelaPequena(limite = 640) {
   const [pequena, setPequena] = useState(
@@ -85,18 +84,18 @@ function useTelaPequena(limite = 640) {
   return pequena;
 }
 
-/** Este site vive em domínio próprio; a página da RENAP aponta de volta. */
+/** Este site vive em domÃ­nio prÃ³prio; a pÃ¡gina da RENAP aponta de volta. */
 const URL_RENAP = "https://encontrolenirlivre.pages.dev/";
 
 const PASSOS = [
-  "Crie sua conta no SIGEventos da UFPB e escolha IPDMS, RENAP ou RENAJU como instituição.",
+  "Crie sua conta no SIGEventos da UFPB e escolha IPDMS, RENAP ou RENAJU como instituiÃ§Ã£o.",
   "Confirme o cadastro pelo e-mail e entre no SIGEventos.",
-  "Clique em “Sem vínculo” e inscreva-se como participante.",
-  "Escolha o XI Seminário e confirme a inscrição.",
-  "Pague a taxa por PIX e envie o comprovante (ou o pedido de isenção) por e-mail.",
+  "Clique em â€œSem vÃ­nculoâ€ e inscreva-se como participante.",
+  "Escolha o XI SeminÃ¡rio e confirme a inscriÃ§Ã£o.",
+  "Pague a taxa por PIX e envie o comprovante (ou o pedido de isenÃ§Ã£o) por e-mail.",
 ];
 
-/** Veias abertas: o motivo gráfico, em SVG, atrás do título. */
+/** Veias abertas: o motivo grÃ¡fico, em SVG, atrÃ¡s do tÃ­tulo. */
 function Veias({ className = "" }: { className?: string }) {
   return (
     <svg
@@ -161,36 +160,36 @@ export function SeminarioPage() {
   return (
     <>
       <a className="xi-pular" href="#xi-conteudo">
-        Pular para o conteúdo
+        Pular para o conteÃºdo
       </a>
 
       <header className={`xi-topo${fixou ? " is-fixa" : ""}`}>
         <div className="xi-casca xi-topo__linha">
-          <a className="xi-marca" href="#topo" aria-label="XI Seminário do IPDMS — início">
+          <a className="xi-marca" href="#topo" aria-label="XI SeminÃ¡rio do IPDMS â€” inÃ­cio">
             <span className="xi-marca__sigla">XI</span>
             <span className="xi-marca__texto">
-              <strong>Seminário do IPDMS</strong>
+              <strong>SeminÃ¡rio do IPDMS</strong>
               <small>Direitos, Pesquisa e Movimentos Sociais</small>
             </span>
           </a>
 
-          <nav className="xi-nav" aria-label="Navegação do seminário">
+          <nav className="xi-nav" aria-label="NavegaÃ§Ã£o do seminÃ¡rio">
             <a href="#sobre">Sobre</a>
             <a href="#editais">Editais</a>
-            <a href="#programacao">Programação</a>
+            <a href="#programacao">ProgramaÃ§Ã£o</a>
             <a href="#gds">GDs</a>
             <a href="#fotos-encontro">Fotos</a>
-            <a href="#inscricoes">Inscrições</a>
-            <a href="#tres">Os três encontros</a>
+            <a href="#inscricoes">InscriÃ§Ãµes</a>
+            <a href="#tres">Os trÃªs encontros</a>
           </nav>
 
           <div className="xi-acoes">
-            {/* Atalho direto para a programação, igual ao da página da RENAP. */}
+            {/* Atalho direto para a programaÃ§Ã£o, igual ao da pÃ¡gina da RENAP. */}
             <a
               className="xi-icone"
               href="#programacao"
-              aria-label="Ir para a programação"
-              title="Ir para a programação"
+              aria-label="Ir para a programaÃ§Ã£o"
+              title="Ir para a programaÃ§Ã£o"
             >
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <rect x="3.5" y="5" width="17" height="15" rx="2.5" />
@@ -237,8 +236,8 @@ export function SeminarioPage() {
 
             <Magnet limite={6}>
               <a className="xi-ponte" href={URL_RENAP}>
-                <span>30º Encontro da RENAP</span>
-                <span aria-hidden="true">→</span>
+                <span>30Âº Encontro da RENAP</span>
+                <span aria-hidden="true">â†’</span>
               </a>
             </Magnet>
 
@@ -259,20 +258,20 @@ export function SeminarioPage() {
         <div id="xi-menu" className={`xi-menu${menuAberto ? " is-aberto" : ""}`}>
           <a href="#sobre" onClick={() => setMenuAberto(false)}>Sobre</a>
           <a href="#editais" onClick={() => setMenuAberto(false)}>Editais</a>
-          <a href="#programacao" onClick={() => setMenuAberto(false)}>Programação</a>
+          <a href="#programacao" onClick={() => setMenuAberto(false)}>ProgramaÃ§Ã£o</a>
           <a href="#oficinas" onClick={() => setMenuAberto(false)}>Oficinas e minicursos</a>
-          <a href="#gds" onClick={() => setMenuAberto(false)}>Grupos de Discussão</a>
+          <a href="#gds" onClick={() => setMenuAberto(false)}>Grupos de DiscussÃ£o</a>
           <a href="#fotos-encontro" onClick={() => setMenuAberto(false)}>Fotos</a>
-          <a href="#inscricoes" onClick={() => setMenuAberto(false)}>Inscrições</a>
-          <a href="#tres" onClick={() => setMenuAberto(false)}>Os três encontros</a>
+          <a href="#inscricoes" onClick={() => setMenuAberto(false)}>InscriÃ§Ãµes</a>
+          <a href="#tres" onClick={() => setMenuAberto(false)}>Os trÃªs encontros</a>
           <a href="#local" onClick={() => setMenuAberto(false)}>Onde e como</a>
-          <a href={URL_RENAP} onClick={() => setMenuAberto(false)}>30º Encontro da RENAP →</a>
+          <a href={URL_RENAP} onClick={() => setMenuAberto(false)}>30Âº Encontro da RENAP â†’</a>
         </div>
       </header>
 
       <main id="xi-conteudo">
         <section className="xi-hero" id="topo" aria-labelledby="xi-titulo">
-          {/* Faixa do que está acontecendo agora, abaixo da barra fixa. */}
+          {/* Faixa do que estÃ¡ acontecendo agora, abaixo da barra fixa. */}
           <div className="xi-hero__faixa">
             <AcontecendoAgora />
           </div>
@@ -281,7 +280,7 @@ export function SeminarioPage() {
           <div className="xi-casca xi-hero__grade">
             <div className="xi-hero__texto">
               <p className="xi-kicker">
-                XI Seminário Nacional Direitos, Pesquisa e Movimentos Sociais
+                XI SeminÃ¡rio Nacional Direitos, Pesquisa e Movimentos Sociais
               </p>
               <h1 id="xi-titulo" className="xi-hero__titulo">
                 Venas
@@ -289,10 +288,10 @@ export function SeminarioPage() {
                 abiertas
               </h1>
               <p className="xi-hero__tema">
-                pesquisas e insurgências na América Latina
+                pesquisas e insurgÃªncias na AmÃ©rica Latina
               </p>
               <p className="xi-hero__meta">
-                11 a 14 de novembro de 2026 · UFPB · João Pessoa/PB
+                11 a 14 de novembro de 2026 Â· UFPB Â· JoÃ£o Pessoa/PB
               </p>
               <FaltamDias className="xi-hero__faltam" />
 
@@ -308,28 +307,28 @@ export function SeminarioPage() {
                   </a>
                 </Magnet>
                 <Magnet>
-                  {/* Desce para a programação da própria página; o site do
-                      IPDMS fica só no link discreto da nota. */}
+                  {/* Desce para a programaÃ§Ã£o da prÃ³pria pÃ¡gina; o site do
+                      IPDMS fica sÃ³ no link discreto da nota. */}
                   <a className="xi-btn xi-btn--linha" href="#programacao">
-                    Programação completa
+                    ProgramaÃ§Ã£o completa
                   </a>
                 </Magnet>
               </div>
 
               <p className="xi-hero__nota">
-                Inscrições até 6 de novembro de 2026. O seminário acontece junto
-                ao 30º Encontro da RENAP e ao 20º Encontro da RENAJU.
+                InscriÃ§Ãµes atÃ© 6 de novembro de 2026. O seminÃ¡rio acontece junto
+                ao 30Âº Encontro da RENAP e ao 20Âº Encontro da RENAJU.
               </p>
             </div>
 
-            {/* Arte oficial: o punho saindo das raízes, sobre o sol. */}
+            {/* Arte oficial: o punho saindo das raÃ­zes, sobre o sol. */}
             <div className="xi-hero__arte">
               <div className="xi-hero__marca">
                 {telaPequena ? (
                   <img
                     className="xi-logo-estatico"
                     src="/img/ipdms-logo.png"
-                    alt="IPDMS — Instituto de Pesquisa, Direitos e Movimentos Sociais"
+                    alt="IPDMS â€” Instituto de Pesquisa, Direitos e Movimentos Sociais"
                     width={344}
                     height={293}
                   />
@@ -343,8 +342,8 @@ export function SeminarioPage() {
                     /* 0.88: o shader desenha o contorno por fora da forma; em
                        escala 1 o "s" e a segunda linha encostavam na borda. */
                     scale={0.88}
-                    /* No tema escuro o traço fino já brilha sozinho: baixa a
-                       intensidade para não estourar o contraste com o fundo. */
+                    /* No tema escuro o traÃ§o fino jÃ¡ brilha sozinho: baixa a
+                       intensidade para nÃ£o estourar o contraste com o fundo. */
                     intensity={tema === "escuro" ? 0.55 : 1.1}
                     glow={0}
                     thickness={tema === "escuro" ? 0.7 : 0.9}
@@ -361,7 +360,7 @@ export function SeminarioPage() {
               <div className="xi-hero__raizes">
                 <img
                   src="/img/xi-raizes.png"
-                  alt="Punho erguido saindo de raízes, sobre o sol — arte do XI Seminário"
+                  alt="Punho erguido saindo de raÃ­zes, sobre o sol â€” arte do XI SeminÃ¡rio"
                   width="568"
                   height="477"
                 />
@@ -379,27 +378,27 @@ export function SeminarioPage() {
               <h2 id="xi-sobre-titulo" className="xi-h2">
                 Pesquisa conectada
                 <br />
-                às lutas por direitos.
+                Ã s lutas por direitos.
               </h2>
             </div>
             <div className="xi-texto">
               <p>
-                O XI Seminário reúne pesquisadoras, pesquisadores, estudantes,
+                O XI SeminÃ¡rio reÃºne pesquisadoras, pesquisadores, estudantes,
                 extensionistas e integrantes de movimentos sociais de todo o
-                país para articular uma agenda de pesquisa conectada às teorias
-                críticas ao Direito e às lutas por direitos no Brasil e na
-                América Latina.
+                paÃ­s para articular uma agenda de pesquisa conectada Ã s teorias
+                crÃ­ticas ao Direito e Ã s lutas por direitos no Brasil e na
+                AmÃ©rica Latina.
               </p>
               <p>
-                O ponto de partida é a conjuntura de ataques à soberania na
-                região. O encontro dá continuidade ao trabalho do IPDMS de
+                O ponto de partida Ã© a conjuntura de ataques Ã  soberania na
+                regiÃ£o. O encontro dÃ¡ continuidade ao trabalho do IPDMS de
                 produzir conhecimento comprometido com processos de
-                transformação e aprofundamento democrático.
+                transformaÃ§Ã£o e aprofundamento democrÃ¡tico.
               </p>
               <p>
-                Em paralelo, acontecem o <strong>30º Encontro Nacional da
-                RENAP</strong> e o <strong>20º Encontro da RENAJU</strong>, com
-                programação própria e momentos conjuntos.
+                Em paralelo, acontecem o <strong>30Âº Encontro Nacional da
+                RENAP</strong> e o <strong>20Âº Encontro da RENAJU</strong>, com
+                programaÃ§Ã£o prÃ³pria e momentos conjuntos.
               </p>
             </div>
           </div>
@@ -412,45 +411,45 @@ export function SeminarioPage() {
         >
           <LayoutGrid />
           <div className="xi-casca">
-            <p className="xi-rotulo">Programação</p>
+            <p className="xi-rotulo">ProgramaÃ§Ã£o</p>
             <h2 id="xi-prog-titulo" className="xi-h2">
               Quatro dias,
               <br />
-              três encontros.
+              trÃªs encontros.
             </h2>
 
             <Programa />
 
             <p className="xi-nota">
-              Programação sujeita a atualização pela organização.{" "}
+              ProgramaÃ§Ã£o sujeita a atualizaÃ§Ã£o pela organizaÃ§Ã£o.{" "}
               <a href={LINKS.programacao} target="_blank" rel="noopener noreferrer">
-                Ver a versão oficial
+                Ver a versÃ£o oficial
               </a>{" "}
-              ·{" "}
+              Â·{" "}
               <a href="#gds">Ver os GDs e os trabalhos aprovados</a>{" "}
-              ·{" "}
+              Â·{" "}
               <a href="/programa.html">Programa para imprimir</a>
-              {" · "}
+              {" Â· "}
               <a href="https://encontrolenirlivre.pages.dev/checkin">
-                Lista de presença
+                Lista de presenÃ§a
               </a>
             </p>
 
-            {/* Informação da organização que não está na grade de horas. */}
-            <aside className="xi-aviso" aria-label="Lançamento de livros">
-              <p className="xi-aviso__rotulo">Lançamento de livros · 12/11, 19h</p>
+            {/* InformaÃ§Ã£o da organizaÃ§Ã£o que nÃ£o estÃ¡ na grade de horas. */}
+            <aside className="xi-aviso" aria-label="LanÃ§amento de livros">
+              <p className="xi-aviso__rotulo">LanÃ§amento de livros Â· 12/11, 19h</p>
               <p>
-                No <strong>Armazém do Campo</strong>, oito obras de advogadas,
+                No <strong>ArmazÃ©m do Campo</strong>, oito obras de advogadas,
                 advogados, pesquisadoras e movimentos sociais. Precisa que ao
                 menos uma pessoa autora ou organizadora esteja presente.
               </p>
               <p>
-                <a href="/lancamentos">Ver os 8 títulos, autorias e sinopses</a>
+                <a href="/lancamentos">Ver os 8 tÃ­tulos, autorias e sinopses</a>
               </p>
             </aside>
             <div className="compartilhar">
               <BotaoWhatsApp
-                texto="Programação do XI Seminário do IPDMS — Venas Abiertas, em João Pessoa, de 11 a 14 de novembro."
+                texto="ProgramaÃ§Ã£o do XI SeminÃ¡rio do IPDMS â€” Venas Abiertas, em JoÃ£o Pessoa, de 11 a 14 de novembro."
                 url="https://seminariovenasabiertas.pages.dev/#programacao"
               />
             </div>
@@ -474,9 +473,9 @@ export function SeminarioPage() {
               do encontro.
             </h2>
             <p className="xi-fotos-texto">
-              Quatro dias no Campus I da UFPB, em João Pessoa, com os GDs, as
-              oficinas e a mística da advocacia popular. Fotos do acervo da
-              organização.
+              Quatro dias no Campus I da UFPB, em JoÃ£o Pessoa, com os GDs, as
+              oficinas e a mÃ­stica da advocacia popular. Fotos do acervo da
+              organizaÃ§Ã£o.
             </p>
           </div>
           <DriftFotos imagens={fotosComLogos} altura="clamp(24rem, 54vw, 40rem)" />
@@ -485,7 +484,7 @@ export function SeminarioPage() {
         <section className="xi-secao" id="inscricoes" aria-labelledby="xi-insc-titulo">
           <div className="xi-casca xi-grade2">
             <div>
-              <p className="xi-rotulo">Inscrições</p>
+              <p className="xi-rotulo">InscriÃ§Ãµes</p>
               <h2 id="xi-insc-titulo" className="xi-h2">
                 Como
                 <br />
@@ -493,7 +492,7 @@ export function SeminarioPage() {
               </h2>
               <div className="compartilhar">
                 <BotaoWhatsApp
-                  texto="Inscrições para o XI Seminário do IPDMS — Venas Abiertas, em João Pessoa."
+                  texto="InscriÃ§Ãµes para o XI SeminÃ¡rio do IPDMS â€” Venas Abiertas, em JoÃ£o Pessoa."
                   url="https://seminariovenasabiertas.pages.dev/#inscricoes"
                 />
               </div>
@@ -501,11 +500,11 @@ export function SeminarioPage() {
                 <caption>Valores</caption>
                 <tbody>
                   <tr>
-                    <th scope="row">Advogadas/os e pós-graduação</th>
+                    <th scope="row">Advogadas/os e pÃ³s-graduaÃ§Ã£o</th>
                     <td>R$ 100</td>
                   </tr>
                   <tr>
-                    <th scope="row">Estudantes de graduação</th>
+                    <th scope="row">Estudantes de graduaÃ§Ã£o</th>
                     <td>R$ 50</td>
                   </tr>
                 </tbody>
@@ -528,31 +527,31 @@ export function SeminarioPage() {
                 ))}
               </ol>
               <p className="xi-nota">
-                Comprovante e pedidos de isenção:{" "}
-                <a href={`mailto:${EMAIL}`}>{EMAIL}</a>. Este site não processa
+                Comprovante e pedidos de isenÃ§Ã£o:{" "}
+                <a href={`mailto:${EMAIL}`}>{EMAIL}</a>. Este site nÃ£o processa
                 pagamentos nem guarda seus dados.
               </p>
               <ul className="xi-lista-fina">
                 <li>
-                  <strong>Isenção:</strong> escreva para{" "}
+                  <strong>IsenÃ§Ã£o:</strong> escreva para{" "}
                   <a href={`mailto:${EMAIL}`}>{EMAIL}</a> com o assunto
-                  “Solicitação de Isenção – XI Seminário IPDMS”, informando nome
+                  â€œSolicitaÃ§Ã£o de IsenÃ§Ã£o â€“ XI SeminÃ¡rio IPDMSâ€, informando nome
                   completo, categoria, justificativa e e-mail de contato.
                 </li>
                 <li>
-                  <strong>Alojamento:</strong> a vaga sai do formulário da
-                  organização, com nome, contato e dados de chegada e
-                  permanência.{" "}
+                  <strong>Alojamento:</strong> a vaga sai do formulÃ¡rio da
+                  organizaÃ§Ã£o, com nome, contato e dados de chegada e
+                  permanÃªncia.{" "}
                   <a
                     href={LINKS.alojamento}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Formulário do alojamento
+                    FormulÃ¡rio do alojamento
                   </a>
                 </li>
                 <li>
-                  <strong>Dúvidas de submissão:</strong> secretaria do seminário
+                  <strong>DÃºvidas de submissÃ£o:</strong> secretaria do seminÃ¡rio
                   em{" "}
                   <a href="mailto:ipdmscorreio@gmail.com">
                     ipdmscorreio@gmail.com
@@ -576,11 +575,11 @@ export function SeminarioPage() {
 
         <section className="xi-secao xi-secao--creme" id="tres" aria-labelledby="xi-tres-titulo">
           <div className="xi-casca">
-            <p className="xi-rotulo">Os três encontros</p>
+            <p className="xi-rotulo">Os trÃªs encontros</p>
             <h2 id="xi-tres-titulo" className="xi-h2">
               Uma mesma luta,
               <br />
-              três programas.
+              trÃªs programas.
             </h2>
 
             <div className="xi-cards">
@@ -596,11 +595,11 @@ export function SeminarioPage() {
                   <span className="xi-card__num">XI</span>
                   <h3>IPDMS</h3>
                   <p>
-                    Seminário Nacional Direitos, Pesquisa e Movimentos Sociais —
+                    SeminÃ¡rio Nacional Direitos, Pesquisa e Movimentos Sociais â€”
                     Venas abiertas.
                   </p>
                   <a href={LINKS.ipdms} target="_blank" rel="noopener noreferrer">
-                    Site do IPDMS ↗
+                    Site do IPDMS â†—
                   </a>
                 </div>
               </ElectroBorder>
@@ -614,13 +613,13 @@ export function SeminarioPage() {
                 glowBlur={26}
               >
                 <div className="xi-card__interior">
-                  <span className="xi-card__num">30º</span>
+                  <span className="xi-card__num">30Âº</span>
                   <h3>RENAP</h3>
                   <p>
                     Encontro Nacional da Rede Nacional de Advogadas e Advogados
-                    Populares — Lenir Correia Livre.
+                    Populares â€” Lenir Correia Livre.
                   </p>
-                  <a href={URL_RENAP}>Ver a página do encontro →</a>
+                  <a href={URL_RENAP}>Ver a pÃ¡gina do encontro â†’</a>
                 </div>
               </ElectroBorder>
 
@@ -633,14 +632,14 @@ export function SeminarioPage() {
                 glowBlur={22}
               >
                 <div className="xi-card__interior">
-                  <span className="xi-card__num">20º</span>
+                  <span className="xi-card__num">20Âº</span>
                   <h3>RENAJU</h3>
                   <p>
-                    Encontro Nacional da Rede Nacional de Assessoria Jurídica
-                    Universitária — Memórias e dilemas renajupianos.
+                    Encontro Nacional da Rede Nacional de Assessoria JurÃ­dica
+                    UniversitÃ¡ria â€” MemÃ³rias e dilemas renajupianos.
                   </p>
                   <a href={LINKS.renaju} target="_blank" rel="noopener noreferrer">
-                    @ajupsbrasil ↗
+                    @ajupsbrasil â†—
                   </a>
                 </div>
               </ElectroBorder>
@@ -658,9 +657,9 @@ export function SeminarioPage() {
                 Campus I.
               </h2>
               <p className="xi-texto">
-                Universidade Federal da Paraíba, Campus I — Cidade
-                Universitária, s/n, Castelo Branco, João Pessoa/PB. A sala de
-                cada atividade é divulgada pela organização.
+                Universidade Federal da ParaÃ­ba, Campus I â€” Cidade
+                UniversitÃ¡ria, s/n, Castelo Branco, JoÃ£o Pessoa/PB. A sala de
+                cada atividade Ã© divulgada pela organizaÃ§Ã£o.
               </p>
               <Magnet>
                 <a className="xi-btn xi-btn--linha" href={LINKS.mapa} target="_blank" rel="noopener noreferrer">
@@ -675,7 +674,7 @@ export function SeminarioPage() {
               </p>
               <p>
                 <a href={LINKS.editais} target="_blank" rel="noopener noreferrer">
-                  Página oficial e editais
+                  PÃ¡gina oficial e editais
                 </a>
               </p>
               <p>
@@ -698,38 +697,38 @@ export function SeminarioPage() {
 
           <div className="xi-rodape__grade">
             <div>
-              <p className="xi-rotulo">XI Seminário</p>
+              <p className="xi-rotulo">XI SeminÃ¡rio</p>
               <p className="xi-rodape__datas">
-                11—14 nov 2026
+                11â€”14 nov 2026
                 <br />
-                UFPB · João Pessoa/PB
+                UFPB Â· JoÃ£o Pessoa/PB
               </p>
               <a className="xi-rodape__mail" href={`mailto:${EMAIL}`}>
                 {EMAIL}
               </a>
             </div>
 
-            <nav aria-label="Rodapé">
+            <nav aria-label="RodapÃ©">
               <a href="#sobre">Sobre</a>
-              <a href="#programacao">Programação</a>
+              <a href="#programacao">ProgramaÃ§Ã£o</a>
               <a href="#oficinas">Oficinas e minicursos</a>
-              <a href="#gds">Grupos de Discussão</a>
-              <a href="#inscricoes">Inscrições</a>
-              <a href="#tres">Os três encontros</a>
-              <a href={`${URL_RENAP}#trabalhos`}>Trabalhos acadêmicos (RENAP)</a>
+              <a href="#gds">Grupos de DiscussÃ£o</a>
+              <a href="#inscricoes">InscriÃ§Ãµes</a>
+              <a href="#tres">Os trÃªs encontros</a>
+              <a href={`${URL_RENAP}#trabalhos`}>Trabalhos acadÃªmicos (RENAP)</a>
               <a href={LINKS.editais} target="_blank" rel="noopener noreferrer">
                 Editais e site do IPDMS
               </a>
-              <a href={URL_RENAP}>Página do 30º Encontro da RENAP</a>
+              <a href={URL_RENAP}>PÃ¡gina do 30Âº Encontro da RENAP</a>
             </nav>
 
             <div className="xi-rodape__orgs">
               <a href={LINKS.ipdms} target="_blank" rel="noopener noreferrer">
-                IPDMS · @institutoipdms
+                IPDMS Â· @institutoipdms
               </a>
-              <a href={URL_RENAP}>RENAP · @renapbrasil</a>
+              <a href={URL_RENAP}>RENAP Â· @renapbrasil</a>
               <a href={LINKS.renaju} target="_blank" rel="noopener noreferrer">
-                RENAJU · @ajupsbrasil
+                RENAJU Â· @ajupsbrasil
               </a>
             </div>
           </div>
@@ -737,7 +736,7 @@ export function SeminarioPage() {
           <div className="xi-rodape__base">
             <p>
               Fontes: IPDMS e SIGEventos/UFPB. Arte: banner oficial do XI
-              Seminário. Para correções, escreva para {EMAIL}.
+              SeminÃ¡rio. Para correÃ§Ãµes, escreva para {EMAIL}.
             </p>
             <p>
               Fontes Zodiak e Satoshi (Fontshare). Componentes React Bits e

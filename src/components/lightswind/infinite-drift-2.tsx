@@ -282,6 +282,10 @@ export const InfiniteDrift2 = forwardRef<
         alpha: true,
         antialias: true,
         premultipliedAlpha: false,
+        // A lente copia este canvas com drawImage. Sem preservar o buffer, o
+        // conteúdo some depois do quadro e a lente fica preta (ou com a foto
+        // errada, se o buffer ainda tiver o quadro anterior).
+        preserveDrawingBuffer: true,
       }) || canvas.getContext("experimental-webgl")) as WebGLRenderingContext | null;
 
       if (!gl) return;
@@ -543,7 +547,7 @@ export const InfiniteDrift2 = forwardRef<
         gl.uniform1f(uGray, p.grayscale);
         gl.uniform1f(uVig, p.vignette);
         gl.uniform2f(uAtlasGrid, gridCount, gridCount);
-        gl.uniform1f(uCount, Math.min(gridCount * gridCount, imageList.length));
+        gl.uniform1f(uCount, gridCount * gridCount);
 
         gl.drawArrays(gl.TRIANGLES, 0, 6);
         animId = requestAnimationFrame(render);
