@@ -10,9 +10,6 @@
 export const fotosEncontro: string[] = [
   "/img/encontro-2026/encontro-01.webp",
   "/img/encontro-2026/encontro-02.webp",
-  "/img/encontro-2026/encontro-03.webp",
-  "/img/encontro-2026/encontro-04.webp",
-  "/img/encontro-2026/encontro-05.webp",
   "/img/encontro-2026/encontro-06.webp",
   "/img/encontro-2026/encontro-07.webp",
   "/img/encontro-2026/encontro-08.webp",

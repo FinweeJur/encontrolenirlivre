@@ -10,6 +10,9 @@ const SAIDA = path.resolve("src/content/fotosEncontro.ts");
 
 const arquivos = (await readdir(PASTA))
   .filter((nome) => nome.endsWith(".webp"))
+  // Logos da RENAP que vieram junto com as fotos (conferido na folha de
+  // contato em 18/11/2026): não entram na grade de fotos.
+  .filter((nome) => !["encontro-03.webp", "encontro-04.webp", "encontro-05.webp"].includes(nome))
   .sort();
 
 const lista = arquivos.map((nome) => `  "/img/encontro-2026/${nome}",`).join("\n");
