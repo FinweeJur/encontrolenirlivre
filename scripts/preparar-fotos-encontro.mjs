@@ -14,6 +14,7 @@ const PASTA_PC = "C:/Users/teste/Downloads/LOGOS RENAP";
 const ZIP = "C:/Users/teste/AppData/Local/Temp/opencode/encontro-zip";
 const OUT = path.resolve("public/img/encontro-2026");
 const LARGURA = 900;
+const ALTURA = 675;
 const LIMITE_ZIP = 34;
 
 const ehImagem = (nome) => /\.(jpe?g|png|webp|heic|heif)$/i.test(nome);
@@ -47,7 +48,10 @@ for (const origem of todas) {
   const destino = path.join(OUT, nome);
   await sharp(origem)
     .rotate()
-    .resize({ width: LARGURA, withoutEnlargement: true })
+    // Corte 4:3 na área de maior "atenção" da imagem (rostos e gente, quase
+    // sempre), para a foto já sair centrada no assunto em vez de no meio
+    // geométrico do arquivo.
+    .resize({ width: LARGURA, height: ALTURA, fit: "cover", position: sharp.strategy.attention })
     .webp({ quality: 78 })
     .toFile(destino);
   const info = await stat(destino);
