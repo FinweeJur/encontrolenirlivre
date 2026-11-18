@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { PhotoDrift } from "./components/PhotoDrift";
+import { CartaXXX } from "./components/CartaXXX";
 import {
   Case,
   Encounter,
@@ -79,6 +80,7 @@ export function App() {
         <Encounter />
         <Vozes />
         <PhotoDrift reducedMotion={reducedMotion} />
+        <CartaXXX />
         <Program />
         <Lancamentos />
         <Registration />

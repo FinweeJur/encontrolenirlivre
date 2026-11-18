@@ -28,6 +28,8 @@ import { BotaoPix } from "../BotaoPix";
 import { AcontecendoAgora } from "../AcontecendoAgora";
 import { ContagemInscricoes, FaltamDias } from "../Contagem";
 import { LayoutGrid } from "../effects/Extras";
+import { InfinityGrid } from "../InfinityGrid";
+import { fotosEncontro } from "../../content/fotosEncontro";
 
 const LINKS = {
   inscricao: "https://sigeventos.ufpb.br/eventos/public/evento/SNIPDMS",
@@ -443,6 +445,33 @@ export function SeminarioPage() {
         <Oficinas />
 
         <Gds />
+
+        <section
+          className="xi-secao xi-secao--creme"
+          id="fotos-encontro"
+          aria-labelledby="xi-fotos-titulo"
+        >
+          <div className="xi-casca xi-fotos-topo">
+            <p className="xi-rotulo">O encontro em imagens</p>
+            <h2 id="xi-fotos-titulo" className="xi-h2">
+              Rostos
+              <br />
+              do encontro.
+            </h2>
+            <p className="xi-fotos-texto">
+              Quatro dias no Campus I da UFPB, em João Pessoa, com os GDs, as
+              oficinas e a mística da advocacia popular. Fotos do acervo da
+              organização.
+            </p>
+          </div>
+          <InfinityGrid
+            imagens={fotosEncontro}
+            faixas={3}
+            altura={210}
+            velocidade={24}
+            alt="Foto do encontro em João Pessoa"
+          />
+        </section>
 
         <section className="xi-secao" id="inscricoes" aria-labelledby="xi-insc-titulo">
           <div className="xi-casca xi-grade2">

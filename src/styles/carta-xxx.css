@@ -1,0 +1,218 @@
+/* ==========================================================================
+   Carta Política do XXX Encontro.
+   Layout de jornal: cabeçalho curto, resumo lateral, texto em coluna estreita.
+   Tokens do site: --paper, --ink, --red, --line-soft, --display, --body, --data.
+   ========================================================================== */
+
+.carta {
+  position: relative;
+  padding-block: clamp(3rem, 7vw, 5.5rem);
+  background: var(--paper);
+  color: var(--ink);
+  border-top: 1px solid var(--line-soft);
+}
+
+.carta__cabeca {
+  max-width: 46rem;
+  margin-bottom: clamp(1.8rem, 4vw, 3rem);
+}
+
+.carta__titulo {
+  font-family: var(--display);
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  margin: 0.35rem 0 0.9rem;
+  text-transform: uppercase;
+}
+
+.carta__destaque {
+  color: var(--red);
+}
+
+.carta__linha-fina {
+  margin: 0;
+  max-width: 38rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--ink) 72%, transparent);
+}
+
+.carta__grade {
+  display: grid;
+  grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: start;
+}
+
+/* ---------- resumo lateral ---------- */
+
+.carta__resumo {
+  position: sticky;
+  top: 6rem;
+  padding: 1.1rem 1.2rem 1.2rem;
+  border: 1px solid var(--line-soft);
+  border-left: 3px solid var(--red);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+}
+
+.carta__resumo h3 {
+  margin: 0 0 0.7rem;
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.carta__resumo ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.carta__resumo li {
+  position: relative;
+  padding-left: 0.9rem;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.carta__resumo li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background: var(--red);
+}
+
+.carta__assinatura {
+  margin: 1rem 0 0;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--line-soft);
+  font-family: var(--display);
+  font-size: 0.95rem;
+  line-height: 1.25;
+  color: var(--red);
+}
+
+/* ---------- texto ---------- */
+
+.carta__texto {
+  max-width: 40rem;
+}
+
+.carta__texto p {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  line-height: 1.68;
+}
+
+.carta__abertura {
+  font-size: 1.12rem;
+  line-height: 1.6;
+  font-weight: 600;
+}
+
+.carta__abertura::first-letter {
+  float: left;
+  margin: 0.1em 0.12em 0 0;
+  font-family: var(--display);
+  font-size: 3.1em;
+  line-height: 0.8;
+  color: var(--red);
+}
+
+.carta__texto blockquote {
+  margin: 1.6rem 0;
+  padding: 0.2rem 0 0.2rem 1.2rem;
+  border-left: 3px solid var(--red);
+  font-family: var(--display);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--ink) 88%, transparent);
+}
+
+.carta__foto {
+  margin: 1.8rem 0;
+}
+
+.carta__foto img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  display: block;
+}
+
+.carta__foto figcaption {
+  margin-top: 0.4rem;
+  font-family: var(--data, ui-monospace, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ink) 55%, transparent);
+}
+
+.carta__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 1.6rem;
+}
+
+/* ---------- grade de fotos ---------- */
+
+.carta__fotos {
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+}
+
+.carta__fotos-topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem 2rem;
+  margin-bottom: 1.2rem;
+}
+
+.carta__fotos-topo h3 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(1.3rem, 3.4vw, 1.9rem);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.carta__fotos-topo p {
+  margin: 0;
+  max-width: 32rem;
+  font-size: 0.88rem;
+  color: color-mix(in srgb, var(--ink) 68%, transparent);
+}
+
+/* ---------- celular ---------- */
+
+@media (max-width: 900px) {
+  .carta__grade {
+    grid-template-columns: 1fr;
+  }
+
+  .carta__resumo {
+    position: static;
+    order: 2;
+  }
+
+  .carta__texto {
+    max-width: none;
+    order: 1;
+  }
+}

@@ -1315,3 +1315,24 @@ html[data-xi-tema="escuro"] .xi-topo {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* Seção de fotos do encontro (InfinityGrid) no site do seminário. */
+.xi-fotos-topo {
+  margin-bottom: clamp(1rem, 2.5vw, 1.6rem);
+}
+
+.xi-fotos-topo .xi-h2 {
+  margin-bottom: 0.6rem;
+}
+
+.xi-fotos-texto {
+  max-width: 34rem;
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--xi-tinta) 74%, transparent);
+}
+
+#fotos-encontro .infinito {
+  --infinito-altura: 210px;
+}

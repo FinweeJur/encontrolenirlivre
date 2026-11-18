@@ -1,0 +1,93 @@
+/* ==========================================================================
+   Grade infinita de fotos (InfinityGrid).
+   Cada faixa corre sozinha, em sentido alternado, com duração proporcional ao
+   número de fotos — assim a velocidade em pixels por segundo fica igual em
+   todas as faixas.
+   ========================================================================== */
+
+.infinito {
+  position: relative;
+  display: grid;
+  gap: 0.55rem;
+  width: 100%;
+  overflow: hidden;
+  /* As bordas somem no fundo da seção, sem corte seco. */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 4%,
+    #000 96%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to right, transparent 0, #000 4%, #000 96%, transparent 100%);
+}
+
+.infinito__faixa {
+  overflow: hidden;
+}
+
+.infinito__trilho {
+  display: flex;
+  width: max-content;
+  gap: 0.55rem;
+  animation: infinito-corre var(--infinito-tempo, 40s) linear infinite;
+  will-change: transform;
+}
+
+.infinito__faixa[data-sentido="volta"] .infinito__trilho {
+  animation-direction: reverse;
+}
+
+.infinito__trilho img {
+  display: block;
+  flex: none;
+  width: auto;
+  height: var(--infinito-altura, 190px);
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 6px;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Pausa para quem quer olhar uma foto. */
+.infinito:hover .infinito__trilho {
+  animation-play-state: paused;
+}
+
+@keyframes infinito-corre {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Sem animação: vira rolagem manual. */
+@media (prefers-reduced-motion: reduce) {
+  .infinito__faixa {
+    overflow-x: auto;
+  }
+
+  .infinito__trilho {
+    animation: none;
+  }
+}
+
+/* No celular a foto encolhe: menos altura, mais fotos por tela. */
+@media (max-width: 640px) {
+  .infinito {
+    gap: 0.35rem;
+  }
+
+  .infinito__trilho {
+    gap: 0.35rem;
+  }
+
+  .infinito__trilho img {
+    height: calc(var(--infinito-altura, 190px) * 0.62);
+    border-radius: 4px;
+  }
+}
