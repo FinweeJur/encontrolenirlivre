@@ -29,6 +29,7 @@ import { AcontecendoAgora } from "../AcontecendoAgora";
 import { ContagemInscricoes, FaltamDias } from "../Contagem";
 import { LayoutGrid } from "../effects/Extras";
 import { InfinityGrid } from "../InfinityGrid";
+import { RolagemHash } from "../RolagemHash";
 import { fotosEncontro } from "../../content/fotosEncontro";
 
 const LINKS = {
@@ -740,6 +741,7 @@ export function SeminarioPage() {
         </div>
       </footer>
 
+      <RolagemHash />
       <SearchPanel />
       <ToolsDock />
       <PlayerRadio />

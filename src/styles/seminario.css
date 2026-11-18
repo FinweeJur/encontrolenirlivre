@@ -1336,3 +1336,8 @@ html[data-xi-tema="escuro"] .xi-topo {
 #fotos-encontro .infinito {
   --infinito-altura: 210px;
 }
+
+/* A seção de fotos fica abaixo do cabeçalho fixo ao abrir pela âncora. */
+#fotos-encontro {
+  scroll-margin-top: 5rem;
+}

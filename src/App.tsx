@@ -3,6 +3,7 @@ import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { PhotoDrift } from "./components/PhotoDrift";
 import { CartaXXX } from "./components/CartaXXX";
+import { RolagemHash } from "./components/RolagemHash";
 import {
   Case,
   Encounter,
@@ -91,6 +92,7 @@ export function App() {
 
       <Footer />
 
+      <RolagemHash />
       <SearchPanel />
       <ToolsDock />
       <PlayerRadio />

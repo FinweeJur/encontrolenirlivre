@@ -10,6 +10,8 @@
   background: var(--paper);
   color: var(--ink);
   border-top: 1px solid var(--line-soft);
+  /* O cabeçalho é fixo: a âncora precisa parar abaixo dele. */
+  scroll-margin-top: 5.5rem;
 }
 
 .carta__cabeca {
@@ -138,6 +140,32 @@
   font-size: 1.05rem;
   line-height: 1.5;
   color: color-mix(in srgb, var(--ink) 88%, transparent);
+}
+
+/* Marcas do original: negrito, destaque (marca-texto) e link. */
+.carta__texto strong {
+  font-weight: 700;
+}
+
+.carta__texto mark {
+  padding: 0 0.12em;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--yellow) 52%, transparent);
+  color: inherit;
+  /* O marca-texto precisa atravessar a quebra de linha. */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.carta__texto a {
+  color: var(--red);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+}
+
+.carta__texto a:hover {
+  text-decoration-thickness: 2px;
 }
 
 .carta__foto {
