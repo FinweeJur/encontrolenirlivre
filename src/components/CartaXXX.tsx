@@ -9,13 +9,12 @@
  * curta, citação e assinatura. No fim, a grade infinita com as fotos do
  * encontro.
  */
-import { Fragment, useRef } from "react";
+import { Fragment } from "react";
 import { cartaXXX, cartaXXXUrl } from "../content/cartaXXX";
 import type { TrechoCarta } from "../content/cartaXXX";
 import { fotosEncontro } from "../content/fotosEncontro";
 import { BotaoWhatsApp } from "./BotaoWhatsApp";
 import { DriftFotos } from "./DriftFotos";
-import { useGrifoScroll } from "./GrifoScroll";
 import "../styles/carta-xxx.css";
 
 const ESSENCIAL = [
@@ -35,24 +34,9 @@ function Trechos({ runs }: { runs: TrechoCarta[] }) {
       {runs.map((run, indice) => {
         let conteudo = <>{run.texto}</>;
 
-        // Destaque: cada palavra é uma camada própria. O amarelo entra atrás
-        // dela e a letra escurece, como caneta passando — o texto claro do
-        // site vai sendo substituído, não coberto por uma faixa.
+        // Destaque: grifo direto, sem animação — amarelo atrás e letra escura.
         if (run.destaque) {
-          const pedacos = run.texto.split(/(\s+)/);
-          conteudo = (
-            <mark className="grifo">
-              {pedacos.map((pedaco, pedacoIndice) =>
-                /^\s*$/.test(pedaco) ? (
-                  <Fragment key={`e-${pedacoIndice}`}>{pedaco}</Fragment>
-                ) : (
-                  <span className="grifo__p" key={`p-${pedacoIndice}`}>
-                    {pedaco}
-                  </span>
-                ),
-              )}
-            </mark>
-          );
+          conteudo = <mark className="grifo">{run.texto}</mark>;
         }
 
         if (run.negrito) conteudo = <strong>{conteudo}</strong>;
@@ -72,8 +56,6 @@ function Trechos({ runs }: { runs: TrechoCarta[] }) {
 
 export function CartaXXX() {
   const [abertura, ...resto] = cartaXXX;
-  const textoRef = useRef<HTMLDivElement>(null);
-  useGrifoScroll(textoRef);
 
   return (
     <section className="carta" id="carta-politica" aria-labelledby="carta-titulo">
@@ -104,7 +86,7 @@ export function CartaXXX() {
             </p>
           </aside>
 
-          <div className="carta__texto" ref={textoRef}>
+          <div className="carta__texto">
             {abertura && abertura.tipo !== "imagem" ? (
               <p className="carta__abertura">
                 <Trechos runs={abertura.runs} />

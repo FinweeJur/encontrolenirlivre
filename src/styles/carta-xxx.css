@@ -147,32 +147,13 @@
   font-weight: 700;
 }
 
-/* Grifo: cada palavra tem sua prÃ³pria tinta. O amarelo entra atrÃ¡s dela e a
-   letra escurece, na ordem em que a "caneta" passa â€” o texto claro do site Ã©
-   substituÃ­do, nÃ£o coberto. Sem JS, tudo nasce preenchido (--g: 100%). */
+/* Grifo direto: amarelo chapado atrás e letra escura. Sem animação e sem
+   camadas — é o que lê melhor nos dois temas. */
 .carta__texto mark.grifo {
-  background: none;
-  color: inherit;
-  padding: 0;
-}
-
-.grifo__p {
-  --g: 100%;
-  --gn: 100;
-  padding: 0;
-  border-radius: 2px;
-  background-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    color-mix(in srgb, var(--yellow) 78%, transparent) 18%,
-    color-mix(in srgb, var(--yellow) 78%, transparent) 82%,
-    transparent 100%
-  );
-  background-repeat: no-repeat;
-  background-position: left 90%;
-  background-size: var(--g) 34%;
-  /* A letra escurece junto com o amarelo. */
-  color: color-mix(in srgb, #17130f calc(var(--gn) * 1%), var(--ink));
+  padding: 0.02em 0.16em;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--yellow) 80%, transparent);
+  color: #17130f;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
