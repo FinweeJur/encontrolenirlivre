@@ -35,12 +35,16 @@ export function useGrifoScroll(container: RefObject<HTMLElement | null>) {
       const inicio = altura * 0.88;
       const fim = altura * 0.42;
 
-      for (const marca of marcas) {
+      marcas.forEach((marca, indice) => {
         const caixa = marca.getBoundingClientRect();
-        if (caixa.bottom < 0 || caixa.top > altura) continue;
-        const progresso = Math.min(1, Math.max(0, (inicio - caixa.top) / (inicio - fim)));
+        if (caixa.bottom < 0 || caixa.top > altura) return;
+        const bruto = Math.min(1, Math.max(0, (inicio - caixa.top) / (inicio - fim)));
+        // Cada trecho começa um tico depois do anterior (3%): dá a sensação de
+        // caneta passando de um grifo para o outro, sem atraso perceptível.
+        const atraso = Math.min(0.18, indice * 0.03);
+        const progresso = Math.min(1, Math.max(0, (bruto - atraso) / (1 - atraso)));
         marca.style.setProperty("--grifo", `${(progresso * 100).toFixed(1)}%`);
-      }
+      });
     };
 
     let ultimo = 0;
@@ -52,12 +56,20 @@ export function useGrifoScroll(container: RefObject<HTMLElement | null>) {
     };
 
     pintar();
+    // Deep link (#carta-politica) chega já no meio da página, muitas vezes sem
+    // evento de rolagem: pinta de novo depois que o layout assentar.
+    const t1 = window.setTimeout(pintar, 350);
+    const t2 = window.setTimeout(pintar, 1200);
     window.addEventListener("scroll", agendar, { passive: true });
     window.addEventListener("resize", agendar);
+    window.addEventListener("hashchange", agendar);
 
     return () => {
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
       window.removeEventListener("scroll", agendar);
       window.removeEventListener("resize", agendar);
+      window.removeEventListener("hashchange", agendar);
     };
   }, [container]);
 }
