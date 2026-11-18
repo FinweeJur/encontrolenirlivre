@@ -34,8 +34,28 @@ function Trechos({ runs }: { runs: TrechoCarta[] }) {
     <>
       {runs.map((run, indice) => {
         let conteudo = <>{run.texto}</>;
+
+        // Destaque: cada palavra é uma camada própria. O amarelo entra atrás
+        // dela e a letra escurece, como caneta passando — o texto claro do
+        // site vai sendo substituído, não coberto por uma faixa.
+        if (run.destaque) {
+          const pedacos = run.texto.split(/(\s+)/);
+          conteudo = (
+            <mark className="grifo">
+              {pedacos.map((pedaco, pedacoIndice) =>
+                /^\s*$/.test(pedaco) ? (
+                  <Fragment key={`e-${pedacoIndice}`}>{pedaco}</Fragment>
+                ) : (
+                  <span className="grifo__p" key={`p-${pedacoIndice}`}>
+                    {pedaco}
+                  </span>
+                ),
+              )}
+            </mark>
+          );
+        }
+
         if (run.negrito) conteudo = <strong>{conteudo}</strong>;
-        if (run.destaque) conteudo = <mark>{conteudo}</mark>;
         if (run.sublinhado) conteudo = <u>{conteudo}</u>;
         if (run.link) {
           conteudo = (

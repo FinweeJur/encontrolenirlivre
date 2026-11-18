@@ -1,6 +1,6 @@
-/* ==========================================================================
-   Carta Política do XXX Encontro.
-   Layout de jornal: cabeçalho curto, resumo lateral, texto em coluna estreita.
+﻿/* ==========================================================================
+   Carta PolÃ­tica do XXX Encontro.
+   Layout de jornal: cabeÃ§alho curto, resumo lateral, texto em coluna estreita.
    Tokens do site: --paper, --ink, --red, --line-soft, --display, --body, --data.
    ========================================================================== */
 
@@ -10,7 +10,7 @@
   background: var(--paper);
   color: var(--ink);
   border-top: 1px solid var(--line-soft);
-  /* O cabeçalho é fixo: a âncora precisa parar abaixo dele. */
+  /* O cabeÃ§alho Ã© fixo: a Ã¢ncora precisa parar abaixo dele. */
   scroll-margin-top: 5.5rem;
 }
 
@@ -147,14 +147,20 @@
   font-weight: 700;
 }
 
-.carta__texto mark {
-  /* A largura do fundo vem do GrifoScroll (0% a 100% conforme a rolagem).
-     Sem JS, ou com movimento reduzido, começa cheio. */
-  --grifo: 100%;
-  padding: 0 0.1em;
+/* Grifo: cada palavra tem sua prÃ³pria tinta. O amarelo entra atrÃ¡s dela e a
+   letra escurece, na ordem em que a "caneta" passa â€” o texto claro do site Ã©
+   substituÃ­do, nÃ£o coberto. Sem JS, tudo nasce preenchido (--g: 100%). */
+.carta__texto mark.grifo {
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+.grifo__p {
+  --g: 100%;
+  --gn: 100;
+  padding: 0;
   border-radius: 2px;
-  /* Uma passada só, fina e encostada na base do texto: é o que lê como
-     marca-texto. Duas camadas viravam borrão e atrapalhavam a leitura. */
   background-image: linear-gradient(
     to bottom,
     transparent 0%,
@@ -163,16 +169,15 @@
     transparent 100%
   );
   background-repeat: no-repeat;
-  /* 90% deixa a faixa na metade de baixo da linha, sem tocar a de cima. */
   background-position: left 90%;
-  background-size: var(--grifo) 34%;
-  color: #17130f;
-  /* O marca-texto precisa atravessar a quebra de linha. */
+  background-size: var(--g) 34%;
+  /* A letra escurece junto com o amarelo. */
+  color: color-mix(in srgb, #17130f calc(var(--gn) * 1%), var(--ink));
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
 
-/* Link dentro do grifo continua legível. */
+/* Link dentro do grifo continua legÃ­vel. */
 .carta__texto mark a {
   color: #17130f;
   text-decoration-color: #17130f;
