@@ -151,7 +151,7 @@ export function DriftFotos({
       enableDrag
       dragSensitivity={1.1}
       friction={0.93}
-      dpr={Math.min(typeof window === "undefined" ? 1 : window.devicePixelRatio || 1, 1.75)}
+      dpr={Math.min(typeof window === "undefined" ? 1 : window.devicePixelRatio || 1, 1.6)}
     />
   );
 

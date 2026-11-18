@@ -364,11 +364,29 @@ export const InfiniteDrift2 = forwardRef<
         }
       }
 
-      // Celula 4:3, igual ao ladrilho: sem isso a foto estica.
-      const cellDim = Math.floor(atlasDim / colunas);
-      const cellAltura = Math.floor((cellDim * 3) / 4);
+      // Celula 4:3 com resolucao de tela: cada ladrilho precisa de ~1,6x o
+      // tamanho em CSS para nao sair borrado (o atlas antigo dava ~136 px por
+      // foto num ladrilho de 250 px). Limites: 4096 px por lado (teto do WebGL
+      // na maioria dos aparelhos) e 8 megapixels de area, para a textura nao
+      // ocupar 40 MB de memoria de video.
+      const TETO_ATLAS = 4096;
+      const AREA_MAXIMA =
+        typeof window !== "undefined" && window.innerWidth < 700 ? 4_000_000 : 8_000_000;
+      let cellDim = Math.max(256, Math.min(420, Math.round(tileWidth * 1.6)));
+      let cellAltura = Math.round((cellDim * 3) / 4);
+
+      cellDim = Math.min(cellDim, Math.floor(TETO_ATLAS / colunas));
+      cellAltura = Math.min(cellAltura, Math.floor(TETO_ATLAS / linhas));
+
+      const areaAtual = cellDim * colunas * cellAltura * linhas;
+      if (areaAtual > AREA_MAXIMA) {
+        const fator = Math.sqrt(AREA_MAXIMA / areaAtual);
+        cellDim = Math.max(64, Math.floor(cellDim * fator));
+        cellAltura = Math.max(48, Math.floor(cellAltura * fator));
+      }
+
       atlasCanvas.width = cellDim * colunas;
-      atlasCanvas.height = Math.min(4096, cellAltura * linhas);
+      atlasCanvas.height = cellAltura * linhas;
       const ctx = atlasCanvas.getContext("2d", { willReadFrequently: true });
 
       // Initialize with sleek, rich procedural gradient artwork as instant fallback
